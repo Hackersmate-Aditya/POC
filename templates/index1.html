@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DALL-E Image Variation Generation</title>
+</head>
+<body>
+    <h1>DALL-E Image Variation Generation</h1>
+    <form action="/generate_image" method="post" enctype="multipart/form-data">
+        <label for="image">Upload an image:</label>
+        <input type="file" id="image" name="image" accept=".png, .jpg, .jpeg">
+        <br>
+        <button type="submit">Generate Image Variation</button>
+    </form>
+    <div id="result">
+        <!-- The generated image will be displayed here -->
+    </div>
+</body>
+</html>

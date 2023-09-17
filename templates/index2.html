@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DALL-E Image Edit</title>
+</head>
+<body>
+    <h1>DALL-E Image Edit</h1>
+    <form action="/generate_edit" method="post" enctype="multipart/form-data">
+        <label for="image">Upload an image:</label>
+        <input type="file" id="image" name="image" accept=".png, .jpg, .jpeg">
+        <br>
+        <label for="mask">Upload a mask:</label>
+        <input type="file" id="mask" name="mask" accept=".png, .jpg, .jpeg">
+        <br>
+        <label for="prompt">Enter a prompt:</label>
+        <input type="text" id="prompt" name="prompt" required>
+        <br>
+        <button type="submit">Generate Edited Image</button>
+    </form>
+    <div id="result">
+        <!-- The generated edited image will be displayed here -->
+    </div>
+</body>
+</html>
