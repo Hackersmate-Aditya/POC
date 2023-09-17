@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DALL-E Image Generation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            background-image: url('/static/background.jpg'); /* Set your background image path */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        img {
+            max-width: 100%;
+            margin-top: 20px;
+            width: 400px;
+            height: 300px;
+            aspect-ratio: 3/2;
+        }
+
+        .loading {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>DALL-E Image Generation</h1>
+    <form id="generate-form">
+        <label for="text">Enter a text description:</label>
+        <input type="text" id="text" name="text">
+        <br>
+        <button type="submit">Generate Image</button>
+        <div class="loading">
+            <img src="/static/loader.webp" alt="Loading..." style="width: 200px; height: 100px;">
+        </div>
+    </form>
+    <div id="result">
+        <!-- The generated image will be displayed here -->
+    </div>
+    <script>
+        const generateForm = document.getElementById('generate-form');
+        const loadingDiv = document.querySelector('.loading');
+        const resultDiv = document.getElementById('result');
+
+        generateForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const text = document.getElementById('text').value;
+            loadingDiv.style.display = 'block'; // Show loading spinner
+
+            fetch('/generate', {
+                method: 'POST',
+                body: new URLSearchParams({ text: text }),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the generated image
+                resultDiv.innerHTML = `<img src="${data.image_url}" alt="Generated Image">`;
+
+                loadingDiv.style.display = 'none'; // Hide loading spinner
+            })
+            .catch(error => console.error(error));
+        });
+    </script>
+</body>
+</html>
