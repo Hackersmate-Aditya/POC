@@ -1,10 +1,11 @@
+from decouple import config
 from flask import Flask, render_template, request, jsonify
 import openai
 
 app = Flask(__name__)
 
-# Set your OpenAI API key
-openai.api_key = "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"
+# Load the OpenAI API key from the .env file
+OPENAI_API_KEY = config('OPENAI_API_KEY')
 
 @app.route('/')
 def index():
