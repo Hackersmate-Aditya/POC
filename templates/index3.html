@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text Summarization</title>
+</head>
+<body>
+    <h1>Text Summarization</h1>
+    <form method="POST">
+        <textarea name="user_input" rows="5" cols="40" placeholder="Enter text to summarize"></textarea>
+        <br>
+        <input type="submit" value="Summarize">
+    </form>
+
+    <!-- Result Section (Initially Hidden) -->
+    {% if summary %}
+    <h2>Result:</h2>
+    <p><strong>Input Text:</strong></p>
+    <p>{{ user_input }}</p>
+    <p><strong>Summary:</strong></p>
+    <p>{{ summary }}</p>
+    {% endif %}
+</body>
+</html>
