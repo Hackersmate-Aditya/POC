@@ -168,5 +168,14 @@ button#download-button {
 .card-header {
     padding: 0px !important
 }
+.navbar-light .navbar-text {
+    margin-right: 440px;
+    /* color: rgba(0,0,0,.5); */
+}
+    
+.navbar-light .navbar-text {
+    margin-left: 438px;
+    color: rgba(0,0,0,.5);
+}
 
     
