@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- Add Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Add Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
+    <title>Audio to Text Converter</title>
+</head>
+<body>
+    <header class="navbar navbar-expand-lg navbar-light mt-0 ">
+        <!-- Logo -->
+        <div class="navbar-brand">
+            <img src="/static/Infobeanslogo.png" alt="InfoBeans Logo" height="30">
+        </div>
+
+        <!-- Title -->
+        <h3 class=" header-text navbar-text  text-white d-flex justify-content-center align-items-center">Audio to Text Converter</h3>
+
+        <!-- Spacer -->
+        <div class="flex-grow-1"></div>
+
+        <!-- Dropdown Menu -->
+        <div class="dropdown">
+            <div  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                <i class="fa fa-ellipsis-v " aria-hidden="true"></i>
+            </div>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/">Home</a>
+                <a class="dropdown-item" href="/image_generation">Generate Image</a>
+                <a class="dropdown-item" href="/summary_generation">Generate Summary</a>
+                <a class="dropdown-item" href="/generate_transcript">Generate Transcript</a>
+            </div>
+        </div>
+    </header>
+
+
+<!-- 
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="audio" accept=".mp3, .wav">
+        <input type="submit" value="Upload and Convert">
+    </form>
+    {% if transcript %}
+    <h2>Transcript:</h2>
+    <p>{{ transcript }}</p>
+    {% endif %} -->
+
+    <div class="container mt-5">
+        <form method="POST" enctype="multipart/form-data">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="audioFile" name="audio" accept=".mp3, .wav" style="display: none;">
+                <label class="custom-file-label" for="audioFile">Choose an audio file (MP3 or WAV)</label>
+            </div>
+            <!-- <div class="form-group mt-2">
+                <button type="button" class="btn btn-primary" onclick="document.getElementById('audioFile').click();">Browse</button>
+            </div> -->
+            <div class="form-group mt-2">
+                <button type="submit" class="btn btn-dark rounded-pill">Upload and Convert</button>
+            </div>
+        </form>
+        
+        {% if transcript %}
+        <div class="row mt-5">
+            <div class="col-md-6 offset-md-3">
+                <h2>Transcript:</h2>
+                <p>{{ transcript }}</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+
+
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-2 mt-5">
+        &copy; Copyright 2023 InfoBeans
+    </footer>
+
+
+      <!-- Add Bootstrap JS and jQuery (required for Bootstrap) -->
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      
+</body>
+</html>
