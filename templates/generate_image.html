@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DALL-E Image Generation</title>
+</head>
+<body>
+    <h1>Image Generation</h1>
+
+    <form action="/generate_image" method="post"> <!-- Add the <form> element -->
+        <div>
+            <label for="text">Enter a text description:</label><br>
+            <input type="text" id="text" name="text">
+        </div>
+
+        <div>
+            <button type="submit" id="generateImage">Generate Image</button> <!-- Specify type="submit" -->
+        </div>
+    </form>
+
+    <div id="imageResult">
+        <!-- The generated image will be displayed here -->
+    </div>
+
+    <script>
+        document.getElementById("generateImage").addEventListener("click", function (e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // Get text input
+            const text = document.getElementById("text").value;
+
+            // Make a POST request to your Flask server to generate the image
+            fetch('/generate_image', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `text=${encodeURIComponent(text)}`,
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the generated image on the web page
+                const imageResult = document.getElementById("imageResult");
+                imageResult.innerHTML = `<img src="${data.image_url}" alt="Generated Image">`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
