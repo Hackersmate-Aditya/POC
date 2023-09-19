@@ -1,4 +1,5 @@
 # Import necessary modules
+#Loaded Google Credentails
 import os
 from flask import Flask, request, render_template, jsonify
 import vertexai
