@@ -16,7 +16,7 @@ davinci_cost = 0.02  # $0.02/1000 tokens
 
 @app.route("/", methods=["GET"])
 def index():
-    return render_template('home.html')
+    return render_template('generate_image.html')
 
 @app.route('/image_generation', methods=['GET', 'POST'])
 def image_generation():
