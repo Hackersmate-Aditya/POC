@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/style1.css">       
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- Add Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Summary Generation</title>
+</head>
+<body>
+    
+    <!-- <header class="navbar navbar-expand-lg navbar-light mt-0 ">
+        <div class="navbar-brand">
+            <img src="/static/Infobeanslogo.png" alt="InfoBeans Logo" height="30">
+        </div>
+
+        <h3 class=" header-text navbar-text  text-white d-flex justify-content-center align-items-center">Prompts</h3>
+
+        <div class="flex-grow-1"></div>
+
+        <div class="dropdown">
+            <div  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                <i class="fa fa-ellipsis-v " aria-hidden="true"></i>
+            </div>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/image_generation">Generate Image</a>
+                <a class="dropdown-item" href="/summary_generation">Generate Summary</a>
+                <a class="dropdown-item" href="/generate_transcript">Generate Transcript</a>
+                <a class="dropdown-item" href="/supportcall_summary_generation">Financial summary</a>
+                <a class="dropdown-item" href="/contract_summary_generation">Contract summary</a>
+            </div>
+        </div>
+
+    </header> -->
+
+
+
+
+    <!-- <div>
+        <label for="inputText">Input Text:</label><br>
+        <textarea id="inputText" rows="6" cols="50"></textarea>
+    </div>
+
+    <div>
+        <label for="prompt">Prompt:</label><br>
+        <input type="text" id="prompt" size="50">
+    </div>
+
+    <div>
+        <button id="generateSummary">Generate Summary</button>
+    </div> -->
+
+    <div class="container-fluid">
+        <div class="row">
+            {% include 'sidebar.html' %} 
+
+
+            <main class="col-md-9 col-lg-10 offset-md-3 offset-lg-2 px-md-0" id="page-content">
+
+                <!-- <header class="navbar navbar-expand-lg navbar-light mt-0  mr-0">
+                    <h3 class=" header-text   text-white d-flex justify-content-center align-items-center">Prompts</h3>
+                    <div class="flex-grow-1"></div>
+                </header> -->
+
+                <div class="container mt-5 mb-5">
+                    <div class="accordion" id="inputTextAccordion">
+                        <div class="card">
+                            <div class="card-header" id="inputTextHeading">
+                                <h5 class="mb-0">
+                                    <button class="btn col-12" type="button" data-toggle="collapse" data-target="#inputTextCollapse" aria-expanded="true" aria-controls="inputTextCollapse">
+                                        Input Text
+                                    </button>
+                                </h5>
+                            </div>
+            
+                            <div id="inputTextCollapse" class="collapse show" aria-labelledby="inputTextHeading" data-parent="#inputTextAccordion">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="inputText">Enter a text description:</label>
+                                        <textarea class="form-control" id="inputText" rows="6" cols="50"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="prompt">Enter a prompt:</label>
+                                        <input type="text" class="form-control" id="prompt" size="50">
+                                    </div>
+                                
+                                    <div class="form-group">
+                                        <button class="rounded-pill" id="generateSummary"
+                                        data-toggle="collapse"
+                                        data-target="#promptCollapse"
+                                        aria-expanded="true" aria-controls="promptCollapse"
+                                        >Generate </button>
+                                       
+            
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="loader" id="loader"></div>
+            
+                    <div class="accordion mt-3" id="promptAccordion">
+                        <div class="card">
+                            <div class="card-header" id="promptHeading">
+                                <h5 class="mb-0">
+                                    <button class="btn col-12 " type="button" data-toggle="collapse" data-target="#promptCollapse" aria-expanded="true" aria-controls="promptCollapse">
+                                        Response
+                                    </button>
+                                </h5>
+                            </div>
+            
+                            <div id="promptCollapse" class="collapse" aria-labelledby="promptHeading" data-parent="#promptAccordion">
+                                <div class="card-body" id="summaryResult">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+            </main>
+        </div>
+    </div>
+
+
+
+    
+
+    <!-- Footer -->
+    {% include 'footer.html' %} 
+
+
+    <script>
+         // Function to show the loader
+        function showLoader() {
+            document.getElementById("loader").style.display = "block";
+        }
+
+        // Function to hide the loader
+        function hideLoader() {
+            document.getElementById("loader").style.display = "none";
+        }
+        document.getElementById("generateSummary").addEventListener("click", function () {
+            showLoader();
+            // Get input text and prompt
+            const inputText = document.getElementById("inputText").value;
+            const prompt = document.getElementById("prompt").value;
+
+            // Make a POST request to your Flask server to generate the summary
+            fetch('/generate_summary', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `inputText=${encodeURIComponent(inputText)}&prompt=${encodeURIComponent(prompt)}`,
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the generated summary on the web page
+                const summaryResult = document.getElementById("summaryResult");
+                summaryResult.innerHTML = "<h2>Generated Summary:</h2>" + data.summary;
+                hideLoader();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+
+    
+    
+
+      <!-- Add Bootstrap JS and jQuery (required for Bootstrap) -->
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+</body>
+</html>

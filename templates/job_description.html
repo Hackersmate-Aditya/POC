@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+          
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- Add Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Job Description</title>
+
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            {% include 'sidebar.html' %} 
+
+
+            <main class="col-md-9 col-lg-10 offset-md-3 offset-lg-2 px-md-0" id="page-content">
+
+                <!-- <header class="navbar navbar-expand-lg navbar-light mt-0  mr-0">
+                    <h3 class=" header-text   text-white d-flex justify-content-center align-items-center">Job Generation</h3>
+                    <div class="flex-grow-1"></div>
+                </header> -->
+                <div class="container mt-5 mb-5">
+                    <!-- Accordion for Input Text -->
+                    <div class="accordion" id="inputTextAccordion">
+                        <div class="card">
+                            <div class="card-header" id="inputTextHeading">
+                                <h5 class="mb-0">
+                                    <button class="btn col-12" type="button" data-toggle="collapse" data-target="#inputTextCollapse" aria-expanded="true" aria-controls="inputTextCollapse">
+                                        Input Text
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="inputTextCollapse" class="collapse show" aria-labelledby="inputTextHeading" data-parent="#inputTextAccordion">
+                                <div class="card-body">
+                                    <form method="POST" action="/job_generation">                                            
+                                        <!-- <input type="submit" value="Generate Responsibilities"> -->
+            
+                                        <div class="form-group">
+                                            <label for="jd_example">Enter a job description:</label>
+                                            <textarea class="form-control" id="jd_example" name="jd_example" rows="4" required></textarea>
+                                        </div>
+                    
+                                        <div class="form-group">
+                                            <label for="responsibilities_prompt">Enter a prompt:</label>
+                                            <input type="text" class="form-control" id="responsibilities_prompt" name="responsibilities_prompt" required>
+                                        </div>
+                                        <div class="form-group" id="showLoaderBtn">
+                                            <button  type="submit" class="rounded-pill" id="generateSummary"
+                                            data-toggle="collapse"
+                                            data-target="#promptCollapse"
+                                            aria-expanded="true" aria-controls="promptCollapse"
+                                            >Generate </button>
+                                        </div>
+                                    </form>                                           
+                                </div>
+                            </div>
+                            <!-- <h2>Description</h2> -->
+                            <div class="loader" id="loader"></div> 
+                            <p class="text-center">{{ text_response }}</p> 
+                        </div>
+                    </div>        
+                </div>  
+                
+            </main>
+        </div>
+    </div>
+
+
+
+   <!-- Footer -->
+   {% include 'footer.html' %} 
+ 
+   <script>
+    // Function to show the loader
+   function showLoader() {
+       document.getElementById("loader").style.display = "block";
+   }
+
+   // Function to hide the loader
+   function hideLoader() {
+       document.getElementById("loader").style.display = "none";
+   }
+   document.getElementById("generateSummary").addEventListener("click", function () {
+   showLoader(); 
+       // Get input text and prompt
+       const inputText = document.getElementById("inputText").value;
+       const prompt = document.getElementById("prompt").value;
+
+       // Make a POST request to your Flask server to generate the summary
+       fetch('/generate_summary', {
+           method: 'POST',
+           headers: {
+               'Content-Type': 'application/x-www-form-urlencoded',
+           },
+           body: `inputText=${encodeURIComponent(inputText)}&prompt=${encodeURIComponent(prompt)}`,
+       })
+       .then(response => response.json())
+       .then(data => {
+           // Display the generated summary on the web page
+           const summaryResult = document.getElementById("summaryResult");
+           summaryResult.innerHTML = "<h2>Generated Summary:</h2>" + data.summary;
+           hideLoader();
+       })
+       .catch(error => {
+           console.error('Error:', error);
+       });
+   });
+</script>
+<!-- Add Bootstrap JS and jQuery (required for Bootstrap) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>
