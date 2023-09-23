@@ -1,5 +1,5 @@
 body {    
-    background-color: #fff9ed !important;
+    background-color: #2f2f39;
     margin: 0;
     padding: 0;    
 }
@@ -43,8 +43,8 @@ header {
     max-width: 950px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
     border-radius: 5px;
     margin-top: 20px;
     
@@ -55,17 +55,15 @@ form {
 }
 
 label {
-    font-size: 18px;
+    font-size: 16px;
     display: block;
     margin-bottom: 10px;
 }
 
 input[type="text"] {
     width: 100%;
-    padding: 10px 4px;
     font-size: 16px;
     border: 1px solid #ccc;
-    border-radius: 10px;
 }
 
 button {
@@ -77,6 +75,7 @@ button {
     cursor: pointer;
     /* margin-top: 10px; */
     border-radius: 15px;
+
 }
 
 .loading {
@@ -87,11 +86,17 @@ button {
 
 footer {
     width: 100%;
-    background-color: #2f2f39;
     color: #fff;
-    text-align: center;    
     position: fixed;
     bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+    font-size: 12px;
+    font-weight: 300;
+    height: 40px;
 }
 
 div.footer {
@@ -110,7 +115,7 @@ img {
     max-width: 100%;
     height: auto;
     border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); */
 }
 
 .download-button {
@@ -138,7 +143,7 @@ button#download-button {
   }
 
 .dropdown-menu a:hover {
-    background-color: #2f2f39;
+    background-color: #676775;
     color: white;
 }
 .card-header {
@@ -161,7 +166,6 @@ button#download-button {
    
 #sidebar{
     background-color: #2f2f39 !important;
-    /* background-color: #2f2f39 !important; */
     color: #fff;
     height: 100%;
     position: fixed;
@@ -169,6 +173,8 @@ button#download-button {
     left: 0;
     overflow-y: auto;
     padding-top: 20px;
+    z-index: 10;
+    max-width: 250px;
 }
 
 .sidebar ul {
@@ -177,22 +183,27 @@ button#download-button {
 }
 
 .sidebar ul li {
-    padding: 10px;
+    padding: 16px 0;
     
 }
-.sidebar ul li a:hover {        
+.sidebar ul li a:hover:not(.active), .sidebar ul.bottom-nav li a:hover {        
     padding: 8px;
     background-color: #7c7c82;
-    border-radius: 10px;
     margin: -8px;    
-    
+}
+
+.sidebar ul.bottom-nav li a:hover {
+    padding-left: 12px;
+    padding-right: 12px;
 }
 
 .sidebar ul li a {
+    display: block;
     text-decoration: none;
     color: #fff;
-    font-size: 15px;
-
+    font-size: 16px;
+    border-radius: 6px;
+    
 }
 
 /* Add a margin to the content to prevent it from being hidden behind the sidebar */
@@ -205,32 +216,205 @@ button#download-button {
 #sidebar {
 transition: all 0.3s;
 padding-top: 20px;
+overflow: visible;
 }
 
 /* Collapsed sidebar */
 #sidebar.collapsed {
-width: 0px; /* Adjust the width as needed */
-padding: 0px;
+left: -250px;
 
 }
-#sidebar.collapsed #sidebar-toggle {
-position: fixed;
-left: 15px;
-top: 10px;
+
+body:not(.collapsed) .content-wrppr {
+    padding-left: 275px;
+    transition: all ease 300ms;
 }
+
+#sidebar.collapsed #sidebar-toggle {    
+    left: 120%;
+    right: auto;
+    transition: all ease 500ms;
+    z-index: 50;
+}
+
 #sidebar-toggle{
-color: red;
-border: red;
+    color: #ea1b3d;
+    margin-left: auto;
+    font-size: 18px;
+    border: 2px solid #ea1b3d;
+    position: absolute;
+    left: 80%;
+    top: 0;
 }
 
 /* Expanded sidebar */
 #sidebar:not(.collapsed) {
-width: 230px; /* Adjust the width as needed */
+left: 0;
 /* padding: 0px; */
 }
 
+/* === UPDATEd === */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    color: #333;
+}
+
+.pg-container {
+    height: 100%;
+}
+
+.sidebar-on .content-wrppr {
+    /* padding-left: 250px; */
+}
+
+.content-wrppr {
+    width: 100%;
+    height: 100%;
+    padding-bottom: 40px;
+    padding-right: 30px;
+    padding-top: 15px;
+    padding-left: 30px;
+}
+
+.inner-wrppr {
+    background-color: #fff9ed;
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+    padding: 70px 30px 150px;
+    position: relative;
+}
+
+#imageResult {
+    text-align: center;
+    width: 100%;
+    height: auto;
+}
+
+.prompt-box {
+    position: absolute;
+    right: 0;
+    bottom: 25px;
+    left: 0;
+    z-index: 5  ;
+    margin: 0 25px;
+}
+
+.prompt {
+    border-radius: 50px;
+    height: 50px;
+    padding-left: 20px;
+}
+
+.prompt-container {
+    display: flex;   
+}
+
+.prompt-container .btn {
+    margin-left: 10px;
+    border-radius: 50px;
+    width: 50px;
+}
+
+.sidebar-icn {
+    width: 22px;
+    margin-right: 7px;
+    vertical-align: text-bottom;
+}
+
+.logo {
+    width: 125px;
+    height: auto;
+}
+
+.navbar-brand {
+    width: 100%;
+    display: flex;
+    height: 52px;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+#sidebar-toggle:focus {
+    box-shadow: none;
+}
+
+.position-sticky {
+    position: -webkit-sticky!important;
+    display: flex;
+    flex-flow: column nowrap;
+    height: 100%;
+}
+
+.bottom-nav {
+    margin-top: auto;
+}
+
+.bottom-nav .nav-link.active {
+    background-color: transparent;
+}
+
+.welcome-note {
+    position: absolute;
+    bottom: 180px;
+    max-width: 1000px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 18px;
+}
+
+.welcome-note h1 {
+    font-weight: 600;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.welcome-note ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.welcome-note ul li {
+    padding: 10px 0;
+}
+
+.welcome-note ul li svg {
+    width: 16px;
+    margin-right: 5px;
+    margin-top: -3px;
+}
 
 
+.header-button{
+    background-color: #676775;
+    color: #ffffff;
+    text-align: left;
+    font-size: 18px;
+    border-radius: 0;
+}
 
-
-
+.Generate-button{
+    margin-top: 14px;
+    background-color: #ea1b3d;    
+}
+.response-accordion{
+    background-color: #e6e6ed;
+    color: #2f2f39;
+    text-align: left;
+    font-size: 18px;
+    border-radius: 0;
+}
