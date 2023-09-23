@@ -177,7 +177,7 @@ def transcribe_and_analyze_sentiment(audio_file):
         transcript = openai.Audio.translate("whisper-1", audio_file)
 
     input_text = str(transcript)
-    prompt = f"Determine the sentiment of the following text whether it is positive, negative, or neutral along with sentiment score: '{input_text}'"
+    prompt = f"Determine the sentiment of the following text whether it is positive, negative, or neutral: '{input_text}'"
 
     response = openai.Completion.create(
         engine="text-davinci-003",  # Use the GPT-3.5-turbo engine
