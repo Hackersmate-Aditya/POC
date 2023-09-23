@@ -3,58 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/style.css">
-          
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    
-    <!-- Add Font Awesome CDN for icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">          
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">       
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>Job Description</title>
 
 </head>
-<body>
-
-    <div class="container-fluid">
+<body id="body" class="sidebar-on">    
+    <div class="pg-container">
         <div class="row">
             {% include 'sidebar.html' %} 
-
-
-            <main class="col-md-9 col-lg-10 offset-md-3 offset-lg-2 px-md-0" id="page-content">
-
-                <!-- <header class="navbar navbar-expand-lg navbar-light mt-0  mr-0">
-                    <h3 class=" header-text   text-white d-flex justify-content-center align-items-center">Job Generation</h3>
-                    <div class="flex-grow-1"></div>
-                </header> -->
-                <div class="container mt-5 mb-5">
+            <main class="content-wrppr" id="page-content">
+                <div class="inner-wrppr" style="    padding-bottom: 160px;
+                padding-top: 80px;">
                     <!-- Accordion for Input Text -->
                     <div class="accordion" id="inputTextAccordion">
                         <div class="card">
                             <div class="card-header" id="inputTextHeading">
                                 <h5 class="mb-0">
-                                    <button class="btn col-12" type="button" data-toggle="collapse" data-target="#inputTextCollapse" aria-expanded="true" aria-controls="inputTextCollapse">
-                                        Input Text
+                                    <button class="btn col-12 header-button" type="button" data-toggle="collapse" data-target="#inputTextCollapse" aria-expanded="true" aria-controls="inputTextCollapse">
+                                        Job Description
                                     </button>
                                 </h5>
                             </div>
                             <div id="inputTextCollapse" class="collapse show" aria-labelledby="inputTextHeading" data-parent="#inputTextAccordion">
                                 <div class="card-body">
-                                    <form method="POST" action="/job_generation">                                            
-                                        <!-- <input type="submit" value="Generate Responsibilities"> -->
-            
+                                    <form method="POST" action="/job_generation">                                                                                               
                                         <div class="form-group">
-                                            <label for="jd_example">Enter a job description:</label>
-                                            <textarea class="form-control" id="jd_example" name="jd_example" rows="4" required></textarea>
+                                            <label for="jd_example" style="text-align: left;">Enter a job description:</label>
+                                            <textarea class="form-control" id="jd_example" name="jd_example" rows="6" cols="50" required></textarea>
                                         </div>
                     
                                         <div class="form-group">
-                                            <label for="responsibilities_prompt">Enter a prompt:</label>
+                                            <label for="responsibilities_prompt" style="text-align: left;">Enter a prompt:</label>
                                             <input type="text" class="form-control" id="responsibilities_prompt" name="responsibilities_prompt" required>
                                         </div>
                                         <div class="form-group" id="showLoaderBtn">
-                                            <button  type="submit" class="rounded-pill" id="generateSummary"
+                                            <button  type="submit" class="rounded-pill Generate-button" id="generateSummary"
                                             data-toggle="collapse"
                                             data-target="#promptCollapse"
                                             aria-expanded="true" aria-controls="promptCollapse"
+                                            style="display: flex;float:left"
                                             >Generate </button>
                                         </div>
                                     </form>                                           

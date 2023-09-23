@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Add Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Audio Sentiment Analysis</title>
+    <style>
+        .custom-file-input:lang(en)~.custom-file-label::after {
+            content: "";
+            display: none;
+        }
+
+        .custom-file-label {
+            border-radius: 15px !important;
+        }
+
+        .main-container {
+            /* margin-top: 100px !important;
+            margin-bottom: 50px !important; */
+
+        }
+    </style>
+</head>
+
+<body id="body" class="sidebar-on">    
+    <div class="pg-container">
+        <div class="row">
+            {% include 'sidebar.html' %} 
+            <main class="content-wrppr" id="page-content">
+                <div class="inner-wrppr" style="    padding-bottom: 50px;
+                padding-top: 50px;">
+                    <div class="accordion mt-3" id="inputTextAccordion">
+                        <div class="card">
+                            <div class="card-header" id="inputTextHeading">
+                                <h5 class="mb-0">
+                                    <button class="btn col-12 header-button" type="button" data-toggle="collapse" data-target="#inputTextCollapse" aria-expanded="true" aria-controls="inputTextCollapse">
+                                        Generate Transcript
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="inputTextAccordion" class="collapse show" aria-labelledby="inputTextHeading" data-parent="#inputTextAccordion">
+                                    <form action="/audio_sentiment" method="post" enctype="multipart/form-data" class="m-2">
+                                        <!-- <div class="form-group mt-2 text-right">
+                                            <button type="submit" class="btn btn-dark rounded-pill" id="generateTranscript">
+                                                Process
+                                            </button>
+                                        </div> -->
+                                        <div class="form-group input-text">
+                                            <!-- <div class="input-group">
+                                                <input type="text" name="directory_path" id="directory_path" required
+                                                    placeholder="Enter the directory path where the audio files are located"
+                                                    class="form-control" id="text" name="text">
+                                            </div> -->
+                                            <!-- <div class="input-group">
+                                                <div class="custom-file ">
+                                                    <input type="file" class="custom-file-input" id="audioFile" name="audio[]"
+                                                        accept=".mp3, .wav" style="display: none;" multiple>
+                                                    <label class="custom-file-label" style="    width: 50%;
+                                                        margin-left: 350px; " for="audioFile">Choose an audio file (MP3 or WAV)</label>
+
+                                                    <div class="input-group-append">
+                                                        <button type="submit" id="generateTranscript" class="btn btn-dark" style="border-top-right-radius: 15px;  top: 0.9px; margin-left: 945px !important;;
+                                                            border-bottom-right-radius: 15px;">
+                                                            <i class="fa fa-upload"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+
+                                            <div  class="card" style="border: 0;">
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <div class="custom-file" style="margin-bottom: 18%;">
+                                                            <input type="file" id="audioFile" name="audio[]" accept=".mp3, .wav" style="display: none" multiple>
+                                                            <label for="audioFile"><img style="max-width: 18%;cursor: pointer;" src="../static/upload-svgrepo-com.svg"></img></label>
+                                                            <label for="audioFile">Upload audio files (MP3 or WAV)</label>
+                                                        </div>
+
+                                                        <button type="submit"  class="btn btn-dark rounded-pill Generate-button" id="generateTranscript" >Upload</button>
+                                                        {% if not results %}
+                                                        <p id="fileCount" class="mt-2">No files selected</p>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>        
+                                            </div>
+                                    </form>
+                            </div>
+                            
+                        </div>
+   
+                        <!-- </div> -->
+                    </div>
+                </div>
+
+                <!-- <div class="container mt-2 mb-5"> -->
+                    <div class="accordion mt-3" id="promptAccordion">
+                        <div class="card">
+                            <div class="card-header" id="promptHeading">
+                                <h5 class="mb-0">
+                                    <button class="btn col-12 response-accordion" type="button" data-toggle="collapse" data-target="#promptCollapse" aria-expanded="true" aria-controls="promptCollapse">
+                                        Response
+                                    </button>
+                                </h5>
+                            </div>
+            
+                            <div id="promptCollapse" class="collapse show" aria-labelledby="promptHeading" data-parent="#promptAccordion">
+                                <div class="card-body" id="summaryResult">
+                                    <!-- Main Content -->
+                                    <main class="col-md-12 col-lg-12" id="page-content">
+                                        <div id="selectedFileName"></div>
+                                        <div class="mt-2 main-container">
+                                            <!-- Display results if available -->
+                                            {% if results %}
+                                            {% for result in results %}
+                                            <div class="container mb-1">
+                                                <strong>Audio File:</strong> {{ result.audio_file }}<br>
+                                                <strong>Predicted Sentiment:</strong> {{ result.sentiment }}<br>
+                                                <div class="accordion" id="inputTextAccordion{{ loop.index  }}">
+                                                    <div class="card">
+                                                        <div class="card-header" id="inputTextHeading{{ loop.index }}">
+                                                            <h5 class="mb-0">
+                                                                <button class="btn btn-link col-12 response-accordion" type="button" data-toggle="collapse"
+                                                                    data-target="#inputTextCollapse{{ loop.index  }}" aria-expanded="true"
+                                                                    aria-controls="inputTextCollapse{{ loop.index  }}">
+                                                                    Transcript
+                                                                </button>
+                                                            </h5>
+                                                        </div>
+                                                        <div id="inputTextCollapse{{ loop.index  }}" class="collapse"
+                                                            aria-labelledby="inputTextHeading{{ loop.index  }}"
+                                                            data-parent="#inputTextAccordion{{ loop.index  }}">
+                                                            <div class="card-body">
+                                                                {{ result.transcript.text }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                            {% endif %}
+                                    
+                                        <div class="loader mt-5" id="loader"></div>
+                                    </main>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <!-- </div> -->
+            </main>
+    </div>
+    </div>
+    <!-- Footer -->
+    {% include 'footer.html' %}
+    <script>
+        document.getElementById("generateTranscript").addEventListener("click", function () {
+            showLoader();
+        });
+
+        if (results) {
+            hideLoader();
+        }
+
+        function showLoader() {
+            // Function to show the loader
+            document.getElementById("loader").style.display = "block";
+        }
+
+        // Function to hide the loader
+        function hideLoader() {
+            document.getElementById("loader").style.display = "none";
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Your code here, including the addEventListener
+            const fileInput = document.getElementById('audioFile');
+            const fileCountParagraph = document.getElementById('fileCount');
+
+            fileInput.addEventListener('change', function () {
+                const selectedFiles = fileInput.files;
+
+                if (selectedFiles.length > 0) {
+                    fileCountParagraph.textContent = `Selected ${selectedFiles.length} file(s)`;
+                } else {
+                    fileCountParagraph.textContent = 'No files selected';
+                }
+            });
+        });
+
+    </script>
+
+    <!-- Add Bootstrap JS and jQuery (required for Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

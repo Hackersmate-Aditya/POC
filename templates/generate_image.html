@@ -3,43 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/style.css">
-          
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">          
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">    
     <!-- Add Font Awesome CDN for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <title>DALL-E Image Generation</title>
+    <title>DHL Image Generation</title>
 </head>
-<body>    
-
-    <div class="container-fluid">
-        <div class="row">
-            <!-- <div class="col"></div> -->
+<body id="body" class="sidebar-on">    
+    <div class="pg-container">
             {% include 'sidebar.html' %} 
-            <main class="col-md-9 col-lg-10 offset-md-3 offset-lg-2 px-md-0" id="page-content">
-                
 
-                <!-- <header class="navbar navbar-expand-lg navbar-light mt-0  mr-0">
-                    <h3 class=" header-text   text-white d-flex justify-content-center align-items-center">Image Generation</h3>
-                    <div class="flex-grow-1"></div>
-                </header> -->
-
-                <div class=" mt-8 ">
-                    <div id="imageResult" class="mt-2 mb-5 text-center">                        
+            <main class="content-wrppr" id="page-content">
+                <div class="inner-wrppr">
+                    <div id="imageResult">
                     </div>
-                    <form action="/generate_image" method="post" class="fixed-bottom m-5">                       
-                        <div class="form-group input-text">
-                             <div class="input-group">
-                                <input type="text" placeholder="Generate an image based on your text input" class="form-control" id="text" name="text">
-                                <div class="input-group-append">
-                                <button type="submit" id="generateImage" class="btn btn-dark" style="border-top-right-radius: 15px;
-                                border-bottom-right-radius: 15px;">
-                                <i class="far fa-paper-plane"></i>
-                                </button>
-                            </div> 
-                             </div>
-                             </div>
+
+                    <div class="welcome-note" id="welcomeNote">
+                        <h1>Gen AI Alchemy : Crafting Images, Summaries, Sentiments, and More...</h1>
+                        <!-- <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        </p> -->
+                        <ul>
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  </svg>                                  
+                                  Instantly create visual images from text descriptions.
+                            </li>
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  </svg>                                  
+                                  Summarize lengthy documents or articles into concise text 
+                            </li>
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  </svg>
+                                  
+                                  Analyze audio files to determine emotional sentiment.
+                            </li>
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  </svg>
+                                  
+                                  Generate summaries of financial reports and data.
+                            </li>
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  </svg>
+                                  
+                                  Quickly extract key points from legal contracts and agreements.
+                            </li>
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  </svg>
+                                  
+                                  Transcribe audio or video content into text format.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <form action="/generate_image" method="post" class="prompt-box">
+                        <!-- <div class="form-group text-right">
+                            <button type="submit" class="btn btn-dark rounded-pill" id="generateImage"><i class="fas fa-refresh"></i> Regenerate</button>
+                        </div> -->
+                        <div class="prompt-container">
+                            <input type="text" placeholder="Generate an image based on your text input" class="form-control prompt" id="text" name="text" autocomplete="off">
+                            <div class="input-group-append">
+                                    <button type="submit" id="generateImage" class="btn btn-dark">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                                          </svg>                                          
+                                    </button>
+                            </div>
+                        </div>
                         <!-- <div class="form-group input-text">
                             <input type="text" placeholder="Generate an image based on your text input" class="form-control" id="text" name="text">
                         </div> -->
@@ -47,31 +91,13 @@
                     <div class="loader" id="loader"></div>                    
                 </div>
             </main>
-        </div>
     </div>
 
     
 
 
 
-    <!-- <h1>Image Generation</h1> -->
-
-    <!-- <form action="/generate_image" method="post"> 
-        <div>
-            <label for="text">Enter a text description:</label><br>
-            <input type="text" id="text" name="text">
-        </div>
-
-        <div>
-            <button type="submit" id="generateImage">Generate Image</button> 
-        </div>
-    </form>
-
-        <div id="imageResult">
-    </div> -->
-
-
-     <!-- Main Content -->
+    
      
 
 
@@ -90,6 +116,7 @@
             document.getElementById("loader").style.display = "none";
         }
         document.getElementById("generateImage").addEventListener("click", function (e) {
+            document.getElementById("welcomeNote").style.display = "none";
             showLoader();
             e.preventDefault(); // Prevent the default form submission
 
@@ -107,8 +134,7 @@
                 body: `text=${encodeURIComponent(text)}`,
             })
             .then(response => response.json())
-            .then(data => {
-                
+            .then(data => {                
                 // Display the generated image on the web page
                 const imageResult = document.getElementById("imageResult");
                 imageResult.innerHTML = `<img src="${data.image_url}" alt="Generated Image">`;

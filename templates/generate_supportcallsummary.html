@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
       
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -11,27 +14,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>Support Call Summary Generation</title>
 
-</head>
-<body>    
-    <div class="container-fluid">
-        <div class="row">
-            {% include 'sidebar.html' %} 
-
-            <main class="col-md-9 col-lg-10 offset-md-3 offset-lg-2 px-md-0" id="page-content">
-
-                <!-- <header class="navbar navbar-expand-lg navbar-light mt-0  mr-0">
-                    <h3 class=" header-text   text-white d-flex justify-content-center align-items-center">Support Call Summary Generation</h3>
-                    <div class="flex-grow-1"></div>
-                </header> -->
-
-                <div class="container mt-5 mb-5">
+</head>    
+    <body id="body" class="sidebar-on">    
+        <div class="pg-container">
+            <div class="row">
+                {% include 'sidebar.html' %} 
+                <main class="content-wrppr" id="page-content">
+                    <div class="inner-wrppr">
                     <!-- Accordion for Input Text -->
                     <div class="accordion" id="inputTextAccordion">
                         <div class="card">
                             <div class="card-header" id="inputTextHeading">
                                 <h5 class="mb-0">
-                                    <button class="btn col-12" type="button" data-toggle="collapse" data-target="#inputTextCollapse" aria-expanded="true" aria-controls="inputTextCollapse">
-                                        Input Text
+                                    <button class="btn col-12 header-button" type="button" data-toggle="collapse" data-target="#inputTextCollapse" aria-expanded="true" aria-controls="inputTextCollapse">
+                                        Financial Summary
                                     </button>
                                 </h5>
                             </div>
@@ -47,7 +43,7 @@
                                         <input type="text" class="form-control" id="prompt" size="50">
                                     </div>
                                     <div class="form-group">
-                                        <button class="rounded-pill" id="generateSummary"
+                                        <button class="rounded-pill Generate-button" id="generateSummary"
                                         data-toggle="collapse"
                                         data-target="#promptCollapse"
                                         aria-expanded="true" aria-controls="promptCollapse"
@@ -59,11 +55,11 @@
                     </div>
                     <div class="loader" id="loader"></div>
                     <!-- Accordion for Prompt -->
-                    <div class="accordion mt-3" id="promptAccordion">
+                    <div style="display: none;" class="accordion show mt-3" id="promptAccordion">
                         <div class="card">
                             <div class="card-header" id="promptHeading">
                                 <h5 class="mb-0">
-                                    <button class="btn col-12 " type="button" data-toggle="collapse" data-target="#promptCollapse" aria-expanded="true" aria-controls="promptCollapse">
+                                    <button class="btn col-12 response-accordion" type="button" data-toggle="collapse" data-target="#promptCollapse" aria-expanded="true" aria-controls="promptCollapse">
                                         Response
                                     </button>
                                 </h5>
@@ -116,10 +112,14 @@
             })
             .then(response => response.json())
             .then(data => {
-                hideLoader();
+                
                 // Display the generated summary on the web page
                 const summaryResult = document.getElementById("summaryResult");
-                summaryResult.innerHTML = "<h2>Generated Summary:</h2>" + data.summary;
+                // summaryResult.innerHTML = "<h2>Generated Summary:</h2>" + data.summary;
+                summaryResult.innerHTML = data.summary;
+                const promptAccordion = document.getElementById("promptAccordion");
+                document.getElementById('promptAccordion').style.display = 'block';
+                hideLoader();
             })
             .catch(error => {
                 console.error('Error:', error);
