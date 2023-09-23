@@ -4,3 +4,5 @@ openai
 google-cloud-aiplatform
 vertexai
 pydub
+PyMuPDF
+BytesIO

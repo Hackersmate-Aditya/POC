@@ -5,9 +5,14 @@ import openai
 from pathlib import Path
 import tempfile
 from pydub import AudioSegment
+import fitz
+from werkzeug.utils import secure_filename
+from io import BytesIO
 
 load_dotenv()
 app = Flask(__name__)
+
+app.config['UPLOAD_FOLDER'] = 'Files'
 
 # Set your OpenAI API key here
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -153,6 +158,147 @@ def job_generation():
         cost = response_json['usage']['total_tokens'] * davinci_cost / 1000
 
     return render_template("job_description.html", text_response=text_response, cost=cost,current_url = request.path)
+
+# Function to transcribe audio and predict sentiment
+def transcribe_and_analyze_sentiment(audio_file):
+    # Save the uploaded audio file to a temporary directory
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as temp_audio_file:
+        audio_file.save(temp_audio_file)
+        temp_audio_path = temp_audio_file.name
+
+    # Convert audio to WAV format if it's not already in WAV
+    if not temp_audio_path.endswith(".wav"):
+        wav_path = os.path.splitext(temp_audio_path)[0] + ".wav"
+        audio = AudioSegment.from_file(temp_audio_path)
+        audio.export(wav_path, format="wav")
+        temp_audio_path = wav_path
+
+    with open(temp_audio_path, "rb") as audio_file:
+        transcript = openai.Audio.translate("whisper-1", audio_file)
+
+    input_text = str(transcript)
+    prompt = f"Determine the sentiment of the following text whether it is positive, negative, or neutral along with sentiment score: '{input_text}'"
+
+    response = openai.Completion.create(
+        engine="text-davinci-003",  # Use the GPT-3.5-turbo engine
+        prompt=prompt,
+        max_tokens=1000,
+        temperature=0,
+        top_p=1
+    )
+
+    sentiment_label = response.choices[0].text.strip()
+
+    # Clean up temporary file after processing
+    os.remove(temp_audio_path)
+
+    return transcript, sentiment_label
+
+# Route for audio sentiment analysis
+@app.route("/audio_sentiment", methods=["GET", "POST"])
+def audio_sentiment_analysis():
+    transcripts_and_sentiments = []
+
+    if request.method == "POST":
+        audio_files = request.files.getlist("audio[]")
+
+        for audio_file in audio_files:
+            if audio_file:
+                audio_file_name = audio_file.filename
+                transcript, sentiment = transcribe_and_analyze_sentiment(audio_file)
+                transcripts_and_sentiments.append({
+                    "audio_file": audio_file_name,
+                    "transcript": transcript,
+                    "sentiment": sentiment
+                })
+    return render_template("audio_sentimetnt.html", results=transcripts_and_sentiments, current_url = request.path)    
+
+# Function to check if the uploaded file has a valid extension
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() == 'pdf'
+
+
+@app.route("/contract_sum", methods=["GET", "POST"])
+def contractSummary():
+    if request.method == "POST":
+        file = request.files['inputFile']
+        questions = request.form['prompt']
+
+        if file and allowed_file(file.filename):
+            # Open the PDF file
+            pdf_bytes = file.read()
+            pdf_stream = BytesIO(pdf_bytes)
+            doc = fitz.open(stream=pdf_stream, filetype="pdf")
+
+            # Generate summaries for each page and store in a list of tuples (page_number, summary)
+            summary_list = []
+            for page_number, page in enumerate(doc, 1):
+                text = page.get_text("text")
+                prompt = text[:3000] + "\nTl;dr:"  # Limiting the prompt to 3000 tokens
+
+                # Generate a summary for the current content
+                response = openai.Completion.create(
+                    model="text-davinci-003",
+                    prompt=prompt,
+                    temperature=0.7,
+                    max_tokens=3000,  # Reduced max_tokens
+                    top_p=0.9,
+                    frequency_penalty=0.0,
+                    presence_penalty=1
+                )
+
+                summary_list.append((page_number, response["choices"][0]["text"]))
+
+            # Generate a final summary for all pages
+            combined_summary = ' '.join([summary for _, summary in summary_list])
+
+            overview_summary = '\n'.join([summary for _, summary in summary_list])  # Overview Summary
+
+            final_prompt = combined_summary[:3000] + "\nTl;dr:"  # Limiting the final prompt to 3000 tokens
+            response = openai.Completion.create(
+                model="text-davinci-003",
+                prompt=final_prompt,
+                temperature=0.7,
+                max_tokens=3000,  # Reduced max_tokens
+                top_p=0.9,
+                frequency_penalty=0.0,
+                presence_penalty=1
+            )
+            final_summary = response["choices"][0]["text"]
+
+            # Extract all text from the PDF
+            pdf_text = '\n'.join([page.get_text("text") for page in doc])
+
+            # Split user's questions into a list
+            user_questions = questions.strip().split('\n')
+
+            # Generate answers for each question using the final summary
+            answers = []
+            for user_question in user_questions:
+                question = user_question.strip()
+                prompt = f"Question: {question}\nContext: {final_summary}\nAnswer:"
+
+                # Generate an answer using OpenAI
+                response = openai.Completion.create(
+                    model="text-davinci-003",
+                    prompt=prompt,
+                    temperature=0.7,
+                    max_tokens=150,  # Adjust max_tokens as needed
+                    top_p=1,
+                    frequency_penalty=0.0,
+                    presence_penalty=0.0
+                )
+
+                answer = response["choices"][0]["text"].strip()
+                answers.append((question, answer))
+
+            # Pass summary_list, final_summary, and answers to the template
+            return render_template('generate_contract.html', summary_list=None, final_summary=final_summary, overview_summary=overview_summary, answers=answers)
+        else:
+            return jsonify({'error': 'Invalid file format'})
+
+    return render_template('generate_contract.html', summary_list=None, final_summary=None, answers=None)
+
 
 
 if __name__ == '__main__':
