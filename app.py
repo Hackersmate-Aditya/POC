@@ -297,7 +297,7 @@ def contractSummary():
         else:
             return jsonify({'error': 'Invalid file format'})
 
-    return render_template('generate_contract.html', summary_list=None, final_summary=None, answers=None)
+    return render_template('generate_contract.html', summary_list=None, final_summary=None, answers=None,current_url = request.path)
 
 
 
