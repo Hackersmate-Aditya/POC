@@ -51,15 +51,20 @@ def generate_summary():
     prompt = request.form['prompt']
 
     # Make a request to the OpenAI API to generate the summary
+    # Make a request to the OpenAI API to generate the summary
     response = openai.Completion.create(
-        engine='text-davinci-003',  # Set the appropriate engine
-        prompt=f"Please summarize the following text:\n{input_text}\n\nPrompt: {prompt}",
-        max_tokens=150  # Adjust the max_tokens as needed
-    )
-
+            engine='text-davinci-003',  # Set the appropriate engine
+            prompt=f"Please summarize the following text:\n{input_text}\n\nPrompt: {prompt}",
+            max_tokens=150  # Adjust the max_tokens as needed
+        )
     summary = response.choices[0].text.strip()
-    #return render_template('generate_summary.html', summary=summary)
-    return jsonify({'summary': summary})
+    
+    # Check if input text or prompt is empty or null
+    if not input_text or not prompt:
+        return jsonify({'error': 'No response generated. Please enter a text description and a prompt, and then click the button.'})
+    else:
+        #return render_template('generate_summary.html', summary=summary)
+        return jsonify({'summary': summary})
 
 
 @app.route('/supportcall_summary_generation', methods=['GET', 'POST'])
@@ -177,7 +182,7 @@ def transcribe_and_analyze_sentiment(audio_file):
         transcript = openai.Audio.translate("whisper-1", audio_file)
 
     input_text = str(transcript)
-    prompt = f"Determine the sentiment of the following text whether it is positive, negative, or neutral: '{input_text}'"
+    prompt = f"Determine the sentiment of the following text whether it is positive, negative, or neutral along with sentiment score: '{input_text}'"
 
     response = openai.Completion.create(
         engine="text-davinci-003",  # Use the GPT-3.5-turbo engine
