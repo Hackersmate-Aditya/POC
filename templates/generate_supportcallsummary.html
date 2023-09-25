@@ -17,7 +17,6 @@
 </head>    
     <body id="body" class="sidebar-on">    
         <div class="pg-container">
-            <div class="row">
                 {% include 'sidebar.html' %} 
                 <main class="content-wrppr" id="page-content">
                     <div class="inner-wrppr">
@@ -35,20 +34,31 @@
                             <div id="inputTextCollapse" class="collapse show" aria-labelledby="inputTextHeading" data-parent="#inputTextAccordion">
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="inputText">Enter a text description:</label>
+                                        <label for="inputText">Enter a text description</label>
                                         <textarea class="form-control" id="inputText" rows="6" cols="50"></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label for="prompt">Enter a prompt:</label>
-                                        <input type="text" class="form-control" id="prompt" size="50">
+                                        <label for="prompt">Enter a prompt</label>
+                                        <div class="prompt-container">
+                                            <input type="text" class="form-control prompt" id="prompt" size="50">
+                                            <div class="input-group-append">
+                                                <button type="submit" id="generateSummary" class="btn btn-dark Generate-button" data-toggle="collapse"
+                                                data-target="#promptCollapse"
+                                                aria-expanded="true" aria-controls="promptCollapse">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                                                    </svg>                                          
+                                                </button>
+                                        </div>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <button class="rounded-pill Generate-button" id="generateSummary"
                                         data-toggle="collapse"
                                         data-target="#promptCollapse"
                                         aria-expanded="true" aria-controls="promptCollapse"
                                         >Generate </button>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -60,7 +70,7 @@
                             <div class="card-header" id="promptHeading">
                                 <h5 class="mb-0">
                                     <button class="btn col-12 response-accordion" type="button" data-toggle="collapse" data-target="#promptCollapse" aria-expanded="true" aria-controls="promptCollapse">
-                                        Response
+                                        <i class='far fa-file-alt'></i> Response
                                     </button>
                                 </h5>
                             </div>
@@ -72,9 +82,9 @@
                         </div>
                     </div>
                 </div>
-                
+                <!-- Footer -->
+                {% include 'footer.html' %}                
             </main>
-        </div>
     </div>
 
 
@@ -82,8 +92,7 @@
     
 
 
-    <!-- Footer -->
-    {% include 'footer.html' %} 
+ 
 
         
 

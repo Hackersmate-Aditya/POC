@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Add Font Awesome CDN for icons -->
@@ -29,12 +31,10 @@
 
 <body id="body" class="sidebar-on">    
     <div class="pg-container">
-        <div class="row">
             {% include 'sidebar.html' %} 
             <main class="content-wrppr" id="page-content">
-                <div class="inner-wrppr" style="    padding-bottom: 50px;
-                padding-top: 50px;">
-                    <div class="accordion mt-3" id="inputTextAccordion">
+                <div class="inner-wrppr">
+                    <div class="accordion" id="inputTextAccordion">
                         <div class="card">
                             <div class="card-header" id="inputTextHeading">
                                 <h5 class="mb-0">
@@ -44,13 +44,13 @@
                                 </h5>
                             </div>
                             <div id="inputTextAccordion" class="collapse show" aria-labelledby="inputTextHeading" data-parent="#inputTextAccordion">
-                                    <form action="/audio_sentiment" method="post" enctype="multipart/form-data" class="m-2">
+                                    <form action="/audio_sentiment" method="post" enctype="multipart/form-data">
                                         <!-- <div class="form-group mt-2 text-right">
                                             <button type="submit" class="btn btn-dark rounded-pill" id="generateTranscript">
                                                 Process
                                             </button>
                                         </div> -->
-                                        <div class="form-group input-text">
+                                        <div class="form-group input-text mb-0">
                                             <!-- <div class="input-group">
                                                 <input type="text" name="directory_path" id="directory_path" required
                                                     placeholder="Enter the directory path where the audio files are located"
@@ -74,19 +74,26 @@
 
                                             <div  class="card" style="border: 0;">
                                                 <div class="card-body">
-                                                    <div class="form-group">
-                                                        <div class="custom-file" style="margin-bottom: 18%;">
+                                                    <div class="form-group select-file-container">
+                                                        <div class="custom-file">
                                                             <input type="file" id="audioFile" name="audio[]" accept=".mp3, .wav" style="display: none" multiple>
-                                                            <label for="audioFile"><img style="max-width: 18%;cursor: pointer;" src="../static/upload-svgrepo-com.svg"></img></label>
-                                                            <label for="audioFile">Upload audio files (MP3 or WAV)</label>
-                                                        </div>
-
-                                                        <button type="submit"  class="btn btn-dark rounded-pill Generate-button" id="generateTranscript" >Upload</button>
-                                                        {% if not results %}
-                                                        <p id="fileCount" class="mt-2">No files selected</p>
-                                                        {% endif %}
+                                                            <label for="audioFile"><img class="upload-img" src="../static/upload-svgrepo-com.svg"></img></label>
+                                                            <label for="audioFile">Select audio file(s) (MP3 or WAV)</label>
+                                                            {% if not results %}
+                                                            <p id="fileCount" class="mt-2">No files selected</p>
+                                                            {% endif %}
+                                                        </div>                                                        
+                                                    </div>
+                                                    <div class="upload-file-container prompt-container">
+                                                        <!-- <button type="submit"  class="btn btn-dark rounded-pill Generate-button" id="generateTranscript" >Upload</button> -->
+                                                        <button type="submit" id="generateTranscript" class="btn btn-dark Generate-button">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                                                            </svg>                                          
+                                                        </button>                                                        
                                                     </div>
                                                 </div>        
+                                            </div>
                                             </div>
                                     </form>
                             </div>
@@ -95,7 +102,7 @@
    
                         <!-- </div> -->
                     </div>
-                </div>
+
 
                 <!-- <div class="container mt-2 mb-5"> -->
                     <div class="accordion mt-3" id="promptAccordion">
@@ -103,7 +110,7 @@
                             <div class="card-header" id="promptHeading">
                                 <h5 class="mb-0">
                                     <button class="btn col-12 response-accordion" type="button" data-toggle="collapse" data-target="#promptCollapse" aria-expanded="true" aria-controls="promptCollapse">
-                                        Response
+                                        <i class='far fa-file-alt'></i> Response
                                     </button>
                                 </h5>
                             </div>
@@ -122,7 +129,7 @@
                                                 <strong>Predicted Sentiment:</strong> {{ result.sentiment }}<br>
                                                 <div class="accordion" id="inputTextAccordion{{ loop.index  }}">
                                                     <div class="card">
-                                                        <div class="card-header" id="inputTextHeading{{ loop.index }}">
+                                                        <div class="card-header pl-0" id="inputTextHeading{{ loop.index }}">
                                                             <h5 class="mb-0">
                                                                 <button class="btn btn-link col-12 response-accordion" type="button" data-toggle="collapse"
                                                                     data-target="#inputTextCollapse{{ loop.index  }}" aria-expanded="true"
@@ -144,18 +151,20 @@
                                             {% endfor %}
                                             {% endif %}
                                     
-                                        <div class="loader mt-5" id="loader"></div>
+                                        
                                     </main>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="loader mt-5" id="loader"></div>
                 <!-- </div> -->
+                </div>                
+                <!-- Footer -->
+                {% include 'footer.html' %}
             </main>
     </div>
-    </div>
-    <!-- Footer -->
-    {% include 'footer.html' %}
+
     <script>
         document.getElementById("generateTranscript").addEventListener("click", function () {
             showLoader();

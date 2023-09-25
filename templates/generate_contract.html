@@ -15,12 +15,11 @@
 </head>
 <body id="body" class="sidebar-on">    
     <div class="pg-container">
-        <div class="row">
+
             {% include 'sidebar.html' %} 
             <main class="content-wrppr" id="page-content">
-                <div class="inner-wrppr" style="    padding-bottom:30px;
-                padding-top: 50px;">
-                    <div class="accordion mt-3" id="inputTextAccordion">
+                <div class="inner-wrppr">
+                    <div class="accordion" id="inputTextAccordion">
                         <div class="card">
                             <div class="card-header" id="inputTextHeading">
                                 <h5 class="mb-0">
@@ -32,15 +31,24 @@
                             <div id="inputTextAccordion" class="collapse show" aria-labelledby="inputTextHeading" data-parent="#inputTextAccordion">
                                 <div class="card-body">
                                     <form action="/contract_sum" method="post" enctype="multipart/form-data">
-                                    <div class="form-group">
-                                        <div class="custom-file" style="margin-bottom: 18%;">
+                                    <div class="form-group select-file-container">
+                                        <div class="custom-file">
                                             <input type="file" id="audioFile" name="inputFile" accept=".pdf" style="display: none">
-                                            <label for="audioFile"><img style="max-width: 18%;cursor: pointer;" src="../static/upload-svgrepo-com.svg"></img></label>
-                                            <label for="audioFile">Upload File</label>
+                                            <label for="audioFile"><img class="upload-img" src="../static/upload-svgrepo-com.svg"></img></label>
+                                            <label for="audioFile">Select File (PDF)</label>
                                             <div id="selectedFileName"></div>
-                                            <textarea class="form-control" name="prompt" placeholder="Enter your questions (one question per line)"></textarea>
                                         </div>
-                                        <button type="submit" class="btn btn-dark rounded-pill Generate-button" id="summaryForm" >Generate</button>
+                                        <!-- <button type="submit" class="btn btn-dark rounded-pill Generate-button" id="summaryForm" >Generate</button> -->
+                                    </div>
+                                    <div class="prompt-container">
+                                        <textarea class="form-control prompt contract-textarea" name="prompt" placeholder="Enter a prompt"></textarea>
+                                        <div class="input-group-append">
+                                                <button type="submit" id="summaryForm" class="btn btn-dark Generate-button">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                                                    </svg>                                          
+                                                </button>
+                                        </div>
                                     </div>
                                     </form>
                                 </div>        
@@ -52,7 +60,7 @@
                                 <div class="card-header" id="promptHeading">
                                     <h5 class="mb-0">
                                         <button class="btn col-12 response-accordion" type="button" data-toggle="collapse" data-target="#promptCollapse" aria-expanded="true" aria-controls="promptCollapse">
-                                            Response
+                                            <i class='far fa-file-alt'></i> Response
                                         </button>
                                     </h5>
                                 </div>
@@ -62,7 +70,7 @@
                                         <div id="tranScript" class="form-group">
                                             {% if overview_summary %}
                                             <div class="row mt-5 ext-center">
-                                                <div class="col-md-6 offset-md-3">
+                                                <div class="col-md-12">
                                                     <h2>Detailed Summary:</h2>
                                                     <p>{{ overview_summary }}</p>
                                                 </div>
@@ -71,7 +79,7 @@
 
                                          {% if final_summary %}
                                          <div class="row mt-5 ext-center">
-                                            <div class="col-md-6 offset-md-3">
+                                            <div class="col-md-12">
                                                 <h2>Synopsis:</h2>
                                                 <p>{{ final_summary }}</p>
                                             </div>
@@ -80,7 +88,7 @@
 
                                          {% if answers %}
                                          <div class="row mt-5 ext-center">
-                                            <div class="col-md-6 offset-md-3">
+                                            <div class="col-md-12">
                                                 <h2>QA Corner:</h2>
                                                 <ul>
                                                     {% for question, answer in answers %}
@@ -90,25 +98,26 @@
                                             </div>
                                         </div>
                                          {% endif %}
-                                            <div class="loader" id="loader"></div>
+                                            
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         </div>
+                        <div class="loader" id="loader"></div>
                     </div>
-                </div>
+                    <!-- Footer -->
+                    {% include 'footer.html' %} 
             </main>
-        </div>
+
     </div>
      
 
 
 
 
-    <!-- Footer -->
-    {% include 'footer.html' %} 
+    
     <script>
         // Get a reference to the file input element
         const fileInput = document.getElementById("audioFile");
@@ -122,7 +131,7 @@
             if (fileInput.files.length > 0) {
                 // Display the selected file name in the designated element
                 selectedFile = fileInput.files[0]
-                selectedFileName.textContent = "Selected Doc file: " + fileInput.files[0].name;
+                selectedFileName.textContent = "Selected file: " + fileInput.files[0].name;
                 const objectURL = URL.createObjectURL(selectedFile);
 
                 // Release the object URL when it's no longer needed to prevent memory leaks
