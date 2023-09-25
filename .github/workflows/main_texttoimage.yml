@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'TextToImage'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F5E9BBC3AC1F49B9B4F35465AAF9690F }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9E786D2B00074F21B840BB62E1F68A93 }}
