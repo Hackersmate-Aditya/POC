@@ -63,6 +63,7 @@ def generate_summary():
     if not input_text or not prompt:
         return jsonify({'error': 'No response generated. Please enter a text description and a prompt, and then click the button.'})
     else:
+        summary = summary.replace('\n', '<br>')
         #return render_template('generate_summary.html', summary=summary)
         return jsonify({'summary': summary})
 
@@ -84,6 +85,7 @@ def generate_summarysupportcall():
     )
 
     summary = response.choices[0].text.strip()
+    summary = summary.replace('\n', '<br>')
     #return render_template('generate_summary.html', summary=summary)
     return jsonify({'summary': summary})
 
@@ -104,6 +106,7 @@ def generate_summarycontract():
     )
 
     summary = response.choices[0].text.strip()
+    summary = summary.replace('\n', '<br>')
     #return render_template('generate_summary.html', summary=summary)
     return jsonify({'summary': summary})
 
@@ -182,7 +185,7 @@ def transcribe_and_analyze_sentiment(audio_file):
         transcript = openai.Audio.translate("whisper-1", audio_file)
 
     input_text = str(transcript)
-    prompt = f"Determine the sentiment of the following text whether it is positive, negative, or neutral along with sentiment score: '{input_text}'"
+    prompt = f"Determine the sentiment of the following text whether it is positive, negative, or neutral: '{input_text}'"
 
     response = openai.Completion.create(
         engine="text-davinci-003",  # Use the GPT-3.5-turbo engine
@@ -298,7 +301,7 @@ def contractSummary():
                 answers.append((question, answer))
 
             # Pass summary_list, final_summary, and answers to the template
-            return render_template('generate_contract.html', summary_list=None, final_summary=final_summary, overview_summary=overview_summary, answers=answers)
+            return render_template('generate_contract.html', summary_list=None, final_summary=final_summary, overview_summary=overview_summary, answers=answers,current_url = request.path)
         else:
             return jsonify({'error': 'Invalid file format'})
 
