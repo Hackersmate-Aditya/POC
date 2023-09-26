@@ -14,7 +14,6 @@
 </head>
 <body id="body" class="sidebar-on">    
     <div class="pg-container">
-        <div class="row">
             {% include 'sidebar.html' %} 
             <main class="content-wrppr" id="page-content">
                 <div class="inner-wrppr" style="    padding-bottom: 160px;
@@ -33,22 +32,33 @@
                                 <div class="card-body">
                                     <form method="POST" action="/job_generation">                                                                                               
                                         <div class="form-group">
-                                            <label for="jd_example" style="text-align: left;">Enter a job description:</label>
+                                            <label for="jd_example" style="text-align: left;">Enter a job description</label>
                                             <textarea class="form-control" id="jd_example" name="jd_example" rows="6" cols="50" required></textarea>
                                         </div>
                     
                                         <div class="form-group">
-                                            <label for="responsibilities_prompt" style="text-align: left;">Enter a prompt:</label>
-                                            <input type="text" class="form-control" id="responsibilities_prompt" name="responsibilities_prompt" required>
+                                            <label for="responsibilities_prompt" style="text-align: left;">Enter a prompt</label>
+                                            <div class="prompt-container">
+                                                <input type="text" class="form-control prompt" id="responsibilities_prompt" name="responsibilities_prompt" required>
+                                                <div class="input-group-append">
+                                                    <button type="submit" id="generateSummary" class="btn btn-dark Generate-button" data-toggle="collapse"
+                                                    data-target="#promptCollapse"
+                                                    aria-expanded="true" aria-controls="promptCollapse">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                                                        </svg>                                          
+                                                    </button>
+                                            </div>                                                
+                                            </div>
                                         </div>
-                                        <div class="form-group" id="showLoaderBtn">
+                                        <!-- <div class="form-group" id="showLoaderBtn">
                                             <button  type="submit" class="rounded-pill Generate-button" id="generateSummary"
                                             data-toggle="collapse"
                                             data-target="#promptCollapse"
                                             aria-expanded="true" aria-controls="promptCollapse"
                                             style="display: flex;float:left"
                                             >Generate </button>
-                                        </div>
+                                        </div> -->
                                     </form>                                           
                                 </div>
                             </div>
@@ -60,7 +70,6 @@
                 </div>  
                 
             </main>
-        </div>
     </div>
 
 
