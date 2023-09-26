@@ -41,7 +41,7 @@
                                         <!-- <button type="submit" class="btn btn-dark rounded-pill Generate-button" id="summaryForm" >Generate</button> -->
                                     </div>
                                     <div class="prompt-container">
-                                        <textarea class="form-control prompt contract-textarea" name="prompt" placeholder="Enter a prompt"></textarea>
+                                        <textarea class="form-control prompt contract-textarea" name="prompt" placeholder="Enter Questions (one question per line)"></textarea>
                                         <div class="input-group-append">
                                                 <button type="submit" id="summaryForm" class="btn btn-dark Generate-button">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -68,19 +68,19 @@
                                 <div id="promptCollapse" class="collapse show" aria-labelledby="promptHeading" data-parent="#promptAccordion">
                                     <div class="card-body" id="summaryResult">
                                         <div id="tranScript" class="form-group">
-                                            {% if overview_summary %}
+                                            <!-- {% if overview_summary %}
                                             <div class="row mt-5 ext-center">
                                                 <div class="col-md-12">
                                                     <h2>Detailed Summary:</h2>
                                                     <p>{{ overview_summary }}</p>
                                                 </div>
                                             </div>
-                                            {% endif %}
+                                            {% endif %} -->
 
                                          {% if final_summary %}
                                          <div class="row mt-5 ext-center">
                                             <div class="col-md-12">
-                                                <h2>Synopsis:</h2>
+                                                <h6>Synopsis:</h6>
                                                 <p>{{ final_summary }}</p>
                                             </div>
                                         </div>
@@ -89,7 +89,7 @@
                                          {% if answers %}
                                          <div class="row mt-5 ext-center">
                                             <div class="col-md-12">
-                                                <h2>QA Corner:</h2>
+                                                <h6>QA Corner:</h6>
                                                 <ul>
                                                     {% for question, answer in answers %}
                                                     <li><strong>Q: {{ question }}</strong><br>A: {{ answer }}</li>

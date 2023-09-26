@@ -21,8 +21,8 @@
                         <div class="card">
                             <div class="card-header" id="inputTextHeading">
                                 <h5 class="mb-0">
-                                    <button class="btn col-12 header-button" type="button" data-toggle="collapse" data-target="#inputTextCollapse" aria-expanded="true" aria-controls="inputTextCollapse">
-                                        Generate Summary
+                                    <button class="btn col-12 header-button" type="button" data-toggle="collapse">
+                                        Text Studio: Summarization, Content Extraction, Personalization, Translation and Beyond! 
                                     </button>
                                 </h5>
                             </div>
@@ -36,11 +36,9 @@
                                     <div class="form-group">
                                         <label for="prompt">Enter a prompt</label>
                                         <div class="prompt-container">
-                                            <input type="text" class="form-control prompt" id="prompt" size="50">
+                                            <input autocomplete="off" type="text" class="form-control prompt" id="prompt" size="50">
                                             <div class="input-group-append">
-                                                    <button type="submit" id="generateSummary" class="btn btn-dark Generate-button" data-toggle="collapse"
-                                                    data-target="#promptCollapse"
-                                                    aria-expanded="true" aria-controls="promptCollapse">
+                                                    <button type="submit" id="generateSummary" class="btn btn-dark Generate-button" data-toggle="collapse">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
                                                         </svg>                                          
@@ -48,14 +46,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                
-                                    <!-- <div class="form-group">
-                                        <button class="rounded-pill Generate-button" id="generateSummary"
-                                        data-toggle="collapse"
-                                        data-target="#promptCollapse"
-                                        aria-expanded="true" aria-controls="promptCollapse"
-                                        >Generate </button>                                                   
-                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -66,13 +56,13 @@
                         <div class="card">
                             <div class="card-header" id="promptHeading">
                                 <h5 class="mb-0">
-                                    <button class="btn col-12 response-accordion" type="button" data-toggle="collapse" data-target="#promptCollapse" aria-expanded="true" aria-controls="promptCollapse">
+                                    <button class="btn col-12 response-accordion" type="button" data-toggle="collapse" >
                                         <i class='far fa-file-alt'></i> Response
                                     </button>
                                 </h5>
                             </div>
             
-                            <div id="promptCollapse" class="collapse" aria-labelledby="promptHeading" data-parent="#promptAccordion">
+                            <div id="promptCollapse" class="collapse show" aria-labelledby="promptHeading" data-parent="#promptAccordion">
                                 <div class="card-body" id="summaryResult">                                    
                                 </div>
                             </div>
@@ -103,6 +93,7 @@
         }
         document.getElementById("generateSummary").addEventListener("click", function () {
             showLoader();
+            document.getElementById("summaryResult").style.display = "none";
             setTimeout(function() {
             var responseData = "This is the generated summary.";
             $("#summaryResult").html(responseData); 
@@ -118,10 +109,18 @@
                 body: `inputText=${encodeURIComponent(inputText)}&prompt=${encodeURIComponent(prompt)}`,
             })
             .then(response => response.json())
-            .then(data => {
-                console.log(data.summary)                
+            .then(data => {            
                 const summaryResult = document.getElementById("summaryResult");                
-                summaryResult.innerHTML = data.summary;
+                    if(data.summary){
+                    console.log(data.summary)
+                    summaryResult.innerHTML = data.summary;
+                    hideLoader();
+                    document.getElementById("summaryResult").style.display = "block";           
+                    }else{
+                    hideLoader();
+                    summaryResult.innerHTML = "<h2>Error:</h2>" + data.error;
+                    document.getElementById("summaryResult").style.display = "block";
+                    }
                 const promptAccordion = document.getElementById("promptAccordion");
                 document.getElementById('promptAccordion').style.display = 'block';
                 hideLoader();
