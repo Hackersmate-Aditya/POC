@@ -1,0 +1,12 @@
+python-dotenv
+flask 
+openai
+google-cloud-aiplatform
+vertexai
+pydub
+PyMuPDF
+langchain
+pinecone-client
+pypdf
+tiktoken
+
