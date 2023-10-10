@@ -1,7 +1,0 @@
-python-dotenv
-flask 
-openai
-google-cloud-aiplatform
-vertexai
-pydub
-PyMuPDF
