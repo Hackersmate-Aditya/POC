@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">        
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">    
+    <!-- Add Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Contract Document</title>
+</head>
+<body id="body" class="sidebar-on">    
+    <div class="pg-container">
+        {% include 'sidebar.html' %} 
+        <main class="content-wrppr" id="page-content">
+            <div class="inner-wrppr">
+                <div class="accordion" id="inputTextAccordion">
+                    <div class="card">
+                        <div class="card-header" id="inputTextHeading">
+                            <h5 class="mb-0">
+                                <button class="btn col-12 header-button" type="button" data-toggle="collapse" data-target="#inputTextCollapse" aria-expanded="true" aria-controls="inputTextCollapse">
+                                    Contract Document
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="inputTextAccordion" class="collapse show" aria-labelledby="inputTextHeading" data-parent="#inputTextAccordion">
+                            <div class="card-body">
+                                <form action="/process_pdff" method="post" enctype="multipart/form-data">
+                                    <div class="form-group select-file-container">
+                                        <div class="custom-file">
+                                            <input type="file" id="audioFile" name="inputFile" accept=".pdf" style="display: none">
+                                            <label for="audioFile"><img class="upload-img" src="../static/upload-svgrepo-com.svg"></img></label>
+                                            <label for="audioFile">Select File (PDF)</label>
+                                            <div id="selectedFileName"></div>
+                                        </div>
+                                    </div>
+                                    <div class="prompt-container">
+                                        <textarea class="form-control prompt contract-textarea" name="query" placeholder="Enter Questions (one question per line)"></textarea>
+                                        <div class="input-group-append">
+                                            <button type="submit" id="summaryForm" class="btn btn-dark Generate-button">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                                                </svg>                                          
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>        
+                        </div>                        
+                    </div>
+                </div>
+                <div class="accordion mt-3" id="promptAccordion">
+                    <div class="card">
+                        <div class="card-header" id="promptHeading">
+                            <h5 class="mb-0">
+                                <button class="btn col-12 response-accordion" type="button" data-toggle="collapse" data-target="#promptCollapse" aria-expanded="true" aria-controls="promptCollapse">
+                                    <i class='far fa-file-alt'></i> Response
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="promptCollapse" class="collapse show" aria-labelledby="promptHeading" data-parent="#promptAccordion">
+                            <div class="card-body" id="summaryResult">
+                                <div id="tranScript" class="form-group">
+                                    {% if summary %}
+                                    <div class="row mt-5 ext-center">
+                                        <div class="col-md-12">
+                                            <h6>Synopsis:</h6>
+                                            <p>{{ summary }}</p>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    {% if formatted_answers %}
+                                    <div class="row mt-5 ext-center">
+                                        <div class="col-md-12">
+                                            <h6>QA Corner:</h6>
+                                            <ul>
+                                                {% for user_query, answer in formatted_answers %}
+                                                <li><strong>Q: {{ user_query }}</strong><br>A: {{ answer }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="loader" id="loader"></div>
+            </div>
+            <!-- Footer -->
+            {% include 'footer.html' %} 
+        </main>
+    </div>
+    <script>
+        // Get a reference to the file input element
+        const fileInput = document.getElementById("audioFile");
+        // Get a reference to the element where you want to display the file name
+        const selectedFileName = document.getElementById("selectedFileName");
+        
+        // Add an event listener to the file input to listen for changes
+        fileInput.addEventListener("change", function () {
+            // Check if a file has been selected
+            if (fileInput.files.length > 0) {
+                // Display the selected file name in the designated element
+                selectedFile = fileInput.files[0]
+                selectedFileName.textContent = "Selected file: " + fileInput.files[0].name;
+                const objectURL = URL.createObjectURL(selectedFile);
+
+                // Release the object URL when it's no longer needed to prevent memory leaks
+            } else {
+                // If no file is selected, clear the displayed file name
+                selectedFileName.textContent = "";
+            }
+        });
+
+        // Function to show the loader
+        function showLoader() {
+            document.getElementById("loader").style.display = "block";
+        }
+
+        // Function to hide the loader
+        function hideLoader() {
+            document.getElementById("loader").style.display = "none";
+        }
+
+        // Function to update the summary container with the response
+        function updateSummary(response) {
+            const summaryContainer = document.getElementById("summaryContainer");
+            summaryContainer.innerHTML = `<h2>Generated Summary:</h2><p>${response}</p>`;
+        }
+
+        // Function to handle form submission
+    document.getElementById("summaryForm").addEventListener("click", function (event) {
+        event.preventDefault();  // Prevent default form submission
+        showLoader();
+
+        const form = event.target.closest('form');
+        if (form) {
+            const formData = new FormData(form);
+            fetch(form.action, {
+                method: form.method,
+                body: formData
+            })
+                .then(response => response.json())  // Parse response as JSON
+                .then(data => {
+                    hideLoader();
+
+                    // Display the result
+                    var resultDiv = document.getElementById("summaryResult");
+                    resultDiv.innerHTML = `<div id="tranScript" class="form-group">`;
+
+                    if (data.summary) {
+                        resultDiv.innerHTML += `
+                            <div class="row mt-5 text-center">
+                                <div class="col-md-12">
+                                    <h6>Synopsis:</h6>
+                                    <p>${data.summary}</p>
+                                </div>
+                            </div>`;
+                    }
+
+                    if (data.formatted_answers && data.formatted_answers.length > 0) {
+                        resultDiv.innerHTML += `
+                            <div class="row mt-5 text-center">
+                                <div class="col-md-12">
+                                    <h6>QA Corner:</h6>
+                                    <ul>`;
+                        data.formatted_answers.forEach(item => {
+                            resultDiv.innerHTML += `
+                                <li><strong>Q: ${item.question}</strong><br>A: ${item.answer}</li>`;
+                        });
+                        resultDiv.innerHTML += `
+                                    </ul>
+                                </div>
+                            </div>`;
+                    }
+
+                    resultDiv.innerHTML += `</div>`;
+                })
+                .catch(error => {
+                    hideLoader();
+                    console.error('Error:', error);
+                });
+        }
+    });
+    </script>
+    <!-- Include Bootstrap JavaScript and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
