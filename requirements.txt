@@ -1,6 +1,6 @@
 python-dotenv
 flask 
-openai==1.0.0
+openai==0.28.0
 google-cloud-aiplatform
 vertexai
 pydub
