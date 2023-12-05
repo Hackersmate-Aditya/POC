@@ -18,6 +18,8 @@ from langchain.chains.question_answering import load_qa_chain
 from langchain.chains.summarize import load_summarize_chain
 from dotenv import load_dotenv
 import pinecone
+from openai import OpenAI
+
 # ALL imports 
 
 
@@ -32,6 +34,8 @@ app.config['uploaded_pdf'] = {'path': None, 'name': None}  # To store the upload
 openai.api_key = os.getenv("OPENAI_API_KEY")
 model = "text-davinci-003"
 davinci_cost = 0.02  # $0.02/1000 tokens
+client = OpenAI()
+
 
 @app.route("/", methods=["GET"])
 def index():
@@ -46,7 +50,8 @@ def generate_image():
     text = request.form['text']
 
     # Call the DALL-E model to generate an image
-    response = openai.Image.create(
+    response = client.images.generate(
+        model="dall-e-3",
         prompt=text,
         n=1,
         size="512x512"  # Adjust the image size as needed
