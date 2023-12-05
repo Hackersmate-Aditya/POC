@@ -1,7 +1,6 @@
 python-dotenv
 flask 
-openai
-openai migrate
+openai==1.0.0
 google-cloud-aiplatform
 vertexai
 pydub
