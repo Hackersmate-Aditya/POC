@@ -21,7 +21,7 @@ import pinecone
 from openai import OpenAI
 
 # ALL imports 
-
+# imports
 
 load_dotenv()
 
