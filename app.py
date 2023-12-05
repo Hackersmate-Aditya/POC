@@ -34,7 +34,6 @@ app.config['uploaded_pdf'] = {'path': None, 'name': None}  # To store the upload
 openai.api_key = os.getenv("OPENAI_API_KEY")
 model = "text-davinci-003"
 davinci_cost = 0.02  # $0.02/1000 tokens
-client = OpenAI()
 
 
 @app.route("/", methods=["GET"])
@@ -50,8 +49,7 @@ def generate_image():
     text = request.form['text']
 
     # Call the DALL-E model to generate an image
-    response = client.images.generate(
-        model="dall-e-3",
+    response = openai.Image.create(
         prompt=text,
         n=1,
         size="512x512"  # Adjust the image size as needed
