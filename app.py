@@ -31,7 +31,7 @@ app.config['uploaded_pdf'] = {'path': None, 'name': None}  # To store the upload
 
 # Set your OpenAI API key here
 openai.api_key = os.getenv("OPENAI_API_KEY")
-model = "text-davinci-003"
+model = "gpt-3.5-turbo-instruct"
 davinci_cost = 0.02  # $0.02/1000 tokens
 
 
@@ -69,7 +69,7 @@ def generate_summary():
     # Make a request to the OpenAI API to generate the summary
     # Make a request to the OpenAI API to generate the summary
     response = openai.Completion.create(
-            engine='text-davinci-003',  # Set the appropriate engine
+            engine='gpt-3.5-turbo-instruct',  # Set the appropriate engine
             prompt=f"Please summarize the following text:\n{input_text}\n\nPrompt: {prompt}",
             max_tokens=150  # Adjust the max_tokens as needed
         )
@@ -95,7 +95,7 @@ def generate_summarysupportcall():
 
     # Make a request to the OpenAI API to generate the summary
     response = openai.Completion.create(
-        engine='text-davinci-003',  # Set the appropriate engine
+        engine='gpt-3.5-turbo-instruct',  # Set the appropriate engine
         prompt=f"Please summarize the following text:\n{input_text}\n\nPrompt: {prompt}",
         max_tokens=150  # Adjust the max_tokens as needed
     )
@@ -116,7 +116,7 @@ def generate_summarycontract():
 
     # Make a request to the OpenAI API to generate the summary
     response = openai.Completion.create(
-        engine='text-davinci-003',  # Set the appropriate engine
+        engine='gpt-3.5-turbo-instruct',  # Set the appropriate engine
         prompt=f"Please summarize the following text:\n{input_text}\n\nPrompt: {prompt}",
         max_tokens=150  # Adjust the max_tokens as needed
     )
@@ -204,7 +204,7 @@ def transcribe_and_analyze_sentiment(audio_file):
     prompt = f"Determine the sentiment of the following text whether it is positive, negative, or neutral: '{input_text}'"
 
     response = openai.Completion.create(
-        engine="text-davinci-003",  # Use the GPT-3.5-turbo engine
+        engine="gpt-3.5-turbo-instruct",  # Use the GPT-3.5-turbo engine
         prompt=prompt,
         max_tokens=1000,
         temperature=0,
@@ -262,7 +262,7 @@ def contractSummary():
 
                 # Generate a summary for the current content
                 response = openai.Completion.create(
-                    model="text-davinci-003",
+                    model="gpt-3.5-turbo-instruct",
                     prompt=prompt,
                     temperature=0.7,
                     max_tokens=3000,  # Reduced max_tokens
@@ -280,7 +280,7 @@ def contractSummary():
 
             final_prompt = combined_summary[:3000] + "\nTl;dr:"  # Limiting the final prompt to 3000 tokens
             response = openai.Completion.create(
-                model="text-davinci-003",
+                model="gpt-3.5-turbo-instruct",
                 prompt=final_prompt,
                 temperature=0.7,
                 max_tokens=3000,  # Reduced max_tokens
@@ -304,7 +304,7 @@ def contractSummary():
 
                 # Generate an answer using OpenAI
                 response = openai.Completion.create(
-                    model="text-davinci-003",
+                    model="gpt-3.5-turbo-instruct",
                     prompt=prompt,
                     temperature=0.7,
                     max_tokens=150,  # Adjust max_tokens as needed
