@@ -5,7 +5,7 @@ google-cloud-aiplatform
 vertexai
 pydub
 PyMuPDF
-langchain==0.0.340
+langchain==0.0.353
 langchain-core==0.1.4
 pinecone-client
 pypdf
