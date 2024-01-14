@@ -33,7 +33,7 @@ app.config['uploaded_pdf'] = {'path': None, 'name': None}  # To store the upload
 # Set your OpenAI API key here
 openai.api_key = os.getenv("OPENAI_API_KEY")
 model = "gpt-3.5-turbo-instruct"
-davinci_cost = 0.02  # $0.02/1000 tokens
+#davinci_cost = 0.02  # $0.02/1000 tokens
 
 
 @app.route("/", methods=["GET"])
@@ -152,17 +152,17 @@ def generate_audio_transcript(audio_file):
     except Exception as e:
         return f"Error: {str(e)}"
 
-def davinci_completion(prompt, max_tokens=1000, temperature=0, top_p=1, n=1, stop=None):
-    response_json = openai.Completion.create(
-        engine=model,
-        prompt=prompt,
-        max_tokens=max_tokens,
-        temperature=temperature,
-        n=n,
-        stop=stop,
-        top_p=top_p
-    )
-    return response_json
+# def davinci_completion(prompt, max_tokens=1000, temperature=0, top_p=1, n=1, stop=None):
+#     response_json = openai.Completion.create(
+#         engine=model,
+#         prompt=prompt,
+#         max_tokens=max_tokens,
+#         temperature=temperature,
+#         n=n,
+#         stop=stop,
+#         top_p=top_p
+#     )
+#     return response_json
 @app.route('/generate_job', methods=['GET'])
 def generate_job():
     return render_template('job_description.html',current_url = request.path)
@@ -178,9 +178,9 @@ def job_generation():
         responsibilities_prompt = request.form.get("responsibilities_prompt") + '\n' + jd_example
 
         # Get responsibilities from the JD
-        response_json = davinci_completion(responsibilities_prompt)
-        text_response = response_json['choices'][0]['text']
-        cost = response_json['usage']['total_tokens'] * davinci_cost / 1000
+        # response_json = davinci_completion(responsibilities_prompt)
+        # text_response = response_json['choices'][0]['text']
+        # cost = response_json['usage']['total_tokens'] * davinci_cost / 1000
 
     return render_template("job_description.html", text_response=text_response, cost=cost,current_url = request.path)
 
