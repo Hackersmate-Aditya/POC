@@ -1,88 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/style.css">          
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">    
-    <!-- Add Font Awesome CDN for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <title>Image Generation</title>
-</head>
+{% include 'head.html' %} 
+
 <body id="body" class="sidebar-on">    
-    <div class="pg-container">
+    <div class="app-container">
             {% include 'sidebar.html' %} 
 
-            <main class="content-wrppr" id="page-content">
-                <div class="inner-wrppr">
+            <main class="app-content-wrppr" id="page-content">
+                <div class="pg-wrppr">
+                    <div class="pg-content-wrppr">
+                        <div>
+                            <div class="prompt-response user" id="textInput">
+                                <!--user entered test to show here-->
+                            </div>
+                        </div>
+                        <div>
+                            <div class="prompt-response bot">
+                                <div id="imageResult">
+                                    <!--result to show here-->
+                                </div>
+                                <ul class="generated-prompt-cta">
+                                    <li>
+                                        <i>
+                                            <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M14.0601 9.5V13C14.0601 13.2321 13.9679 13.4546 13.8038 13.6187C13.6397 13.7828 13.4171 13.875 13.1851 13.875H3.18506C2.95299 13.875 2.73043 13.7828 2.56634 13.6187C2.40225 13.4546 2.31006 13.2321 2.31006 13V9.5C2.31006 9.40054 2.34957 9.30516 2.41989 9.23483C2.49022 9.16451 2.5856 9.125 2.68506 9.125C2.78451 9.125 2.8799 9.16451 2.95022 9.23483C3.02055 9.30516 3.06006 9.40054 3.06006 9.5V13C3.06006 13.0332 3.07323 13.0649 3.09667 13.0884C3.12011 13.1118 3.15191 13.125 3.18506 13.125H13.1851C13.2182 13.125 13.25 13.1118 13.2734 13.0884C13.2969 13.0649 13.3101 13.0332 13.3101 13V9.5C13.3101 9.40054 13.3496 9.30516 13.4199 9.23483C13.4902 9.16451 13.5856 9.125 13.6851 9.125C13.7845 9.125 13.8799 9.16451 13.9502 9.23483C14.0206 9.30516 14.0601 9.40054 14.0601 9.5ZM7.92006 9.765C7.99037 9.83523 8.08568 9.87467 8.18506 9.87467C8.28443 9.87467 8.37975 9.83523 8.45006 9.765L10.9501 7.265C11.0163 7.19391 11.0524 7.09989 11.0506 7.00274C11.0489 6.90559 11.0096 6.8129 10.9409 6.74419C10.8722 6.67548 10.7795 6.63613 10.6823 6.63441C10.5852 6.6327 10.4911 6.66876 10.4201 6.735L8.56006 8.59437V2.5C8.56006 2.40054 8.52055 2.30516 8.45022 2.23483C8.3799 2.16451 8.28451 2.125 8.18506 2.125C8.0856 2.125 7.99022 2.16451 7.91989 2.23483C7.84957 2.30516 7.81006 2.40054 7.81006 2.5V8.59437L5.95006 6.735C5.87897 6.66876 5.78495 6.6327 5.6878 6.63441C5.59065 6.63613 5.49795 6.67548 5.42925 6.74419C5.36054 6.8129 5.32118 6.90559 5.31947 7.00274C5.31776 7.09989 5.35382 7.19391 5.42006 7.265L7.92006 9.765Z" fill="#5B6073"/>
+                                            </svg></i>Download
+                                    </li>
+                                    <li>
+                                        <i>
+                                            <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M15.06 3.5V6.5C15.06 6.59945 15.0205 6.69484 14.9502 6.76516C14.8799 6.83549 14.7845 6.875 14.685 6.875H11.685C11.5856 6.875 11.4902 6.83549 11.4199 6.76516C11.3495 6.69484 11.31 6.59945 11.31 6.5C11.31 6.40054 11.3495 6.30516 11.4199 6.23483C11.4902 6.16451 11.5856 6.125 11.685 6.125H13.7194L11.8206 4.3875C11.8169 4.38375 11.8131 4.37937 11.8088 4.37562C11.0964 3.66364 10.19 3.17735 9.2028 2.9775C8.21563 2.77766 7.19145 2.87312 6.25822 3.25196C5.32499 3.6308 4.52407 4.27622 3.95552 5.10761C3.38697 5.93899 3.076 6.91947 3.06145 7.92656C3.04689 8.93365 3.32941 9.9227 3.8737 10.7702C4.41799 11.6176 5.19993 12.2859 6.12182 12.6916C7.04372 13.0972 8.06471 13.2222 9.05724 13.051C10.0498 12.8798 10.9698 12.4199 11.7025 11.7287C11.7749 11.6605 11.8714 11.6237 11.9709 11.6266C12.0703 11.6294 12.1645 11.6717 12.2328 11.7441C12.3011 11.8164 12.3379 11.9129 12.335 12.0124C12.3321 12.1118 12.2899 12.2061 12.2175 12.2744C11.1287 13.3058 9.68483 13.8789 8.18502 13.875H8.10502C7.143 13.8615 6.19902 13.6118 5.35603 13.1481C4.51305 12.6844 3.79685 12.0207 3.27037 11.2154C2.7439 10.4101 2.42325 9.48784 2.33661 8.52962C2.24998 7.57141 2.39999 6.60658 2.77349 5.71992C3.14698 4.83325 3.73252 4.05188 4.47865 3.44446C5.22479 2.83704 6.10869 2.42216 7.05268 2.23627C7.99667 2.05039 8.97187 2.09919 9.8926 2.37838C10.8133 2.65758 11.6514 3.15862 12.3331 3.8375L14.31 5.64687V3.5C14.31 3.40054 14.3495 3.30516 14.4199 3.23483C14.4902 3.16451 14.5856 3.125 14.685 3.125C14.7845 3.125 14.8799 3.16451 14.9502 3.23483C15.0205 3.30516 15.06 3.40054 15.06 3.5Z" fill="#5B6073"/>
+                                            </svg></i>Re-generate
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
 
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="mb-0">
-                                <button class="btn col-12 header-button" type="button">
-                                    Generate Art Work
-                                </button>
-                            </h5>
+                        <div class="welcome-note" id="welcomeNote">
+                                <svg class="mt-auto" width="79" height="67" viewBox="0 0 79 67" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g filter="url(#filter0_d_79_1380)">
+                                    <path d="M68.8077 0H6.19231C4.68261 0 3.23475 0.603407 2.16724 1.67748C1.09972 2.75155 0.5 4.20831 0.5 5.72727V57.2727C0.5 58.7917 1.09972 60.2484 2.16724 61.3225C3.23475 62.3966 4.68261 63 6.19231 63H68.8077C70.3174 63 71.7652 62.3966 72.8328 61.3225C73.9003 60.2484 74.5 58.7917 74.5 57.2727V5.72727C74.5 4.20831 73.9003 2.75155 72.8328 1.67748C71.7652 0.603407 70.3174 0 68.8077 0ZM68.8077 5.72727V42.5071L59.5328 33.1788C59.0042 32.6468 58.3766 32.2249 57.6859 31.9369C56.9952 31.649 56.2549 31.5009 55.5073 31.5009C54.7596 31.5009 54.0193 31.649 53.3286 31.9369C52.6379 32.2249 52.0103 32.6468 51.4817 33.1788L44.3663 40.3379L28.7125 24.5879C27.6451 23.5146 26.1978 22.9117 24.6887 22.9117C23.1797 22.9117 21.7324 23.5146 20.665 24.5879L6.19231 39.1495V5.72727H68.8077ZM6.19231 47.25L24.6923 28.6364L53.1538 57.2727H6.19231V47.25ZM68.8077 57.2727H61.2049L48.3972 44.3864L55.5126 37.2273L68.8077 50.6076V57.2727ZM43.1923 21.4773C43.1923 20.6277 43.4427 19.7972 43.9118 19.0908C44.3809 18.3845 45.0477 17.8339 45.8278 17.5088C46.6079 17.1837 47.4663 17.0986 48.2944 17.2644C49.1226 17.4301 49.8833 17.8392 50.4803 18.4399C51.0774 19.0407 51.484 19.806 51.6487 20.6393C51.8135 21.4725 51.7289 22.3362 51.4058 23.1211C51.0827 23.906 50.5355 24.5768 49.8334 25.0488C49.1313 25.5208 48.3059 25.7727 47.4615 25.7727C46.3293 25.7727 45.2434 25.3202 44.4427 24.5146C43.6421 23.7091 43.1923 22.6165 43.1923 21.4773Z" fill="#2F2F39"/>
+                                    </g>
+                                    <defs>
+                                    <filter id="filter0_d_79_1380" x="0.5" y="0" width="78" height="67" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                                    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                                    <feOffset dx="4" dy="4"/>
+                                    <feComposite in2="hardAlpha" operator="out"/>
+                                    <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 0.815686 0 0 0 0 0.847059 0 0 0 1 0"/>
+                                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_79_1380"/>
+                                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_79_1380" result="shape"/>
+                                    </filter>
+                                    </defs>
+                                    </svg>
+                                    
+                                <h1 class="feature-intro-title">Redefining Visual Expression</h1>
+                                <p class="feature-intro-desc">
+                                    Exploring the Intersection of Cutting-Edge Technology and Artistic Ingenuity to Redefine Visual Expression and Inspire Innovation
+                                </p>
+                                <div class="example-prompts">
+                                    <div class="prompt-wrppr">
+                                        Generate concept art for a fantasy RPG game
+                                        <div class="generate-prompt">
+                                            <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7.88269 4.46164C7.84555 4.50038 7.80143 4.53111 7.75288 4.55208C7.70432 4.57305 7.65228 4.58384 7.59971 4.58384C7.54715 4.58384 7.4951 4.57305 7.44655 4.55208C7.39799 4.53111 7.35388 4.50038 7.31673 4.46164L4.39993 1.42268V7.58335C4.39993 7.69385 4.35779 7.79983 4.28278 7.87797C4.20777 7.9561 4.10603 8 3.99995 8C3.89387 8 3.79214 7.9561 3.71713 7.87797C3.64212 7.79983 3.59998 7.69385 3.59998 7.58335V1.42268L0.683177 4.46164C0.608125 4.53982 0.506334 4.58374 0.400196 4.58374C0.294057 4.58374 0.192266 4.53982 0.117215 4.46164C0.0421633 4.38346 7.90793e-10 4.27742 0 4.16686C-7.90793e-10 4.05629 0.0421633 3.95026 0.117215 3.87208L3.71697 0.122199C3.75412 0.0834598 3.79823 0.052728 3.84679 0.0317602C3.89534 0.0107924 3.94739 0 3.99995 0C4.05252 0 4.10456 0.0107924 4.15312 0.0317602C4.20168 0.052728 4.24579 0.0834598 4.28294 0.122199L7.88269 3.87208C7.91988 3.91077 7.94938 3.95672 7.96951 4.00731C7.98964 4.05789 8 4.1121 8 4.16686C8 4.22161 7.98964 4.27583 7.96951 4.32641C7.94938 4.37699 7.91988 4.42294 7.88269 4.46164Z" fill="black"/>
+                                                </svg>
+                                                
+                                        </div>
+                                    </div>
+                                    <div class="prompt-wrppr">
+                                        Create a cover design for a science fiction novel
+                                        <div class="generate-prompt">
+                                            <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7.88269 4.46164C7.84555 4.50038 7.80143 4.53111 7.75288 4.55208C7.70432 4.57305 7.65228 4.58384 7.59971 4.58384C7.54715 4.58384 7.4951 4.57305 7.44655 4.55208C7.39799 4.53111 7.35388 4.50038 7.31673 4.46164L4.39993 1.42268V7.58335C4.39993 7.69385 4.35779 7.79983 4.28278 7.87797C4.20777 7.9561 4.10603 8 3.99995 8C3.89387 8 3.79214 7.9561 3.71713 7.87797C3.64212 7.79983 3.59998 7.69385 3.59998 7.58335V1.42268L0.683177 4.46164C0.608125 4.53982 0.506334 4.58374 0.400196 4.58374C0.294057 4.58374 0.192266 4.53982 0.117215 4.46164C0.0421633 4.38346 7.90793e-10 4.27742 0 4.16686C-7.90793e-10 4.05629 0.0421633 3.95026 0.117215 3.87208L3.71697 0.122199C3.75412 0.0834598 3.79823 0.052728 3.84679 0.0317602C3.89534 0.0107924 3.94739 0 3.99995 0C4.05252 0 4.10456 0.0107924 4.15312 0.0317602C4.20168 0.052728 4.24579 0.0834598 4.28294 0.122199L7.88269 3.87208C7.91988 3.91077 7.94938 3.95672 7.96951 4.00731C7.98964 4.05789 8 4.1121 8 4.16686C8 4.22161 7.98964 4.27583 7.96951 4.32641C7.94938 4.37699 7.91988 4.42294 7.88269 4.46164Z" fill="black"/>
+                                                </svg>
+                                                
+                                        </div>
+                                    </div>
+                                    <div class="prompt-wrppr"> 
+                                        Design an educational poster about space exploration
+                                        <div class="generate-prompt">
+                                            <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7.88269 4.46164C7.84555 4.50038 7.80143 4.53111 7.75288 4.55208C7.70432 4.57305 7.65228 4.58384 7.59971 4.58384C7.54715 4.58384 7.4951 4.57305 7.44655 4.55208C7.39799 4.53111 7.35388 4.50038 7.31673 4.46164L4.39993 1.42268V7.58335C4.39993 7.69385 4.35779 7.79983 4.28278 7.87797C4.20777 7.9561 4.10603 8 3.99995 8C3.89387 8 3.79214 7.9561 3.71713 7.87797C3.64212 7.79983 3.59998 7.69385 3.59998 7.58335V1.42268L0.683177 4.46164C0.608125 4.53982 0.506334 4.58374 0.400196 4.58374C0.294057 4.58374 0.192266 4.53982 0.117215 4.46164C0.0421633 4.38346 7.90793e-10 4.27742 0 4.16686C-7.90793e-10 4.05629 0.0421633 3.95026 0.117215 3.87208L3.71697 0.122199C3.75412 0.0834598 3.79823 0.052728 3.84679 0.0317602C3.89534 0.0107924 3.94739 0 3.99995 0C4.05252 0 4.10456 0.0107924 4.15312 0.0317602C4.20168 0.052728 4.24579 0.0834598 4.28294 0.122199L7.88269 3.87208C7.91988 3.91077 7.94938 3.95672 7.96951 4.00731C7.98964 4.05789 8 4.1121 8 4.16686C8 4.22161 7.98964 4.27583 7.96951 4.32641C7.94938 4.37699 7.91988 4.42294 7.88269 4.46164Z" fill="black"/>
+                                                </svg>
+                                                
+                                        </div>
+                                    </div>
+                                    <div class="prompt-wrppr">
+                                        Illustration of astronauts conducting experiments
+                                        <div class="generate-prompt">
+                                            <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7.88269 4.46164C7.84555 4.50038 7.80143 4.53111 7.75288 4.55208C7.70432 4.57305 7.65228 4.58384 7.59971 4.58384C7.54715 4.58384 7.4951 4.57305 7.44655 4.55208C7.39799 4.53111 7.35388 4.50038 7.31673 4.46164L4.39993 1.42268V7.58335C4.39993 7.69385 4.35779 7.79983 4.28278 7.87797C4.20777 7.9561 4.10603 8 3.99995 8C3.89387 8 3.79214 7.9561 3.71713 7.87797C3.64212 7.79983 3.59998 7.69385 3.59998 7.58335V1.42268L0.683177 4.46164C0.608125 4.53982 0.506334 4.58374 0.400196 4.58374C0.294057 4.58374 0.192266 4.53982 0.117215 4.46164C0.0421633 4.38346 7.90793e-10 4.27742 0 4.16686C-7.90793e-10 4.05629 0.0421633 3.95026 0.117215 3.87208L3.71697 0.122199C3.75412 0.0834598 3.79823 0.052728 3.84679 0.0317602C3.89534 0.0107924 3.94739 0 3.99995 0C4.05252 0 4.10456 0.0107924 4.15312 0.0317602C4.20168 0.052728 4.24579 0.0834598 4.28294 0.122199L7.88269 3.87208C7.91988 3.91077 7.94938 3.95672 7.96951 4.00731C7.98964 4.05789 8 4.1121 8 4.16686C8 4.22161 7.98964 4.27583 7.96951 4.32641C7.94938 4.37699 7.91988 4.42294 7.88269 4.46164Z" fill="black"/>
+                                                </svg>
+                                                
+                                        </div>
+                                    </div>
+                                </div>
                         </div>
                     </div>
-
-                    <div id="imageResult">
-                    </div>
-
-                    <div class="welcome-note" id="welcomeNote">
-                        <div class="note-wrppr">
-                            <h1>Gen AI Alchemy : Crafting images, Summaries, Sentiments, and more...</h1>
-                            <!-- <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            </p> -->
-                            <ul>
-                                <li>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
-                                    </svg>                                                                    
-                                    Instantly create visual images from text descriptions.
-                                </li>
-                                <li>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
-                                    </svg>                                                                    
-                                    Summarize lengthy documents or articles into concise text. 
-                                </li>
-                                <li>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
-                                    </svg>                                  
-                                    
-                                    Analyze audio files to determine emotional sentiment.
-                                </li>
-                                <li>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
-                                    </svg>                                  
-                                    
-                                    Generate summaries of financial reports and data.
-                                </li>
-                                <li>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
-                                    </svg>                                  
-                                    
-                                    Quickly extract key points from legal contracts and agreements.
-                                </li>
-                                <li>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
-                                    </svg>                                  
-                                    
-                                    Transcribe audio or video content into text format.
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
+                    
                     <form action="/generate_image" method="post" class="prompt-box">
                         <!-- <div class="form-group text-right">
                             <button type="submit" class="btn btn-dark rounded-pill" id="generateImage"><i class="fas fa-refresh"></i> Regenerate</button>
@@ -90,35 +104,25 @@
                         <div class="prompt-container">
                             <input type="text" placeholder="Generate an image based on your text input" class="form-control prompt" id="text" name="text" autocomplete="off">
                             <div class="input-group-append">
-                                    <button type="submit" id="generateImage" class="btn btn-dark Generate-button">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-                                          </svg>                                          
+                                    <button type="submit" id="generateImage" class="btn btn-dark">
+                                        <svg width="16" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M15.3488 7.87209L1.90861 0.164426C1.68206 0.0367376 1.42221 -0.0186732 1.16356 0.00555387C0.904924 0.029781 0.659741 0.132499 0.460585 0.300064C0.261429 0.467628 0.117727 0.692107 0.0485688 0.943682C-0.0205895 1.19526 -0.011931 1.46202 0.0733942 1.70853L2.55342 8.98053C2.5531 8.9832 2.5531 8.9859 2.55342 8.98857C2.55297 8.99123 2.55297 8.99395 2.55342 8.99661L0.0733942 16.2847C0.00506218 16.4786 -0.0159761 16.6862 0.012045 16.8899C0.0400662 17.0937 0.116329 17.2878 0.234433 17.4558C0.352537 17.6238 0.509036 17.7609 0.690794 17.8556C0.872552 17.9503 1.07427 17.9998 1.27901 18C1.50114 17.9994 1.71938 17.9413 1.91261 17.8312L15.3456 10.1107C15.5437 9.99916 15.7087 9.83667 15.8238 9.6399C15.9388 9.44312 15.9996 9.21915 16 8.99095C16.0004 8.76276 15.9404 8.53856 15.8261 8.34138C15.7118 8.14419 15.5473 7.98111 15.3496 7.86887L15.3488 7.87209ZM1.27901 16.7139V16.7067L3.69023 9.64045H8.31908C8.48882 9.64045 8.65161 9.57271 8.77163 9.45211C8.89166 9.33152 8.95909 9.16796 8.95909 8.99741C8.95909 8.82687 8.89166 8.66331 8.77163 8.54271C8.65161 8.42212 8.48882 8.35437 8.31908 8.35437H3.69663L1.28381 1.29055L1.27901 1.28091L14.7191 8.98375L1.27901 16.7139Z" fill="white"/>
+                                            </svg>
+                                                                                      
                                     </button>
                             </div>
                         </div>
+                        <p class="disclaimer">IntelliGenius can make mistakes. Consider checking important information.</p>
                         <!-- <div class="form-group input-text">
                             <input type="text" placeholder="Generate an image based on your text input" class="form-control" id="text" name="text">
                         </div> -->
                     </form>
-                    <div class="loader" id="loader"></div>                    
+                    <div class="loader" id="loader"></div>
                 </div>
-                {% include 'footer.html' %} 
+                
+                <!-- {% include 'footer.html' %}  -->
             </main>
     </div>
-
-    
-
-
-
-    
-     
-
-
-
-
-
-
 
     <script>
          function showLoader() {
@@ -152,6 +156,7 @@
                 // Display the generated image on the web page
                 const imageResult = document.getElementById("imageResult");
                 imageResult.innerHTML = `<img src="${data.image_url}" alt="Generated Image">`;
+                textInput.innerHTML = text;
                 hideLoader();
             })
             .catch(error => {
