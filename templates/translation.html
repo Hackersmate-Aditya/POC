@@ -1,0 +1,116 @@
+{% include 'head.html' %} 
+
+<body id="body" class="sidebar-on">
+    <div class="pg-container">
+        {% include 'sidebar.html' %}
+        <main class="app-content-wrppr" id="page-content">
+            <div class="pg-wrppr">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="accordion" id="inputTextAccordion">
+                        <div class="card">
+                            <div class="card-header" id="inputTextHeading">
+                                <h5 class="mb-0">
+                                    <button class="btn col-12 header-button" type="button" data-toggle="collapse" data-target="#inputTextCollapse" aria-expanded="true" aria-controls="inputTextCollapse">
+                                        Generate Transcript
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="inputTextAccordion" class="collapse show" aria-labelledby="inputTextHeading" data-parent="#inputTextAccordion">
+                                <div class="card-body">
+                                    <div class="form-group select-file-container">
+                                        <div class="custom-file">
+                                            <input type="file" id="audioFile" name="audio" accept=".mp3, .wav" style="display: none">
+                                            <label for="audioFile"><img class="upload-img" src="../static/upload-svgrepo-com.svg"></img></label>
+                                            <label for="audioFile">Select audio file (MP3 or WAV)</label>
+                                        </div>
+                                        <div id="audioPlayerContainer" style="display: none;">
+                                            <audio id="audioPlayer" controls>
+                                                <source src="" type="audio/mpeg">
+                                                Your browser does not support the audio element.
+                                            </audio>
+                                        </div>
+                                        <div id="selectedFileName"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <!-- Add a language dropdown -->
+                                        <label for="language">Select Target Language:</label>
+                                        <select class="form-control" id="language" name="language">
+                                            <option value="en">English</option>
+                                            <option value="hi">Hindi</option>
+                                            <option value="es">Spanish</option>
+                                            <option value="nl">Dutch</option>
+                                            <option value="fr">French</option>
+                                            <option value="de">German</option>
+                                            <option value="it">Italian</option>
+                                            <option value="ja">Japanese</option>
+                                            <option value="pt-PT">Portuguese (Portugal)</option>
+                                            <option value="ru">Russian</option>
+                                        </select>
+                                    </div>
+                                    <div class="upload-file-container prompt-container">
+                                        <button type="submit" id="generateTranscript" class="btn btn-dark Generate-button">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion mt-3" id="promptAccordion">
+                            <div class="card">
+                                <div class="card-header" id="promptHeading">
+                                    <h5 class="mb-0">
+                                        <button class="btn col-12 response-accordion" type="button" data-toggle="collapse" data-target="#promptCollapse" aria-expanded="true" aria-controls="promptCollapse">
+                                            <i class='far fa-file-alt'></i> Response
+                                        </button>
+                                    </h5>
+                                </div>
+
+                                <div id="promptCollapse" class="collapse show" aria-labelledby="promptHeading" data-parent="#promptAccordion">
+                                    <div class="card-body" id="summaryResult">
+                                        <div class="form-group" style="text-align: left;">
+                                            {% if transcript %}
+                                                <div id="tranScript">
+                                                    <div class="col-md-12">
+                                                        <h2>Transcript:</h2>
+                                                        <p>{{ transcript }}</p>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+
+                                            <!-- Display translated language -->
+                                            {% if translated_language %}
+                                                <div id="translatedLanguage">
+                                                    <div class="col-md-12">
+                                                        <h2>Translated Language:</h2>
+                                                        <p>{{ translated_language }}</p>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="loader" id="loader"></div>
+            </div>
+            <!-- Footer -->
+            {% include 'footer.html' %}
+        </main>
+    </div>
+
+    <!-- Your existing script block -->
+    <script>
+        // ... (existing script)
+    </script>
+
+    <!-- Include Bootstrap JavaScript and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
