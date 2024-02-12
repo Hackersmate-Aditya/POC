@@ -2,96 +2,181 @@
 
 <body id="body" class="sidebar-on">    
     <div class="app-container">
-            {% include 'sidebar.html' %} 
-            <main class="app-content-wrppr" id="page-content">
-                <div class="pg-wrppr">
-                <form method="POST" enctype="multipart/form-data">
-                <!-- <div class="container mt-5 mb-5"> -->
-                    <div class="accordion" id="inputTextAccordion">
-                        <div class="card">
-                            <div class="card-header" id="inputTextHeading">
-                                <h5 class="mb-0">
-                                    <button class="btn col-12 header-button" type="button" data-toggle="collapse" data-target="#inputTextCollapse" aria-expanded="true" aria-controls="inputTextCollapse">
-                                        Generate Transcript
-                                    </button>
-                                </h5>
-                            </div>
-                            <div id="inputTextAccordion" class="collapse show" aria-labelledby="inputTextHeading" data-parent="#inputTextAccordion">
-                                <div class="card-body">
-                                    <div class="form-group select-file-container">
-                                        <div class="custom-file">
-                                            <input type="file" id="audioFile" name="audio" accept=".mp3, .wav" style="display: none">
-                                            <label for="audioFile"><img class="upload-img" src="../static/upload-svgrepo-com.svg"></img></label>
-                                            <label for="audioFile">Select audio file (MP3 or WAV)</label>
-                                        </div>
-                                        <div id="audioPlayerContainer" style="display: none;">
-                                            <audio id="audioPlayer" controls>
-                                                <source src="" type="audio/mpeg">
-                                                Your browser does not support the audio element.
-                                            </audio>
-                                        </div>
-                                        <div id="selectedFileName"></div>
+        {% include 'sidebar.html' %} 
+        <main class="app-content-wrppr" id="page-content">
+            <div class="pg-wrppr">
+                <div class="pg-content-wrppr pg-gt">
+                    <form method="POST" enctype="multipart/form-data">
+                        <div class="welcome-note" id="welcomeNote">
+                            <div class="welcome-note-content-warapper">
+                                <svg width="81" height="80" viewBox="0 0 81 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g filter="url(#filter0_d_80_1717)">
+                                        <path d="M49.8721 10.2368C49.4779 10.0448 49.0378 9.96712 48.6018 10.0127C48.1657 10.0583 47.7512 10.2252 47.4053 10.4946L26.9443 26.4058H13.6875C12.4443 26.4058 11.252 26.8996 10.3729 27.7787C9.49386 28.6578 9 29.8501 9 31.0933V49.8433C9 51.0865 9.49386 52.2788 10.3729 53.1578C11.252 54.0369 12.4443 54.5308 13.6875 54.5308H26.9443L47.4053 70.4419C47.7515 70.7111 48.1663 70.8777 48.6026 70.9228C49.0388 70.968 49.4789 70.8898 49.8729 70.6972C50.267 70.5046 50.599 70.2054 50.8314 69.8334C51.0638 69.4615 51.1872 69.0318 51.1875 68.5933V12.3433C51.1876 11.9042 51.0643 11.4739 50.8317 11.1015C50.5991 10.7291 50.2666 10.4295 49.8721 10.2368ZM46.5 63.8003L29.1885 50.3384C28.778 50.0168 28.2714 49.8424 27.75 49.8433H13.6875V31.0933H27.75C28.2714 31.0941 28.778 30.9198 29.1885 30.5982L46.5 17.1362V63.8003ZM62.9062 33.437V47.4995C62.9062 48.1211 62.6593 48.7173 62.2198 49.1568C61.7802 49.5963 61.1841 49.8433 60.5625 49.8433C59.9409 49.8433 59.3448 49.5963 58.9052 49.1568C58.4657 48.7173 58.2188 48.1211 58.2188 47.4995V33.437C58.2188 32.8154 58.4657 32.2193 58.9052 31.7797C59.3448 31.3402 59.9409 31.0933 60.5625 31.0933C61.1841 31.0933 61.7802 31.3402 62.2198 31.7797C62.6593 32.2193 62.9062 32.8154 62.9062 33.437ZM72.2812 28.7495V52.187C72.2812 52.8086 72.0343 53.4048 71.5948 53.8443C71.1552 54.2838 70.5591 54.5308 69.9375 54.5308C69.3159 54.5308 68.7198 54.2838 68.2802 53.8443C67.8407 53.4048 67.5938 52.8086 67.5938 52.187V28.7495C67.5938 28.1279 67.8407 27.5318 68.2802 27.0922C68.7198 26.6527 69.3159 26.4058 69.9375 26.4058C70.5591 26.4058 71.1552 26.6527 71.5948 27.0922C72.0343 27.5318 72.2812 28.1279 72.2812 28.7495Z" fill="#2F2F39"/>
+                                    </g>
+                                    <defs>
+                                        <filter id="filter0_d_80_1717" x="9" y="10" width="67.2812" height="64.9353" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                                            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                                            <feOffset dx="4" dy="4"/>
+                                            <feComposite in2="hardAlpha" operator="out"/>
+                                            <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 0.815686 0 0 0 0 0.847059 0 0 0 1 0"/>
+                                            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_80_1717"/>
+                                            <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_80_1717" result="shape"/>
+                                        </filter>
+                                    </defs>
+                                </svg>    
+                                
+                                <h1 class="feature-intro-title">Revolutionising Audio Transcript</h1>
+                                <p class="feature-intro-desc">
+                                    The AI Audio Transcript App is designed to bridge the gap between audio content and text-based accessibility
+                                </p>
+
+                                <!--Step1: option to uplaod or select audio file-->
+                                <div class="form-group select-file-container">
+                                    <div class="custom-file">
+                                        <svg width="50" height="52" viewBox="0 0 50 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g clip-path="url(#clip0_134_2815)">
+                                                <g filter="url(#filter0_d_134_2815)">
+                                                <path d="M48.0467 26.0795C48.057 29.7882 46.8772 33.3985 44.6873 36.3592C44.5949 36.4848 44.4793 36.5905 44.3468 36.6705C44.2144 36.7505 44.0679 36.8031 43.9155 36.8253C43.7632 36.8475 43.608 36.8389 43.4589 36.7999C43.3099 36.7609 43.1698 36.6924 43.0467 36.5982C42.9235 36.5041 42.8198 36.3861 42.7414 36.251C42.663 36.1159 42.6114 35.9664 42.5897 35.811C42.5679 35.6556 42.5764 35.4974 42.6146 35.3453C42.6528 35.1933 42.7199 35.0504 42.8123 34.9248C44.1864 33.0561 45.1054 30.881 45.4937 28.5789C45.8819 26.2768 45.7283 23.9135 45.0455 21.6838C44.3626 19.4542 43.1701 17.4219 41.5662 15.7546C39.9623 14.0872 37.9929 12.8325 35.8203 12.0938C33.6477 11.3551 31.3341 11.1536 29.0701 11.5059C26.8062 11.8582 24.6567 12.7542 22.7989 14.12C20.941 15.4858 19.428 17.2824 18.3844 19.3618C17.3409 21.4411 16.7967 23.7436 16.7967 26.0795C16.7967 26.3965 16.6732 26.7005 16.4534 26.9247C16.2337 27.1489 15.9356 27.2748 15.6248 27.2748C15.314 27.2748 15.0159 27.1489 14.7961 26.9247C14.5764 26.7005 14.4529 26.3965 14.4529 26.0795C14.4514 24.3471 14.709 22.6247 15.2166 20.9715C14.8335 20.9247 14.4481 20.9007 14.0623 20.8998C11.4723 20.8998 8.98836 21.9493 7.15695 23.8173C5.32554 25.6853 4.29666 28.2189 4.29666 30.8607C4.29666 33.5025 5.32554 36.0361 7.15695 37.9042C8.98836 39.7722 11.4723 40.8217 14.0623 40.8217H18.7498C19.0606 40.8217 19.3587 40.9476 19.5784 41.1718C19.7982 41.3959 19.9217 41.7 19.9217 42.017C19.9217 42.334 19.7982 42.638 19.5784 42.8622C19.3587 43.0864 19.0606 43.2123 18.7498 43.2123H14.0623C12.3863 43.2117 10.7286 42.8563 9.1942 42.1684C7.65981 41.4806 6.28212 40.4753 5.14832 39.2163C4.01452 37.9573 3.14929 36.4719 2.60741 34.8542C2.06552 33.2364 1.85877 31.5216 2.00025 29.8181C2.14173 28.1147 2.62835 26.4597 3.42931 24.958C4.23028 23.4563 5.32815 22.1406 6.65343 21.094C7.97872 20.0475 9.50256 19.293 11.1285 18.8782C12.7545 18.4634 14.4471 18.3975 16.0994 18.6845C17.7438 15.1808 20.5067 12.351 23.9349 10.6593C27.3631 8.96767 31.2532 8.51451 34.9671 9.37419C38.681 10.2339 41.9982 12.3553 44.3748 15.3907C46.7513 18.426 48.0461 22.195 48.0467 26.0795ZM30.5154 25.2348C30.2957 25.011 29.9978 24.8852 29.6873 24.8852C29.3767 24.8852 29.0789 25.011 28.8592 25.2348L22.6092 31.6098C22.4022 31.8364 22.2895 32.1361 22.2948 32.4458C22.3002 32.7554 22.4232 33.0509 22.6379 33.2699C22.8526 33.4889 23.1422 33.6143 23.4458 33.6198C23.7494 33.6253 24.0433 33.5103 24.2654 33.2992L28.5154 28.9662V42.017C28.5154 42.334 28.6389 42.638 28.8586 42.8622C29.0784 43.0864 29.3765 43.2123 29.6873 43.2123C29.9981 43.2123 30.2962 43.0864 30.5159 42.8622C30.7357 42.638 30.8592 42.334 30.8592 42.017V28.9662L35.1092 33.2992C35.3313 33.5103 35.6251 33.6253 35.9287 33.6198C36.2323 33.6143 36.522 33.4889 36.7367 33.2699C36.9514 33.0509 37.0744 32.7554 37.0797 32.4458C37.0851 32.1361 36.9724 31.8364 36.7654 31.6098L30.5154 25.2348Z" fill="black"/>
+                                                </g>
+                                            </g>
+                                            <defs>
+                                                <filter id="filter0_d_134_2815" x="1.95703" y="8.94934" width="48.0898" height="36.2629" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                                                    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                                                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                                                    <feOffset dx="2" dy="2"/>
+                                                    <feComposite in2="hardAlpha" operator="out"/>
+                                                    <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 0.815686 0 0 0 0 0.847059 0 0 0 1 0"/>
+                                                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_134_2815"/>
+                                                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_134_2815" result="shape"/>
+                                                </filter>
+                                                <clipPath id="clip0_134_2815">
+                                                    <rect width="50" height="51" fill="white" transform="translate(0 0.579468)"/>
+                                                </clipPath>
+                                            </defs>
+                                        </svg>
+
+                                        <input type="file" id="audioFile" name="audio" accept=".mp3, .wav" style="display: none">
+                                        <p class="upload-audio-inst">
+                                            Drag your MP3 or WAV file here 
+                                            <br> 
+                                            <span>or</span>
+                                        </p>
+                                        <label for="audioFile" class="mb-0">
+                                            <span class="btn btn-primary">Browse File</span>
+                                        </label>
                                     </div>
-                                    <div class="upload-file-container prompt-container">
-                                        <!-- <button type="submit" class="btn btn-dark rounded-pill Generate-button" id="generateTranscript" >Upload and Transcribe</button> -->
-                                        <button type="submit" id="generateTranscript" class="btn btn-dark Generate-button">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-                                                        </svg>                                          
-                                                    </button>
-                                    </div>
-                                </div>        
-                            </div>
-                            
-                        </div>
-                        
-                        <div class="accordion  mt-3" id="promptAccordion">
-                            <div class="card">
-                                <div class="card-header" id="promptHeading">
-                                    <h5 class="mb-0">
-                                        <button class="btn col-12 response-accordion" type="button" data-toggle="collapse" data-target="#promptCollapse" aria-expanded="true" aria-controls="promptCollapse">
-                                            <i class='far fa-file-alt'></i> Response
-                                        </button>
-                                    </h5>
                                 </div>
-                
-                                <div id="promptCollapse" class="collapse show" aria-labelledby="promptHeading" data-parent="#promptAccordion">
-                                    <div class="card-body" id="summaryResult">
-                                        <div class="form-group" style="text-align: left;">
-                                            {% if transcript %}
-                                            <div id="tranScript">
-                                                <div class="col-md-12">
-                                                    <!-- <h2>Transcript:</h2> -->
-                                                    <p>{{ transcript }}</p>
-                                                </div>
+                            </div>
+
+                            <!-- Response to show here -->
+                            <div class="transcript-response hide">
+                                <div class="prompt-response bot">
+                                    <div id="summaryResult">
+                                        {% if transcript %}
+                                        <div id="tranScript">
+                                            {{ transcript }}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    <ul class="generated-prompt-cta">
+                                        <li>
+                                            <i>
+                                                <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M14.0601 9.5V13C14.0601 13.2321 13.9679 13.4546 13.8038 13.6187C13.6397 13.7828 13.4171 13.875 13.1851 13.875H3.18506C2.95299 13.875 2.73043 13.7828 2.56634 13.6187C2.40225 13.4546 2.31006 13.2321 2.31006 13V9.5C2.31006 9.40054 2.34957 9.30516 2.41989 9.23483C2.49022 9.16451 2.5856 9.125 2.68506 9.125C2.78451 9.125 2.8799 9.16451 2.95022 9.23483C3.02055 9.30516 3.06006 9.40054 3.06006 9.5V13C3.06006 13.0332 3.07323 13.0649 3.09667 13.0884C3.12011 13.1118 3.15191 13.125 3.18506 13.125H13.1851C13.2182 13.125 13.25 13.1118 13.2734 13.0884C13.2969 13.0649 13.3101 13.0332 13.3101 13V9.5C13.3101 9.40054 13.3496 9.30516 13.4199 9.23483C13.4902 9.16451 13.5856 9.125 13.6851 9.125C13.7845 9.125 13.8799 9.16451 13.9502 9.23483C14.0206 9.30516 14.0601 9.40054 14.0601 9.5ZM7.92006 9.765C7.99037 9.83523 8.08568 9.87467 8.18506 9.87467C8.28443 9.87467 8.37975 9.83523 8.45006 9.765L10.9501 7.265C11.0163 7.19391 11.0524 7.09989 11.0506 7.00274C11.0489 6.90559 11.0096 6.8129 10.9409 6.74419C10.8722 6.67548 10.7795 6.63613 10.6823 6.63441C10.5852 6.6327 10.4911 6.66876 10.4201 6.735L8.56006 8.59437V2.5C8.56006 2.40054 8.52055 2.30516 8.45022 2.23483C8.3799 2.16451 8.28451 2.125 8.18506 2.125C8.0856 2.125 7.99022 2.16451 7.91989 2.23483C7.84957 2.30516 7.81006 2.40054 7.81006 2.5V8.59437L5.95006 6.735C5.87897 6.66876 5.78495 6.6327 5.6878 6.63441C5.59065 6.63613 5.49795 6.67548 5.42925 6.74419C5.36054 6.8129 5.32118 6.90559 5.31947 7.00274C5.31776 7.09989 5.35382 7.19391 5.42006 7.265L7.92006 9.765Z" fill="#000"/>
+                                                </svg></i>
+                                        </li>
+                                        <li>
+                                            <i>
+                                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M12.721 0.715576H4.05436C3.9107 0.715576 3.77293 0.772645 3.67135 0.874227C3.56976 0.975809 3.5127 1.11358 3.5127 1.25724V3.96558H0.804362C0.660703 3.96558 0.522928 4.02264 0.421346 4.12423C0.319764 4.22581 0.262695 4.36358 0.262695 4.50724V13.1739C0.262695 13.3176 0.319764 13.4553 0.421346 13.5569C0.522928 13.6585 0.660703 13.7156 0.804362 13.7156H9.47103C9.61469 13.7156 9.75246 13.6585 9.85405 13.5569C9.95563 13.4553 10.0127 13.3176 10.0127 13.1739V10.4656H12.721C12.8647 10.4656 13.0025 10.4085 13.104 10.3069C13.2056 10.2053 13.2627 10.0676 13.2627 9.92391V1.25724C13.2627 1.11358 13.2056 0.975809 13.104 0.874227C13.0025 0.772645 12.8647 0.715576 12.721 0.715576ZM8.92936 12.6322H1.34603V5.04891H8.92936V12.6322ZM12.1794 9.38224H10.0127V4.50724C10.0127 4.36358 9.95563 4.22581 9.85405 4.12423C9.75246 4.02264 9.61469 3.96558 9.47103 3.96558H4.59603V1.79891H12.1794V9.38224Z" fill="#2F2F39"/>
+                                                    </svg>
+                                            </i>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                                    
+                            <!--Step2: audio file uplaoding in progress-->
+                            <div class="audio-processing-container hide">
+                                <div class="audio-processing-container-body">
+                                    <div class="audio-upload-progress">
+                                        <p>Uploading Audio File</p>
+                                        <span class="stop-upload">
+                                            <svg width="7" height="6" viewBox="0 0 7 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M6.34924 0.796605L4.15766 2.98818L6.34924 5.17976C6.39578 5.22313 6.4331 5.27542 6.45899 5.33353C6.48488 5.39163 6.4988 5.45436 6.49993 5.51796C6.50105 5.58156 6.48935 5.64474 6.46553 5.70372C6.4417 5.7627 6.40624 5.81628 6.36126 5.86126C6.31628 5.90624 6.2627 5.9417 6.20372 5.96553C6.14474 5.98935 6.08156 6.00105 6.01796 5.99993C5.95436 5.9988 5.89163 5.98488 5.83353 5.95899C5.77542 5.9331 5.72313 5.89578 5.67976 5.84924L3.48818 3.65766L1.29661 5.84924C1.20681 5.93291 1.08804 5.97846 0.965328 5.97629C0.842612 5.97413 0.725527 5.92442 0.638739 5.83763C0.551952 5.75084 0.502239 5.63376 0.500074 5.51104C0.497909 5.38832 0.543461 5.26956 0.627132 5.17976L2.81871 2.98818L0.627132 0.796605C0.543461 0.706811 0.497909 0.588045 0.500074 0.465328C0.502239 0.342612 0.551952 0.225527 0.638739 0.138739C0.725527 0.0519523 0.842612 0.00223899 0.965328 7.37974e-05C1.08804 -0.00209139 1.20681 0.0434605 1.29661 0.127132L3.48818 2.31871L5.67976 0.127132C5.76956 0.0434605 5.88832 -0.00209139 6.01104 7.37974e-05C6.13376 0.00223899 6.25084 0.0519523 6.33763 0.138739C6.42442 0.225527 6.47413 0.342612 6.47629 0.465328C6.47846 0.588045 6.43291 0.706811 6.34924 0.796605Z" fill="#EA1B3D"/>
+                                            </svg>                                                    
+                                        </span>
+
+                                        <!-- //show progress bar here -->
+                                        <div class="progress-bar-container">
+                                            <div class="progress-bar">
                                             </div>
-                                            {% endif %}         
-                                            
                                         </div>
                                     </div>
+                                    <button disabled type="submit" id="generateTranscript" class="btn-generate label-with-icon">
+                                        Generate Transcript
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12.4353 7.07228L4.03517 1.93384C3.89357 1.84871 3.73116 1.81177 3.56951 1.82792C3.40786 1.84407 3.25462 1.91255 3.13015 2.02426C3.00568 2.13597 2.91586 2.28562 2.87264 2.45334C2.82942 2.62106 2.83483 2.7989 2.88816 2.96324L4.43817 7.81124C4.43797 7.81302 4.43797 7.81482 4.43817 7.8166C4.43789 7.81837 4.43789 7.82018 4.43817 7.82196L2.88816 12.6807C2.84545 12.81 2.8323 12.9483 2.84981 13.0842C2.86733 13.22 2.91499 13.3494 2.98881 13.4614C3.06262 13.5734 3.16043 13.6648 3.27403 13.728C3.38763 13.7911 3.5137 13.8241 3.64166 13.8242C3.7805 13.8238 3.9169 13.7851 4.03767 13.7117L12.4333 8.56467C12.5571 8.49032 12.6603 8.382 12.7321 8.25082C12.804 8.11963 12.842 7.97032 12.8423 7.81819C12.8425 7.66606 12.805 7.51659 12.7336 7.38514C12.6621 7.25368 12.5593 7.14496 12.4358 7.07013L12.4353 7.07228ZM3.64166 12.9668V12.962L5.14868 8.25119H8.04171C8.1478 8.25119 8.24954 8.20602 8.32456 8.12563C8.39957 8.04523 8.44171 7.93619 8.44171 7.82249C8.44171 7.7088 8.39957 7.59976 8.32456 7.51936C8.24954 7.43896 8.1478 7.3938 8.04171 7.3938H5.15268L3.64466 2.68459L3.64166 2.67816L12.0418 7.81338L3.64166 12.9668Z" fill="white"/>
+                                        </svg>                                          
+                                    </button>
                                 </div>
-                            </div>
+                                <div class="audio-processing-container-footer">
+                                    Selected Audio file: <span id="selectedFileName01"></span>
+                                    <div class="upload-audio-cta">
+                                        <input type="file" id="audioFile" name="audio" accept=".mp3, .wav" style="display: none">
+                                        <label for="audioFile" class="mb-0">
+                                            <span>Browse New File</span>
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M6.49097 6.04223L6.49098 6.04221L7.78142 4.75365V9.64464C7.78142 9.78869 7.83875 9.92682 7.94075 10.0286C8.04274 10.1304 8.18103 10.1876 8.32518 10.1876C8.46934 10.1876 8.60763 10.1304 8.70962 10.0286C8.81161 9.92682 8.86895 9.78869 8.86895 9.64464V4.75365L10.1594 6.04221L10.1594 6.04223C10.2614 6.14408 10.3998 6.20126 10.544 6.20126C10.6882 6.20126 10.8266 6.14408 10.9286 6.04223C11.0307 5.94037 11.088 5.80219 11.088 5.65806C11.088 5.51394 11.0307 5.37575 10.9286 5.2739L8.70983 3.05918C8.70982 3.05916 8.70981 3.05915 8.70979 3.05914C8.65929 3.00868 8.59933 2.96866 8.53335 2.94136C8.46735 2.91405 8.39662 2.9 8.32518 2.9C8.25375 2.9 8.18301 2.91405 8.11701 2.94136C8.05103 2.96866 7.99107 3.00868 7.94057 3.05914C7.94056 3.05915 7.94055 3.05916 7.94053 3.05918L5.72175 5.2739C5.6197 5.37575 5.56234 5.51394 5.56234 5.65806C5.56234 5.80219 5.6197 5.94037 5.72175 6.04223C5.82378 6.14408 5.96214 6.20126 6.10636 6.20126C6.25058 6.20126 6.38893 6.14408 6.49097 6.04223ZM13.7504 12.7453V9.64464C13.7504 9.50058 13.693 9.36245 13.591 9.26065C13.489 9.15884 13.3508 9.10168 13.2066 9.10168C13.0624 9.10168 12.9242 9.15884 12.8222 9.26065C12.7202 9.36245 12.6628 9.50058 12.6628 9.64464V12.6453H3.98753V9.64464C3.98753 9.50058 3.9302 9.36245 3.8282 9.26065C3.72621 9.15884 3.58792 9.10168 3.44377 9.10168C3.29961 9.10168 3.16132 9.15884 3.05933 9.26065C2.95733 9.36245 2.9 9.50058 2.9 9.64464V12.7453C2.9 13.0068 3.00409 13.2576 3.18931 13.4425C3.37452 13.6274 3.62568 13.7312 3.88753 13.7312H12.7628C13.0247 13.7312 13.2758 13.6274 13.4611 13.4425C13.6463 13.2576 13.7504 13.0068 13.7504 12.7453Z" fill="#2F2F39" stroke="#2F2F39" stroke-width="0.2"/>
+                                            </svg>   
+                                        </label>
+                                    </div>
+                                </div>
+                            </div> 
+
+                            <!--Step3: audio file uploaded and ready to generate transcript-->
+                            <div id="audioPlayerContainer" class="audio-processing-container hide">
+                                <div class="audio-processing-container-body">
+                                    <audio id="audioPlayer" controls>
+                                        <source src="" type="audio/mpeg">
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                    <button type="submit" id="generateTranscript" class="btn-generate label-with-icon">
+                                        Generate Transcript
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12.4353 7.07228L4.03517 1.93384C3.89357 1.84871 3.73116 1.81177 3.56951 1.82792C3.40786 1.84407 3.25462 1.91255 3.13015 2.02426C3.00568 2.13597 2.91586 2.28562 2.87264 2.45334C2.82942 2.62106 2.83483 2.7989 2.88816 2.96324L4.43817 7.81124C4.43797 7.81302 4.43797 7.81482 4.43817 7.8166C4.43789 7.81837 4.43789 7.82018 4.43817 7.82196L2.88816 12.6807C2.84545 12.81 2.8323 12.9483 2.84981 13.0842C2.86733 13.22 2.91499 13.3494 2.98881 13.4614C3.06262 13.5734 3.16043 13.6648 3.27403 13.728C3.38763 13.7911 3.5137 13.8241 3.64166 13.8242C3.7805 13.8238 3.9169 13.7851 4.03767 13.7117L12.4333 8.56467C12.5571 8.49032 12.6603 8.382 12.7321 8.25082C12.804 8.11963 12.842 7.97032 12.8423 7.81819C12.8425 7.66606 12.805 7.51659 12.7336 7.38514C12.6621 7.25368 12.5593 7.14496 12.4358 7.07013L12.4353 7.07228ZM3.64166 12.9668V12.962L5.14868 8.25119H8.04171C8.1478 8.25119 8.24954 8.20602 8.32456 8.12563C8.39957 8.04523 8.44171 7.93619 8.44171 7.82249C8.44171 7.7088 8.39957 7.59976 8.32456 7.51936C8.24954 7.43896 8.1478 7.3938 8.04171 7.3938H5.15268L3.64466 2.68459L3.64166 2.67816L12.0418 7.81338L3.64166 12.9668Z" fill="white"/>
+                                        </svg>                                          
+                                    </button>
+                                </div>
+                                <div class="audio-processing-container-footer">
+                                    Selected Audio file: <span class="selected-file-name" id="selectedFileName02"></span>
+                                    <div class="upload-audio-cta">
+                                        <input type="file" id="audioFile" name="audio" accept=".mp3, .wav" style="display: none">
+                                        <label for="audioFile" class="mb-0">
+                                            <span>Browse New File</span>
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M6.49097 6.04223L6.49098 6.04221L7.78142 4.75365V9.64464C7.78142 9.78869 7.83875 9.92682 7.94075 10.0286C8.04274 10.1304 8.18103 10.1876 8.32518 10.1876C8.46934 10.1876 8.60763 10.1304 8.70962 10.0286C8.81161 9.92682 8.86895 9.78869 8.86895 9.64464V4.75365L10.1594 6.04221L10.1594 6.04223C10.2614 6.14408 10.3998 6.20126 10.544 6.20126C10.6882 6.20126 10.8266 6.14408 10.9286 6.04223C11.0307 5.94037 11.088 5.80219 11.088 5.65806C11.088 5.51394 11.0307 5.37575 10.9286 5.2739L8.70983 3.05918C8.70982 3.05916 8.70981 3.05915 8.70979 3.05914C8.65929 3.00868 8.59933 2.96866 8.53335 2.94136C8.46735 2.91405 8.39662 2.9 8.32518 2.9C8.25375 2.9 8.18301 2.91405 8.11701 2.94136C8.05103 2.96866 7.99107 3.00868 7.94057 3.05914C7.94056 3.05915 7.94055 3.05916 7.94053 3.05918L5.72175 5.2739C5.6197 5.37575 5.56234 5.51394 5.56234 5.65806C5.56234 5.80219 5.6197 5.94037 5.72175 6.04223C5.82378 6.14408 5.96214 6.20126 6.10636 6.20126C6.25058 6.20126 6.38893 6.14408 6.49097 6.04223ZM13.7504 12.7453V9.64464C13.7504 9.50058 13.693 9.36245 13.591 9.26065C13.489 9.15884 13.3508 9.10168 13.2066 9.10168C13.0624 9.10168 12.9242 9.15884 12.8222 9.26065C12.7202 9.36245 12.6628 9.50058 12.6628 9.64464V12.6453H3.98753V9.64464C3.98753 9.50058 3.9302 9.36245 3.8282 9.26065C3.72621 9.15884 3.58792 9.10168 3.44377 9.10168C3.29961 9.10168 3.16132 9.15884 3.05933 9.26065C2.95733 9.36245 2.9 9.50058 2.9 9.64464V12.7453C2.9 13.0068 3.00409 13.2576 3.18931 13.4425C3.37452 13.6274 3.62568 13.7312 3.88753 13.7312H12.7628C13.0247 13.7312 13.2758 13.6274 13.4611 13.4425C13.6463 13.2576 13.7504 13.0068 13.7504 12.7453Z" fill="#2F2F39" stroke="#2F2F39" stroke-width="0.2"/>
+                                            </svg>   
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>    
                         </div>
-                        </div>
-                    <!-- </div> -->
-            </form>
-            <div class="loader" id="loader"></div>
+                    </form>
+                    <div class="loader" id="loader"></div>
                 </div>
-                <!-- Footer -->
-                <!-- {% include 'footer.html' %}  -->
-            </main>
+                {% include 'footer.html' %}
+            </div>
+        </main>
     </div>
      
-
-
-
-
-
 <script>
         // Get a reference to the file input element
     const fileInput = document.getElementById("audioFile");
     // Get a reference to the element where you want to display the file name
-    const selectedFileName = document.getElementById("selectedFileName");
+    const selectedFileName01 = document.getElementById("selectedFileName01");
+    const selectedFileName02 = document.getElementById("selectedFileName02");
     const audioPlayer = document.getElementById('audioPlayer');
     // const summaryResult = document.getElementById("summaryResult");
     // summaryResult.innerHTML = "";
@@ -102,7 +187,10 @@
     if (fileInput.files.length > 0) {
         // Display the selected file name in the designated element
         selectedFile= fileInput.files[0]
-        selectedFileName.textContent = "Selected Audio file: " + fileInput.files[0].name;
+        selectedFileName01.textContent = fileInput.files[0].name;
+        selectedFileName01.title = fileInput.files[0].name;
+        selectedFileName02.textContent = fileInput.files[0].name;
+        selectedFileName02.title = fileInput.files[0].name;
         const objectURL = URL.createObjectURL(selectedFile);
 
     // Set the audio player source to the URL
