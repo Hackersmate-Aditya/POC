@@ -446,7 +446,11 @@ def generate_multiple_audio_transcript(audio_file, language):
             return transcript, translated_language
 
     except Exception as e:
-        return f"Error: {str(e)}", None        
+        return f"Error: {str(e)}", None  
+
+@app.route('/imageClassification', methods=['GET'])
+def index2():
+    return render_template('image_Classification.html')                
     
     
 
