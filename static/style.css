@@ -572,6 +572,11 @@ audio#audioPlayer {
     background-image: url('user-profile-pic.png');
 }
 
+.response-list {
+    display: inline-flex;
+    flex-flow: column wrap;
+}
+
 .generated-prompt-cta {
     list-style-type: none;
     padding: 0;

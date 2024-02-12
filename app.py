@@ -19,6 +19,7 @@ from langchain.llms import OpenAI
 from langchain.chains.question_answering import load_qa_chain
 from langchain.chains.summarize import load_summarize_chain
 from dotenv import load_dotenv
+from googletrans import Translator
 import pinecone
 # ALL imports 
 # imports
@@ -410,6 +411,46 @@ def process_pdf():
 
     else:
         return jsonify({'status': 'error', 'message': 'File type not allowed'})
+
+@app.route('/generate_translation', methods=['POST', 'GET'])
+def generate_multiple_transcript():
+    transcript = None
+    translated_language = None
+
+    if request.method == "POST":
+        audio_file = request.files["audio"]
+        language = request.form['language']
+
+        if audio_file:
+            transcript, translated_language = generate_multiple_audio_transcript(audio_file, language)
+
+    return render_template("translation.html", transcript=transcript, translated_language=translated_language, current_url=request.path)
+
+def generate_multiple_audio_transcript(audio_file, language):
+    try:
+        # Rename the uploaded file to have a .wav suffix
+        temp_dir = tempfile.mkdtemp()
+        temp_wav = Path(temp_dir) / audio_file.filename
+        temp_wav = temp_wav.with_suffix('.wav')
+        audio_file.save(temp_wav)
+
+        # Open the renamed .wav file and transcribe it
+        with open(temp_wav, "rb") as wav_file:
+            response = openai.Audio.transcribe("whisper-1", wav_file)
+            transcript = response['text']
+
+            # Use googletrans for translation
+            translator = Translator()
+            translated_language = translator.translate(transcript, dest=language).text
+
+            return transcript, translated_language
+
+    except Exception as e:
+        return f"Error: {str(e)}", None  
+
+@app.route('/imageClassification', methods=['GET'])
+def index2():
+    return render_template('image_Classification.html')                
     
     
 
