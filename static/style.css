@@ -15,6 +15,10 @@
     text-align: left;
 }
 
+.h-100 {
+    height: calc(100% - 12px);
+}
+
 
 /* === GLOBAL === */
 html, body {
@@ -65,6 +69,10 @@ body {
 
 .pg-gt form {
     height: 100%;
+}
+
+.pg-gcd {
+    height: calc(100% - 96px);
 }
 
 
@@ -123,6 +131,70 @@ body {
 #sidebar {
     transition: all 0.3s;
     overflow: visible;
+}
+
+/* Generate Contract Document */
+.pg-generate-contract-doc .audio-processing-container {
+    width: 100%;
+    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.09);
+    border-radius: 5px;
+}
+
+.pg-generate-contract-doc .audio-upload-progress {
+    max-width: 336px;
+    margin-right: 28px;
+}
+
+.pg-generate-contract-doc .audio-processing-container .btn-generate, .pg-generate-contract-doc .audio-processing-container .btn-generate.disabled, .pg-generate-contract-doc .audio-processing-container .btn-generate:disabled {
+    margin-left: auto;
+}
+
+.pg-generate-contract-doc .upload-audio-cta label {
+    font-size: 12px;
+    color: #2F2F39;
+}
+
+.pg-generate-contract-doc .audio-processing-container-body {
+    align-items: center;
+}
+
+.file-upload-status {
+    font-size: 13px;
+}
+
+.file-upload-status svg {
+    vertical-align: bottom;
+    margin-right: 3px;
+}
+
+.pg-generate-contract-doc .chat-wrapper {
+    text-align: left;
+    padding-left: 40px;
+    padding-top: 7px;
+}
+
+.block-title {
+    display: block;
+    font-size: 17px;
+    font-weight: 500;
+    color: #2F2F39;
+    margin: 28px 0 8px;
+}
+
+.pdf-qa-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.pdf-qa-list .question {
+    font-size: 15px;
+    font-weight: 500;
+    color: #2F2F39;
+    margin-bottom: 5px;
+}
+
+.pdf-qa-list .answer {
+    font-size: 15px;
 }
     
 /* Collapsed sidebar */
@@ -476,10 +548,9 @@ audio#audioPlayer {
 .prompt, textarea.form-control.prompt {
     border-radius: 8px;
     height: 56px;
-    padding: 20px 18px;
+    padding: 10px 18px;
     font-size: 15px;
     border: 1px solid rgba(103, 103, 117, 48%);
-
 }
 
 .prompt-container {
