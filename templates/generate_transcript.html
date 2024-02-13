@@ -326,7 +326,7 @@
     function hideLoader() {
     document.getElementById("loader").style.display = "none";
     }
-    const dropArea = document.getElementById('dropArea');    
+    let dropArea = document.getElementById('dropArea');    
 
   // Prevent default drag behaviors
   ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -362,14 +362,14 @@
 
   function handleDrop(e) {
     const dt = e.dataTransfer;
-    const files = dt.files;
+    let files = dt.files;
 
     if (files.length > 0) {
-      const file = files[0];
-      const fileType = file.type.split('/')[0];
+      let file = files[0];
+      let fileType = file.type.split('/')[0];
       
       if (fileType === 'audio') {
-        const reader = new FileReader();
+        let reader = new FileReader();
         
 
         reader.onprogress = function(event) {
@@ -387,6 +387,8 @@
             // File loaded successfully
             console.log('File loaded successfully');
             generateTranscriptBtn.removeAttribute('disabled');
+                // Update the file input with the dropped files
+            fileInput.files = files;
             showProgressBarContainerOnly()
 
         };
