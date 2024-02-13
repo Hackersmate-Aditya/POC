@@ -43,19 +43,19 @@
             margin-bottom: 5px;
             text-align: center;
         }
-        .progress-container {
+        .container1 {
             margin-bottom: 10px;
             
         }
-        .progress-bar {
-            width: 500px; 
-            height: 20px; 
+        .bar1 {
+            width: 500px !important; 
+            height: 20px !important; 
             background-color: #ddd;
             margin: 0 auto 5px auto; 
             position: relative;
             
         }
-        .progress-bar-fill {
+        .bar-fill1 {
             height: 100%;
             position: absolute;
             top: 0;
@@ -63,7 +63,7 @@
             transition: width 0.3s ease;
             
         }
-        .progress-label {
+        .label1 {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -71,13 +71,13 @@
             color: white;
            
         }
-        .progress-bar-blue {
+        .bar-blue1 {
             /* background-color: #f21616; */
             background-color: #28a745;
             
         }
 
-        .progress-bar-green {
+        .bar-green1 {
             background-color: #f21616;
             
         }
@@ -97,6 +97,7 @@
                 </div>
                 <div id="webcam-container" class="container"></div>
                 <div id="label-container" class="container"></div>
+                
                     
                 <div class="loader" id="loader"></div>
                 </div>
@@ -161,23 +162,23 @@
             const prediction = await model.predict(webcam.canvas);
             for (let i = 0; i < maxPredictions; i++) {
                 const progressBar = document.createElement('div');
-                progressBar.classList.add('progress-bar');
+                progressBar.classList.add('bar1');
 
                 const progressBarFill = document.createElement('div');
-                progressBarFill.classList.add('progress-bar-fill');                            
+                progressBarFill.classList.add('bar-fill1');                            
                 
                 progressBarFill.style.width = `${prediction[i].probability * 100}%`;
 
                 if (i % 2 === 0) {
-                    progressBarFill.classList.add('progress-bar-blue');
+                    progressBarFill.classList.add('bar-blue1');
                 } else {
-                    progressBarFill.classList.add('progress-bar-green');
+                    progressBarFill.classList.add('bar-green1');
                 }
 
                 progressBar.appendChild(progressBarFill);
 
                 const label = document.createElement('div');
-                label.classList.add('progress-label');
+                label.classList.add('label1');
                 label.textContent = `${(prediction[i].probability * 100).toFixed(2)}%`;                
 
                 progressBar.appendChild(label);
