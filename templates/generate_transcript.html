@@ -184,7 +184,7 @@
                                     </button>
                                 </div>
                                 <div class="audio-processing-container-footer">
-                                    <span class="selected-file-name" id="selectedFileName02"></span>
+                                    <span class="selected-file-name" id="selectedFileName"></span>
                                     <div class="upload-audio-cta">
                                         <input type="file" id="audioFile" name="audio" accept=".mp3, .wav" style="display: none">
                                         <label for="audioFile" class="mb-0">
@@ -321,28 +321,28 @@
 
 
     function showLoader() {
-    document.getElementById("loader").style.display = "block";
+        document.getElementById("loader").style.display = "block";
     }    
     function hideLoader() {
-    document.getElementById("loader").style.display = "none";
+        document.getElementById("loader").style.display = "none";
     }
     let dropArea = document.getElementById('dropArea');    
 
-  // Prevent default drag behaviors
-  ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-    dropArea.addEventListener(eventName, preventDefaults, false);
-    document.body.addEventListener(eventName, preventDefaults, false);
-  });
+    // Prevent default drag behaviors
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, preventDefaults, false);
+        document.body.addEventListener(eventName, preventDefaults, false);
+    });
 
-  // Highlight drop area when a draggable item is dragged over it
-  ['dragenter', 'dragover'].forEach(eventName => {
-    dropArea.addEventListener(eventName, highlight, false);
-  });
+    // Highlight drop area when a draggable item is dragged over it
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropArea.addEventListener(eventName, highlight, false);
+    });
 
-  // Unhighlight drop area when draggable item is dragged out of it
-  ['dragleave', 'drop'].forEach(eventName => {
-    dropArea.addEventListener(eventName, unhighlight, false);
-  });
+    // Unhighlight drop area when draggable item is dragged out of it
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, unhighlight, false);
+    });
 
   // Handle dropped files
   dropArea.addEventListener('drop', handleDrop, false);

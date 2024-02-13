@@ -5,9 +5,11 @@
         {% include 'sidebar.html' %} 
         <main class="app-content-wrppr" id="page-content">
             <div class="pg-wrppr pg-generate-contract-doc">
+                <form id="textInputPrompt"  action="/process_pdff" method="post" enctype="multipart/form-data" >
+
                 <div class="pg-content-wrppr pg-gcd">
                         <!--PDF file uploading progress and status to show here -->
-                        <div id="progressBarContainer" class="audio-processing-container">
+                        <div id="progressBarContainer" class="audio-processing-container"  style="display: none;">
                             <div class="audio-processing-container-body">
                                 <!-- <div class="audio-upload-progress">
                                     <p>Uploading Audio File</p>
@@ -40,33 +42,22 @@
                                         </div>
 
                                         <!-- //show progress bar here -->
-                                        <div class="progress-bar-container">
+                                        <div id="progressBarWithRemoveBtn" style="display: block;" class="progress-bar-container">
                                                 <progress class="progress-bar" id="progressBar" value="0" max="100"></progress>
                                         </div>
                                     </div>
 
                                     <!-- Uploaded file information -->
-                                    <p class="file-upload-status hide">
-                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <g clip-path="url(#clip0_193_549)">
-                                                <path d="M18.3332 9.23355V10.0002C18.3321 11.7972 17.7503 13.5458 16.6743 14.9851C15.5983 16.4244 14.0859 17.4773 12.3626 17.9868C10.6394 18.4963 8.79755 18.4351 7.1119 17.8124C5.42624 17.1896 3.98705 16.0386 3.00897 14.5311C2.03089 13.0236 1.56633 11.2403 1.68457 9.44714C1.80281 7.65402 2.49751 5.94715 3.66507 4.58111C4.83263 3.21506 6.41049 2.26303 8.16333 1.867C9.91617 1.47097 11.7501 1.65216 13.3915 2.38355" stroke="#00882C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M18.3333 3.3335L10 11.6752L7.5 9.17516" stroke="#00882C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                            </g>
-                                            <defs>
-                                                <clipPath id="clip0_193_549">
-                                                    <rect width="20" height="20" fill="white"/>
-                                                </clipPath>
-                                            </defs>
-                                        </svg>
-                                            
-                                        File uploaded successfully <span>Finace.pdf</span></p>
+                                    <p  class="file-upload-status" id="selectedFileName"></p>
                                     
 
                                 </div>
 
                                 <div class="upload-audio-cta">
-                                    <input type="file" id="audioFile" name="audio" accept=".mp3, .wav" style="display: none">
-                                    <label for="audioFile" class="mb-0">
+                                   
+
+                                    <!-- <input type="file" id="pdfFile" name="inputFile" accept=".pdf" style="display: none"> -->
+                                    <label for="pdfFile" class="mb-0">
                                         <span>Browse New File</span>
                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M6.49097 6.04223L6.49098 6.04221L7.78142 4.75365V9.64464C7.78142 9.78869 7.83875 9.92682 7.94075 10.0286C8.04274 10.1304 8.18103 10.1876 8.32518 10.1876C8.46934 10.1876 8.60763 10.1304 8.70962 10.0286C8.81161 9.92682 8.86895 9.78869 8.86895 9.64464V4.75365L10.1594 6.04221L10.1594 6.04223C10.2614 6.14408 10.3998 6.20126 10.544 6.20126C10.6882 6.20126 10.8266 6.14408 10.9286 6.04223C11.0307 5.94037 11.088 5.80219 11.088 5.65806C11.088 5.51394 11.0307 5.37575 10.9286 5.2739L8.70983 3.05918C8.70982 3.05916 8.70981 3.05915 8.70979 3.05914C8.65929 3.00868 8.59933 2.96866 8.53335 2.94136C8.46735 2.91405 8.39662 2.9 8.32518 2.9C8.25375 2.9 8.18301 2.91405 8.11701 2.94136C8.05103 2.96866 7.99107 3.00868 7.94057 3.05914C7.94056 3.05915 7.94055 3.05916 7.94053 3.05918L5.72175 5.2739C5.6197 5.37575 5.56234 5.51394 5.56234 5.65806C5.56234 5.80219 5.6197 5.94037 5.72175 6.04223C5.82378 6.14408 5.96214 6.20126 6.10636 6.20126C6.25058 6.20126 6.38893 6.14408 6.49097 6.04223ZM13.7504 12.7453V9.64464C13.7504 9.50058 13.693 9.36245 13.591 9.26065C13.489 9.15884 13.3508 9.10168 13.2066 9.10168C13.0624 9.10168 12.9242 9.15884 12.8222 9.26065C12.7202 9.36245 12.6628 9.50058 12.6628 9.64464V12.6453H3.98753V9.64464C3.98753 9.50058 3.9302 9.36245 3.8282 9.26065C3.72621 9.15884 3.58792 9.10168 3.44377 9.10168C3.29961 9.10168 3.16132 9.15884 3.05933 9.26065C2.95733 9.36245 2.9 9.50058 2.9 9.64464V12.7453C2.9 13.0068 3.00409 13.2576 3.18931 13.4425C3.37452 13.6274 3.62568 13.7312 3.88753 13.7312H12.7628C13.0247 13.7312 13.2758 13.6274 13.4611 13.4425C13.6463 13.2576 13.7504 13.0068 13.7504 12.7453Z" fill="#2F2F39" stroke="#2F2F39" stroke-width="0.2"/>
@@ -74,71 +65,26 @@
                                     </label>
                                 </div>
 
-                                <button disabled type="submit" id="generateTranscript" class="btn-generate label-with-icon">
+                                <button disabled type="submit" id="generateDoc" class="btn-generate label-with-icon hide">
                                     Start Over                                         
                                 </button>
                             </div>
                         </div>
 
                         <!--User and Prompt (Bot) response to show here -->
-                        <div class="chat-wrapper" id="chat-history">
+                        <div class="chat-wrapper" id="chatHistory" style="display: none;">
                             <div>
                                 <div class="prompt-response user" id="textInput">
-                                    <!--user entered test to show here-->
-                                    What is the revenue of XYZ Corporation?
+                                   
                                 </div>
                             </div>
 
-                            <div>
+                            <div id="promptBoxChat">
                                 <div class="prompt-response bot">
                                     <div id="summaryResult">
-                                    
-                                        <div id="tranScript">
-                                            <!-- {{ transcript }} -->
-                                            <!-- <div class="pdf-synopsis">
-                                                <span class="block-title">Synopsis:</span>
-                                                XYZ Corporation's financial statement for February 5, 2024 shows a revenue of $500,000 and a net income of $150,000. The company has $425,000 in total assets and $175,000 in total liabilities. They have $75,000 in ending cash and $200,000 in revenue primarily from product sales. Their expenses include direct manufacturing costs, salaries, rent, utilities, and marketing expenses. .
-                                            </div> -->
 
-                                            {% if summary %}
-                                            <div class="pdf-synopsis">
-                                                <span class="block-title">Synopsis:</span>
-                                                {{ summary }}
-                                            </div>
-                                            {% endif %}
 
-                                            <div class="pdf-qa">
-                                                <!-- <span class="block-title">QA Corner:</span>
-                                                
-                                                <ul class="pdf-qa-list">
-                                                    <li>
-                                                        <p class="question">What is the financial revenue of XYZ Corporation?</p>
-                                                        <p class="answer">Revenue of $500,000 and a net income of $150,000. The company has $425,000 in total assets and $175,000 in total liabilities.</p>
-                                                    </li>
 
-                                                    <li>
-                                                        <p class="question">What is the financial revenue of XYZ Corporation?</p>
-                                                        <p class="answer">Revenue of $500,000 and a net income of $150,000. The company has $425,000 in total assets and $175,000 in total liabilities.</p>
-                                                    </li>
-                                                </ul> -->
-
-                                                {% if formatted_answers %}
-                                                <div class="col-md-12">
-                                                    <span class="block-title">QA Corner:</span>
-                                                    <ul class="pdf-qa-list">
-                                                        {% for user_query, answer in formatted_answers %}
-                                                        <li>
-                                                            <p class="question">{{ user_query }}</p>
-                                                            <p class="answer">{{ answer }}</p>
-                                                        </li>
-                                                        {% endfor %}
-                                                    </ul>
-                                                </div>
-                                                {% endif %}
-                                            </div>
-
-                                        </div>
-                                    
                                     </div>
                                     <ul class="generated-prompt-cta">
                                         <li>
@@ -156,12 +102,18 @@
                                         </li>
                                     </ul>
                                 </div>
+                                   
+                                    
+                                   
                             </div>
 
                         </div>
 
+                    
+
+                    {% if not summary %}
                         <!--Welcome text and PDF file uplaod to show here -->
-                        <div class="welcome-note hide" id="welcomeNote">
+                        <div id="selectFileContainerWithWelcomeNote" class="welcome-note " >
                             <div class="welcome-note-content-warapper">
                                 <svg width="81" height="80" viewBox="0 0 81 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g filter="url(#filter0_d_138_1740)">
@@ -186,7 +138,7 @@
 
                                 <!--Step1: option to uplaod or select audio file-->
                             
-                                <div id="selectFileContainer" class="form-group select-file-container text-center">
+                                <div  class="form-group select-file-container text-center">
                                     <div class="custom-file">
                                         <svg width="50" height="52" viewBox="0 0 50 52" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clip-path="url(#clip0_134_2815)">
@@ -210,31 +162,38 @@
                                             </defs>
                                         </svg>
 
-                                        <input type="file" id="audioFile" name="inputFile" accept=".pdf" style="display: none">
+                                        <input type="file" id="pdfFile" name="inputFile" accept=".pdf" style="display: none">
                                             Drag your PDF file here 
                                             <br> 
                                             <span>or</span>
                                         </p>
-                                        <label for="audioFile" class="mb-0">
+                                        <label for="pdfFile" class="mb-0">
                                             <span class="btn btn-primary">Browse File</span>
                                         </label>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        {% endif %}
                         <div class="loader" id="loader"></div>
                 </div>
-
                 <!--Prompt to insert text to show here -->
-                <form class="prompt-box" action="/process_pdff" method="post" enctype="multipart/form-data">
-                    <div class="prompt-container btn-inside">
-                        <textarea class="form-control prompt contract-textarea" name="query" placeholder="Enter Questions (one question per line)"></textarea>
-                        <button type="submit" id="summaryForm" class="btn-generate icon-only">
-                            <svg width="16" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M15.3488 7.87209L1.90861 0.164426C1.68206 0.0367376 1.42221 -0.0186732 1.16356 0.00555387C0.904924 0.029781 0.659741 0.132499 0.460585 0.300064C0.261429 0.467628 0.117727 0.692107 0.0485688 0.943682C-0.0205895 1.19526 -0.011931 1.46202 0.0733942 1.70853L2.55342 8.98053C2.5531 8.9832 2.5531 8.9859 2.55342 8.98857C2.55297 8.99123 2.55297 8.99395 2.55342 8.99661L0.0733942 16.2847C0.00506218 16.4786 -0.0159761 16.6862 0.012045 16.8899C0.0400662 17.0937 0.116329 17.2878 0.234433 17.4558C0.352537 17.6238 0.509036 17.7609 0.690794 17.8556C0.872552 17.9503 1.07427 17.9998 1.27901 18C1.50114 17.9994 1.71938 17.9413 1.91261 17.8312L15.3456 10.1107C15.5437 9.99916 15.7087 9.83667 15.8238 9.6399C15.9388 9.44312 15.9996 9.21915 16 8.99095C16.0004 8.76276 15.9404 8.53856 15.8261 8.34138C15.7118 8.14419 15.5473 7.98111 15.3496 7.86887L15.3488 7.87209ZM1.27901 16.7139V16.7067L3.69023 9.64045H8.31908C8.48882 9.64045 8.65161 9.57271 8.77163 9.45211C8.89166 9.33152 8.95909 9.16796 8.95909 8.99741C8.95909 8.82687 8.89166 8.66331 8.77163 8.54271C8.65161 8.42212 8.48882 8.35437 8.31908 8.35437H3.69663L1.28381 1.29055L1.27901 1.28091L14.7191 8.98375L1.27901 16.7139Z" fill="white"/>
-                                </svg>                                      
-                        </button>
-                    </div>
+                    <!-- <input type="file" id="pdfFile" name="inputFile" accept=".pdf" > -->
+                    <!-- <form id="textInputPrompt" class="prompt-box" action="/process_pdff" method="post" enctype="multipart/form-data" style="display: none;"> -->
+                        <div id="prompt-box" class="prompt-box" style="display: none;">
+                            <div class="prompt-container btn-inside">
+                                <textarea class="form-control prompt contract-textarea" name="query" placeholder="Enter Questions (one question per line)"></textarea>
+                                <button type="submit" id="summaryForm" class="btn-generate icon-only">
+                                    <svg width="16" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M15.3488 7.87209L1.90861 0.164426C1.68206 0.0367376 1.42221 -0.0186732 1.16356 0.00555387C0.904924 0.029781 0.659741 0.132499 0.460585 0.300064C0.261429 0.467628 0.117727 0.692107 0.0485688 0.943682C-0.0205895 1.19526 -0.011931 1.46202 0.0733942 1.70853L2.55342 8.98053C2.5531 8.9832 2.5531 8.9859 2.55342 8.98857C2.55297 8.99123 2.55297 8.99395 2.55342 8.99661L0.0733942 16.2847C0.00506218 16.4786 -0.0159761 16.6862 0.012045 16.8899C0.0400662 17.0937 0.116329 17.2878 0.234433 17.4558C0.352537 17.6238 0.509036 17.7609 0.690794 17.8556C0.872552 17.9503 1.07427 17.9998 1.27901 18C1.50114 17.9994 1.71938 17.9413 1.91261 17.8312L15.3456 10.1107C15.5437 9.99916 15.7087 9.83667 15.8238 9.6399C15.9388 9.44312 15.9996 9.21915 16 8.99095C16.0004 8.76276 15.9404 8.53856 15.8261 8.34138C15.7118 8.14419 15.5473 7.98111 15.3496 7.86887L15.3488 7.87209ZM1.27901 16.7139V16.7067L3.69023 9.64045H8.31908C8.48882 9.64045 8.65161 9.57271 8.77163 9.45211C8.89166 9.33152 8.95909 9.16796 8.95909 8.99741C8.95909 8.82687 8.89166 8.66331 8.77163 8.54271C8.65161 8.42212 8.48882 8.35437 8.31908 8.35437H3.69663L1.28381 1.29055L1.27901 1.28091L14.7191 8.98375L1.27901 16.7139Z" fill="white"/>
+                                        </svg>                                      
+                                </button>
+                            </div>
+                        </div>
+
+                    <!-- </form> -->
+                </div>
                     {% include 'footer.html' %} 
                 </form>
             </div>
@@ -242,25 +201,137 @@
     </div>
     <script>
         // Get a reference to the file input element
-        const fileInput = document.getElementById("audioFile");
-        // Get a reference to the element where you want to display the file name
-        const selectedFileName = document.getElementById("selectedFileName");
-        
-        // Add an event listener to the file input to listen for changes
+        let  fileInput = document.getElementById("pdfFile");
+        let pdfFileinform = document.getElementById('pdfFileinform')
+
+        let audioPlayer = document.getElementById('audioPlayer');
+        let generateDocBtn = document.getElementById('generateDoc');
+        var removeFileBtn = document.getElementById('removeFileBtn');
+
+        let mainAudioPlayer = document.getElementById('mainAudioPlayer');
+        var mainProgressBar = document.getElementById('mainProgressBar');
+        var promptbox = document.getElementById('prompt-box');
+
+
+        let progressBarContainer = document.getElementById('progressBarContainer')
+        let selectedFileName = document.getElementById('selectedFileName')
+        let textInputPrompt = document.getElementById('textInputPrompt')
+        let chatHistory = document.getElementById('chatHistory')
+        let progressBarWithRemoveBtn = document.getElementById('progressBarWithRemoveBtn')
+
+
+
         fileInput.addEventListener("change", function () {
             // Check if a file has been selected
             if (fileInput.files.length > 0) {
-                // Display the selected file name in the designated element
-                selectedFile = fileInput.files[0]
-                selectedFileName.textContent = "Selected file: " + fileInput.files[0].name;
-                const objectURL = URL.createObjectURL(selectedFile);
 
-                // Release the object URL when it's no longer needed to prevent memory leaks
-            } else {
-                // If no file is selected, clear the displayed file name
-                selectedFileName.textContent = "";
+            // fileInput.files = files;
+            // Display the selected file name in the designated element
+            selectedFile= fileInput.files[0]
+
+            const objectURL = URL.createObjectURL(selectedFile);
+
+            var reader = new FileReader();
+
+            reader.onprogress = function(event) {
+                if (event.lengthComputable) {
+                    var percentLoaded = (event.loaded / event.total) * 100;
+                    progressBar.value = percentLoaded;
+                    if(percentLoaded === 100){
+                        mainAudioPlayer.style.display = 'block';
+                        mainProgressBar.style.display = 'none'
+                        progressBarWithRemoveBtn.style.display = 'none'
+                    }
+                }
+            };
+
+            reader.onload = function(event) {
+                // File loaded successfully
+                console.log('File loaded successfully');
+                generateDocBtn.removeAttribute('disabled');
+              
+                showProgressBarContainerOnly()
+
+            };
+
+            reader.onerror = function(event) {
+                // Error reading file
+                console.error('Error reading file:', event.target.error);
+            };
+
+            reader.readAsDataURL(selectedFile); // Read file as data URL (you can use other methods like readAsText())
+
+
+            selectedFileName.innerHTML = `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g clip-path="url(#clip0_193_549)">
+                                                <path d="M18.3332 9.23355V10.0002C18.3321 11.7972 17.7503 13.5458 16.6743 14.9851C15.5983 16.4244 14.0859 17.4773 12.3626 17.9868C10.6394 18.4963 8.79755 18.4351 7.1119 17.8124C5.42624 17.1896 3.98705 16.0386 3.00897 14.5311C2.03089 13.0236 1.56633 11.2403 1.68457 9.44714C1.80281 7.65402 2.49751 5.94715 3.66507 4.58111C4.83263 3.21506 6.41049 2.26303 8.16333 1.867C9.91617 1.47097 11.7501 1.65216 13.3915 2.38355" stroke="#00882C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M18.3333 3.3335L10 11.6752L7.5 9.17516" stroke="#00882C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </g>
+                                            <defs>
+                                                <clipPath id="clip0_193_549">
+                                                    <rect width="20" height="20" fill="white"/>
+                                                </clipPath>
+                                            </defs>
+                                        </svg>
+                                            
+                                         <span> File uploaded successfully  ${fileInput.files[0].name}</span>`
+            
+
+            fileInput.files = files;
+        
+
+
+            
+            // Set the audio player source to the URL
+            // audioPlayer.src = objectURL;
+            // audioPlayerContainer.style.display = 'block';
+
+            // Release the object URL when it's no longer needed to prevent memory leaks
+            audioPlayer.onended = function () {
+                URL.revokeObjectURL(objectURL);
+            };
+        } else {
+            // If no file is selected, clear the displayed file name
+            selectedFileName.innerHTML = "";
+            audioPlayer.src = '';
+            // audioPlayerContainer.style.display = 'none';
+            mainProgressBar.style.display = 'block'
+            promptbox.style.display = 'promptbox'
+
+        }
+        });   
+        
+
+        function showProgressBarContainerOnly(){
+            let selectFileContainerWithWelcomeNote = document.getElementById("selectFileContainerWithWelcomeNote");
+            let progressBarContainer = document.getElementById('progressBarContainer');
+            let audioPlayerContainer = document.getElementById('audioPlayerContainer');
+            progressBarContainer.style.display = 'block';
+            if(selectFileContainerWithWelcomeNote){
+                selectFileContainerWithWelcomeNote.style.display = 'none';
             }
+            if(audioPlayerContainer){
+                audioPlayerContainer.style.display = 'none';
+            }
+            if(textInputPrompt){
+                textInputPrompt.style.display = 'block'
+            }
+
+            promptbox.style.display = 'block'
+
+        }
+
+        
+        removeFileBtn.addEventListener('click', function() {
+            // Reset the file input field by clearing its value
+            fileInput.value = '';
+            progressBar.value = 0;
+            generateDocBtn.setAttribute('disabled', 'disabled');
+            selectedFileName.textContent  = ''
+            mainProgressBar.style.display = 'block'
+            // removeFileBtn.style.display = 'none';
         });
+
 
         // Function to show the loader
         function showLoader() {
@@ -293,6 +364,16 @@
                 .then(response => response.json())  // Parse response as JSON
                 .then(data => {
                     hideLoader();
+                    if(chatHistory){
+                        chatHistory.style.display = 'block'
+                     }       
+                    // Display the result
+
+                    var textInput = document.getElementById("textInput");
+
+                     if(data.user_query){
+                        textInput.innerText = data.user_query
+                    }
 
                     // Display the result
                     var resultDiv = document.getElementById("summaryResult");
@@ -325,6 +406,47 @@
                     }
 
                     resultDiv.innerHTML += `</div>`;
+
+
+                    // Display the multiple result       
+
+                    // let div = document.createElement('div');
+                 
+                    // if(data.user_query){
+                    //     textInput.innerText = data.user_query
+                    // }
+                    // div.innerHTML = ` <div id="tranScript" class="form-group">`;
+                    // if (data.summary) {
+                    //     div.innerHTML += `
+                    //         <div class="row mt-5 text-center">
+                    //             <div class="col-md-12">
+                    //                 <h6>Synopsis:</h6>
+                    //                 <p>${data.summary}</p>
+                    //             </div>
+                    //         </div>`;
+                    // }
+
+                    // if (data.formatted_answers && data.formatted_answers.length > 0) {
+                    //     div.innerHTML += `
+                    //         <div class="row mt-5 text-center">
+                    //             <div class="col-md-12">
+                    //                 <h6>QA Corner:</h6>
+                    //                 <ul>`;
+                    //     data.formatted_answers.forEach(item => {
+                    //         div.innerHTML += `
+                    //             <li><strong>Q: ${item.question}</strong><br>A: ${item.answer}</li>`;
+                    //     });
+                    //     div.innerHTML += `
+                    //                 </ul>
+                    //             </div>
+                    //         </div>`;
+                    // }
+
+                    // div.innerHTML += `</div>
+                    //              `;
+
+                    // resultDiv.appendChild(div);
+
                 })
                 .catch(error => {
                     hideLoader();
@@ -332,6 +454,7 @@
                 });
         }
     });
+
     </script>
     <!-- Include Bootstrap JavaScript and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
