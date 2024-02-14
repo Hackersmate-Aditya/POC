@@ -15,7 +15,7 @@
         {% include 'sidebar.html' %} 
         <main class="app-content-wrppr" id="page-content">
             <div class="pg-wrppr">
-                <div class="pg-content-wrppr pg-gt">
+                <div class="pg-content-wrppr pg-gt pg-as">
                     <form action="/audio_sentiment" method="post" enctype="multipart/form-data">
                         <div class="welcome-note" id="welcomeNote">
                             {% if not results %}
@@ -96,9 +96,14 @@
                                                     <p class="sentiment-header">Predicted Sentiment</p>
                                                     <p>
                                                         <span class="sentiment-text">{{ result.sentiment }}</span>
-                                                        <br>
-                                                        <span class="selected-file-name">Audio File: {{ result.audio_file }}</span>
+                                                        <!-- <br>
+                                                        <span class="selected-file-name">Audio File: {{ result.audio_file }}</span> -->
                                                     </p>
+                                                </div>
+                                                <div id="inputTextCollapse{{ loop.index  }}" class="collapse sentiment-transcript"
+                                                    aria-labelledby="inputTextHeading{{ loop.index  }}"
+                                                    data-parent="#inputTextAccordion{{ loop.index  }}">
+                                                        {{ result.transcript.text }}
                                                 </div>
                                                 <div id="inputTextAccordion{{ loop.index  }}">
                                                     <div id="inputTextHeading{{ loop.index }}">
@@ -107,11 +112,6 @@
                                                             aria-controls="inputTextCollapse{{ loop.index  }}">
                                                                 View Transcript
                                                         </button>
-                                                    </div>
-                                                    <div id="inputTextCollapse{{ loop.index  }}" class="collapse"
-                                                        aria-labelledby="inputTextHeading{{ loop.index  }}"
-                                                        data-parent="#inputTextAccordion{{ loop.index  }}">
-                                                            {{ result.transcript.text }}
                                                     </div>
                                                 </div>
                                             {% endfor %}

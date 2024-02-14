@@ -19,6 +19,9 @@
     height: calc(100% - 12px);
 }
 
+.transcript-generated .welcome-note {
+    justify-content: flex-start;
+}
 
 /* === GLOBAL === */
 html, body {
@@ -140,6 +143,15 @@ body {
 #sidebar {
     transition: all 0.3s;
     overflow: visible;
+}
+
+/* Audio Sentiment */
+.pg-as .transcript-response {
+    width: 100%;
+}
+
+.pg-as .transcript-response .prompt-response {
+    display: block;
 }
 
 /* Generate Contract Document */
@@ -433,7 +445,7 @@ button#download-button {
     margin: 0;
 }
 
-.audio-upload-progress + .btn-generate, #mainAudioPlayer + .btn-generate {
+.audio-upload-progress + .btn-generate, #mainAudioPlayer + .btn-generate, #audioPlayer + .btn-generate {
     margin-left: 16px;
 } 
 
@@ -490,7 +502,7 @@ button#download-button {
     right: 12px;
 }
 
-#mainAudioPlayer {
+#mainAudioPlayer, #audioPlayer {
     width: 315px;
 }
 
@@ -519,11 +531,14 @@ button#download-button {
     border: 1px solid #676775;
     border-radius: 8px;
     padding: 13px 20px;
+    margin-top: 12px;
 }
 
 .sentiment-header {
     font-weight: 500;
     font-size: 17px;
+    color: #2F2F39;
+    margin-bottom: 0;
 }
 
 .sentiment-response.neutral {
@@ -687,7 +702,11 @@ button#download-button {
 
 .prompt-response.user:before {
     content: 'You';
-    background-image: url('user-profile-pic.png');
+    background-image: url('Deepesh_photo.webp');
+    width: 27px;
+    height: 27px;
+    display: inline-block;
+    border-radius: 50%;
 }
 
 .response-list {
@@ -845,12 +864,11 @@ button#download-button {
     border-color: #B10F12;
 }
 .response-accordion{
-    background-color: #fff9ed;
-    color: #333;
+    color: #2F2F39;
     text-align: left;
-    font-size: 14px;
+    font-size: 13px;
     border-radius: 0;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .card-body {
@@ -891,6 +909,12 @@ button#download-button {
 
 .user-photo {
     margin-right: 11px;
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    overflow: hidden;
+    border-radius: 50%;
+    vertical-align: middle;
 }
 
 .form-group.select-file-container {
@@ -937,7 +961,17 @@ button#download-button {
 }
 
 .btn-link.response-accordion {
-    color: rgba(222, 4, 4, 0.741);
+    color: #2F2F39;
+    margin-top: 23px;
+    padding-left: 0;
+}
+
+.sentiment-transcript {
+    margin-top: 24px;
+}
+
+.sentiment-transcript.collapse.show + #inputTextAccordion1 .btn-link.response-accordion {
+    margin-top: 13px;
 }
 
 .response-accordion:focus {
