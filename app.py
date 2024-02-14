@@ -136,7 +136,9 @@ def generate_transcript():
         audio_file = request.files["audio"]
         if audio_file:
             transcript = generate_audio_transcript(audio_file)
-    return render_template("generate_transcript.html", transcript=transcript,current_url = request.path)
+        return jsonify({'transcript' : transcript, 'current_url':  request.path })
+    else:
+        return render_template("generate_transcript.html", transcript=transcript,current_url = request.path)
 
 def generate_audio_transcript(audio_file):
     try:
@@ -237,7 +239,10 @@ def audio_sentiment_analysis():
                     "transcript": transcript,
                     "sentiment": sentiment
                 })
-    return render_template("audio_sentimetnt.html", results=transcripts_and_sentiments, current_url = request.path)    
+
+        return jsonify({'results' : transcripts_and_sentiments, 'current_url':  request.path })
+    else :
+        return render_template("audio_sentimetnt.html", results=transcripts_and_sentiments, current_url = request.path)
 
 # Function to check if the uploaded file has a valid extension
 def allowed_file(filename):
@@ -355,6 +360,7 @@ def summarize_and_ask(pdf_file_path, user_questions):
 
     embeddings_qa = OpenAIEmbeddings(openai_api_key=openai.api_key)
     pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_API_ENV)
+    # index_name_qa = "genai"
     index_name_qa = "info"
     docsearch_qa = Pinecone.from_texts([t.page_content for t in texts], embeddings_qa, index_name=index_name_qa)
 
@@ -380,7 +386,7 @@ def summarize_and_ask(pdf_file_path, user_questions):
 # Combined route for PDF upload, summarization, and question answering
 @app.route('/newgendoc', methods=['GET'])
 def index1():
-    return render_template('generate_contractdoc.html')
+    return render_template('generate_contractdoc.html', current_url=request.path)
 
 # Modified route to handle multiple questions
 @app.route('/process_pdff', methods=['POST'])
@@ -450,7 +456,7 @@ def generate_multiple_audio_transcript(audio_file, language):
 
 @app.route('/imageClassification', methods=['GET'])
 def index2():
-    return render_template('image_Classification.html')                
+    return render_template('image_Classification.html', current_url=request.path)                
     
     
 

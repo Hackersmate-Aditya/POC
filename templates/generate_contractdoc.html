@@ -3,7 +3,7 @@
 <body id="body" class="sidebar-on">    
     <div class="app-container">
         {% include 'sidebar.html' %} 
-        <main class="app-content-wrppr" id="page-content">
+        <main class="app-content-wrppr" id="page-content"> 
             <div class="pg-wrppr pg-generate-contract-doc">
                 <form id="textInputPrompt"  action="/process_pdff" method="post" enctype="multipart/form-data" >
 
@@ -31,7 +31,7 @@
                                 <div  id="mainProgressBar" class="audio-upload-progress">
 
                                     <!-- Upload file progress -->
-                                    <div class="">
+                                    <div id="progressBarWithRemoveBtn">
                                         <p>Uploading PDF File</p>
                                         <div id="removeFileBtn">
                                             <span class="stop-upload">
@@ -42,7 +42,7 @@
                                         </div>
 
                                         <!-- //show progress bar here -->
-                                        <div id="progressBarWithRemoveBtn" style="display: block;" class="progress-bar-container">
+                                        <div  style="display: block;" class="progress-bar-container">
                                                 <progress class="progress-bar" id="progressBar" value="0" max="100"></progress>
                                         </div>
                                     </div>
@@ -163,7 +163,7 @@
                                         </svg>
 
                                         <input type="file" id="pdfFile" name="inputFile" accept=".pdf" style="display: none">
-                                            <p class="upload-audio-inst">
+                                            <p id="dropArea" class="upload-audio-inst">
                                                 Drag your PDF file here
                                                 <br>
                                             <span>or</span>
@@ -203,7 +203,6 @@
         let  fileInput = document.getElementById("pdfFile");
         let pdfFileinform = document.getElementById('pdfFileinform')
 
-        let audioPlayer = document.getElementById('audioPlayer');
         let generateDocBtn = document.getElementById('generateDoc');
         var removeFileBtn = document.getElementById('removeFileBtn');
 
@@ -275,24 +274,14 @@
                                             
                                          <span> File uploaded successfully  ${fileInput.files[0].name}</span>`
             
-
+            progressBarWithRemoveBtn.style.display = 'none'
             fileInput.files = files;
         
 
 
-            
-            // Set the audio player source to the URL
-            // audioPlayer.src = objectURL;
-            // audioPlayerContainer.style.display = 'block';
-
-            // Release the object URL when it's no longer needed to prevent memory leaks
-            audioPlayer.onended = function () {
-                URL.revokeObjectURL(objectURL);
-            };
         } else {
             // If no file is selected, clear the displayed file name
             selectedFileName.innerHTML = "";
-            audioPlayer.src = '';
             // audioPlayerContainer.style.display = 'none';
             mainProgressBar.style.display = 'block'
             promptbox.style.display = 'promptbox'
@@ -359,9 +348,7 @@
             fetch(form.action, {
                 method: form.method,
                 body: formData
-            })
-                .then(response => response.json())  // Parse response as JSON
-                .then(data => {
+            }).then(response => response.json()).then(data => {
                     hideLoader();
                     if(chatHistory){
                         chatHistory.style.display = 'block'
@@ -453,6 +440,112 @@
                 });
         }
     });
+
+    </script>
+
+    <script>
+
+            let dropArea = document.getElementById('dropArea');    
+
+            // Prevent default drag behaviors
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, preventDefaults, false);
+                document.body.addEventListener(eventName, preventDefaults, false);
+            });
+
+            // Highlight drop area when a draggable item is dragged over it
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropArea.addEventListener(eventName, highlight, false);
+            });
+
+            // Unhighlight drop area when draggable item is dragged out of it
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, unhighlight, false);
+            });
+
+            // Handle dropped files
+            dropArea.addEventListener('drop', handleDrop, false);
+
+            function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            }
+
+            function highlight() {
+            dropArea.classList.add('highlight');
+            }
+
+            function unhighlight() {
+            dropArea.classList.remove('highlight');
+            }
+
+            function handleDrop(e) {
+            const dt = e.dataTransfer;
+            let files = dt.files;
+
+            if (files.length > 0) {
+            let file = files[0];
+            let fileType = file.type.split('/')[0];
+            console.log(fileType)
+            
+            if (fileType === 'application') {
+                // Check if a file has been selected
+                    fileInput.files = files;
+                    // Display the selected file name in the designated element
+                    selectedFile= fileInput.files[0]
+                    console.log('selectedFile',selectedFile)
+                    const objectURL = URL.createObjectURL(selectedFile);
+
+                    var reader = new FileReader();
+
+                    reader.onprogress = function(event) {
+                        if (event.lengthComputable) {
+                            var percentLoaded = (event.loaded / event.total) * 100;
+                            progressBar.value = percentLoaded;
+                            if(percentLoaded === 100){
+                                mainAudioPlayer.style.display = 'block';
+                                mainProgressBar.style.display = 'none'
+                                progressBarWithRemoveBtn.style.display = 'none'
+                            }
+                        }
+                    };
+
+                    reader.onload = function(event) {
+                        // File loaded successfully
+                        console.log('File loaded successfully');
+                        generateDocBtn.removeAttribute('disabled');
+                    
+                        showProgressBarContainerOnly()
+
+                    };
+
+                    reader.onerror = function(event) {
+                        // Error reading file
+                        console.error('Error reading file:', event.target.error);
+                    };
+
+                    reader.readAsDataURL(selectedFile); // Read file as data URL (you can use other methods like readAsText())
+
+                    progressBarWithRemoveBtn.style.display = 'none'
+                    fileInput.files = files;
+                    selectedFileName.innerHTML = `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <g clip-path="url(#clip0_193_549)">
+                                                        <path d="M18.3332 9.23355V10.0002C18.3321 11.7972 17.7503 13.5458 16.6743 14.9851C15.5983 16.4244 14.0859 17.4773 12.3626 17.9868C10.6394 18.4963 8.79755 18.4351 7.1119 17.8124C5.42624 17.1896 3.98705 16.0386 3.00897 14.5311C2.03089 13.0236 1.56633 11.2403 1.68457 9.44714C1.80281 7.65402 2.49751 5.94715 3.66507 4.58111C4.83263 3.21506 6.41049 2.26303 8.16333 1.867C9.91617 1.47097 11.7501 1.65216 13.3915 2.38355" stroke="#00882C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        <path d="M18.3333 3.3335L10 11.6752L7.5 9.17516" stroke="#00882C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_193_549">
+                                                            <rect width="20" height="20" fill="white"/>
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+                                                    
+                                                <span> File uploaded successfully  ${fileInput.files[0]?.name}</span>`
+            } else {
+                alert('Please drop an pdf file.');
+            }
+        }
+    }
 
     </script>
     <!-- Include Bootstrap JavaScript and jQuery -->
