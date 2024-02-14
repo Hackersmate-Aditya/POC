@@ -23,6 +23,24 @@
     justify-content: flex-start;
 }
 
+/* === Loader === */
+.loader {
+    width: 6px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    animation: l5 1s infinite linear alternate;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: none;
+  }
+  @keyframes l5 {
+      0%  {box-shadow: 10px 0 #676775, -10px 0 #D9D9D9;background: #676775 }
+      33% {box-shadow: 10px 0 #676775, -10px 0 #D9D9D9;background: #D9D9D9}
+      66% {box-shadow: 10px 0 #D9D9D9,-10px 0 #676775; background: #D9D9D9}
+      100%{box-shadow: 10px 0 #D9D9D9,-10px 0 #676775; background: #676775 }
+  }
+
 /* === GLOBAL === */
 html, body {
     height: 100%;
@@ -155,10 +173,17 @@ body {
 }
 
 /* Generate Contract Document */
+body[data-new-gr-c-s-loaded= "14.1154.0"] .pg-generate-contract-doc .pg-gcd {
+    height: calc(100% - 96px);
+    padding-bottom: 5px;
+}
+
+
 .pg-generate-contract-doc .audio-processing-container {
-    width: 100%;
+    width: calc(100% - 2.6%);
     box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.09);
     border-radius: 5px;
+    margin-left: auto;
 }
 
 .pg-generate-contract-doc .audio-upload-progress {
@@ -179,19 +204,28 @@ body {
     align-items: center;
 }
 
+.pg-generate-contract-doc .prompt-response.user {
+    border-bottom-right-radius: 19px;
+}
+
 .file-upload-status {
     font-size: 13px;
+    position: relative;
+    padding-left: 25px;
 }
 
 .file-upload-status svg {
     vertical-align: bottom;
     margin-right: 3px;
+    position: absolute;
+    left: 0;
 }
 
 .pg-generate-contract-doc .chat-wrapper {
     text-align: left;
     padding-left: 40px;
     padding-top: 7px;
+    padding-right: 8px;
 }
 
 .block-title {

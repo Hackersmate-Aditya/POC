@@ -192,9 +192,8 @@
                                 </button>
                             </div>
                         </div>
-
-                        {% include 'footer.html' %} 
                     </form>
+                    {% include 'footer.html' %} 
                 </div>
         </main>
     </div>
@@ -363,32 +362,21 @@
 
                     // Display the result
                     var resultDiv = document.getElementById("summaryResult");
-                    resultDiv.innerHTML = `<div id="tranScript" class="form-group">`;
+                    resultDiv.innerHTML = `<div id="tranScript">`;
 
                     if (data.summary) {
                         resultDiv.innerHTML += `
-                            <div class="row mt-5 text-center">
-                                <div class="col-md-12">
-                                    <h6>Synopsis:</h6>
-                                    <p>${data.summary}</p>
-                                </div>
-                            </div>`;
+                                    <p class="block-title">Synopsis:</p>
+                                    <p>${data.summary}</p>`;
                     }
 
                     if (data.formatted_answers && data.formatted_answers.length > 0) {
                         resultDiv.innerHTML += `
-                            <div class="row mt-5 text-center">
-                                <div class="col-md-12">
-                                    <h6>QA Corner:</h6>
-                                    <ul>`;
-                        data.formatted_answers.forEach(item => {
-                            resultDiv.innerHTML += `
-                                <li><strong>Q: ${item.question}</strong><br>A: ${item.answer}</li>`;
-                        });
-                        resultDiv.innerHTML += `
-                                    </ul>
-                                </div>
-                            </div>`;
+                                    <p class="block-title">QA Corner:</p>`;
+                                        data.formatted_answers.forEach(item => {
+                                            resultDiv.innerHTML += `
+                                                <div class="pdf-qa-list"><p class="question">${item.question}</p><p class="answer">${item.answer}</p></div>`;
+                                        });
                     }
 
                     resultDiv.innerHTML += `</div>`;
