@@ -138,9 +138,9 @@
                                             </filter>
                                         </defs>
                                     </svg>    
-                                    <h1 class="feature-intro-title">Webcam Powered Image Classification</h1>
+                                    <h1 class="feature-intro-title">Quality Control Metrics for Products</h1>
                                     <p class="feature-intro-desc feature-classification-desc">
-                                        Incorporating webcam-powered image classification into your website can significantly enhance the user experience and provide real-time visual recognition capabilities.
+                                        Incorporating products to your website that offer real-time visual recognition capabilities and greatly improve user experience.
                                     </p>
                                     <!-- <button id="show_intact"  type="button" onclick="init()">Start Classification</button> -->
                                     <button type="button" id="show_intact" class="btn-generate label-with-icon cta-intro" onclick="init()">
@@ -149,7 +149,7 @@
                                         </svg>
                                             
                                           
-                                        Start Classification                                         
+                                        Start Quality Check                                         
                                     </button>
                                 </div>
                                 <div class="welcome-note-content-warapper" id="result-classification" style="display:none;">
@@ -213,7 +213,7 @@
             hideLoader();
             document.getElementById("result-classification").style.display = "block";
             const stopButton = document.createElement("button");
-            stopButton.textContent = "Stop Classification";
+            stopButton.textContent = "Stop Quality Check ";
             stopButton.id = "stop_button";
             stopButton.type = "button";
             const svgIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
