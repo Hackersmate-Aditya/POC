@@ -15,7 +15,7 @@
         {% include 'sidebar.html' %} 
         <main class="app-content-wrppr" id="page-content">
             <div class="pg-wrppr">
-                <div class="pg-content-wrppr pg-gt pg-as">
+                <div id="pgContentWrppr" class="pg-content-wrppr pg-gt pg-as">
                     <form action="/audio_sentiment" method="post" enctype="multipart/form-data"> 
                         <div class="welcome-note" id="welcomeNote">
                            
@@ -167,15 +167,25 @@
                     .then(response => response.json())  // Parse response as JSON
                     .then(data => {
                         if(data?.results && data.results.length){
+                            const pgContentWrppr = document.getElementById('pgContentWrppr')
+                            pgContentWrppr.classList.add('transcript-generated');
+
                             hideLoader();
                             responseSection.style.display = 'block'
                             selectFileSection.style.display = 'none'
-                            responseSection.innerHTML = ` <div class="prompt-response bot">
-                                        <div id="summaryResult">
-                                        
-                                            
-                                                    <div class="sentiment-response neutral">
-                                                        <p class="sentiment-header">Predicted Sentiment</p>
+                            let innerHTML = ''
+                            innerHTML += ` <div class="prompt-response bot">
+                                        <div id="summaryResult">`
+
+                            if( data.results[0].sentiment == 'Positive'){
+                                innerHTML+= `<div class="sentiment-response positive">`
+                            }else if (data.results[0].sentiment == 'Nagative'){
+                                innerHTML+= `<div class="sentiment-response nagative">`
+                            }else{
+                                innerHTML+= `<div class="sentiment-response neutral">`
+                            }
+
+                               innerHTML += `<p class="sentiment-header">Predicted Sentiment</p>
                                                         <p>
                                                             <span class="sentiment-text">${ data.results[0].sentiment }</span>
                                                             <!-- <br>
@@ -189,7 +199,7 @@
                                                     </div>
                                                     <div id="inputTextAccordion1">
                                                         <div id="inputTextHeading1">
-                                                            <button class="btn btn-link col-12 response-accordion" type="button" data-toggle="collapse"
+                                                            <button id="viewHideTranscriptBtn"  class="btn btn-link col-12 response-accordion" type="button" data-toggle="collapse"
                                                                 data-target="#inputTextCollapse1" aria-expanded="true"
                                                                 aria-controls="inputTextCollapse1">
                                                                     View Transcript
@@ -215,6 +225,8 @@
                                             </li>
                                         </ul>
                                     </div>`
+
+                                responseSection.innerHTML = innerHTML
                         }
                  })
                     .catch(error => {
@@ -223,6 +235,22 @@
                     });
             }
     });
+
+    // Add an event listener to the button element with id "inputTextCollapse1"
+
+
+            document.getElementById("responseSection").addEventListener("click", function(event) {
+                if (event.target && event.target.id == "viewHideTranscriptBtn") {
+                    const button = document.getElementById('viewHideTranscriptBtn');
+                    if ((button.textContent).trim() == 'View Transcript') {
+                        button.textContent = 'Hide Transcript';
+                    } else {
+                        button.textContent = 'View Transcript';
+                    }
+                }
+            });
+
+
     </script>
 
     

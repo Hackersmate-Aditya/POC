@@ -7,26 +7,11 @@
             <div class="pg-wrppr pg-generate-contract-doc">
                 <form id="textInputPrompt"  action="/process_pdff" method="post" enctype="multipart/form-data" >
 
-                <div class="pg-content-wrppr pg-gcd">
+                <div id="pgContentWrppr" class="pg-content-wrppr pg-gcd">
                         <!--PDF file uploading progress and status to show here -->
                         <div id="progressBarContainer" class="audio-processing-container"  style="display: none;">
                             <div class="audio-processing-container-body">
-                                <!-- <div class="audio-upload-progress">
-                                    <p>Uploading Audio File</p>
-                                    <div id="removeFileBtn">
-                                        <span class="stop-upload">
-                                            <svg width="7" height="6" viewBox="0 0 7 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M6.34924 0.796605L4.15766 2.98818L6.34924 5.17976C6.39578 5.22313 6.4331 5.27542 6.45899 5.33353C6.48488 5.39163 6.4988 5.45436 6.49993 5.51796C6.50105 5.58156 6.48935 5.64474 6.46553 5.70372C6.4417 5.7627 6.40624 5.81628 6.36126 5.86126C6.31628 5.90624 6.2627 5.9417 6.20372 5.96553C6.14474 5.98935 6.08156 6.00105 6.01796 5.99993C5.95436 5.9988 5.89163 5.98488 5.83353 5.95899C5.77542 5.9331 5.72313 5.89578 5.67976 5.84924L3.48818 3.65766L1.29661 5.84924C1.20681 5.93291 1.08804 5.97846 0.965328 5.97629C0.842612 5.97413 0.725527 5.92442 0.638739 5.83763C0.551952 5.75084 0.502239 5.63376 0.500074 5.51104C0.497909 5.38832 0.543461 5.26956 0.627132 5.17976L2.81871 2.98818L0.627132 0.796605C0.543461 0.706811 0.497909 0.588045 0.500074 0.465328C0.502239 0.342612 0.551952 0.225527 0.638739 0.138739C0.725527 0.0519523 0.842612 0.00223899 0.965328 7.37974e-05C1.08804 -0.00209139 1.20681 0.0434605 1.29661 0.127132L3.48818 2.31871L5.67976 0.127132C5.76956 0.0434605 5.88832 -0.00209139 6.01104 7.37974e-05C6.13376 0.00223899 6.25084 0.0519523 6.33763 0.138739C6.42442 0.225527 6.47413 0.342612 6.47629 0.465328C6.47846 0.588045 6.43291 0.706811 6.34924 0.796605Z" fill="#EA1B3D"/>
-                                            </svg>                                                    
-                                        </span>
-                                    </div>
-
-                                    //show progress bar here
-                                    <div class="progress-bar-container">
-                                        <progress class="progress-bar" id="progressBar" value="0" max="100"></progress>
-
-                                    </div>
-                                </div> -->
+                            
 
                                 <div  id="mainProgressBar" class="audio-upload-progress">
 
@@ -64,10 +49,14 @@
                                         </svg>   
                                     </label>
                                 </div>
+                                <div class="start-over-container">
 
-                                <button disabled type="submit" id="generateDoc" class="btn-generate label-with-icon hide">
-                                    Start Over                                         
-                                </button>
+                                    <a class="nav-link" href="/newgendoc">
+                                        <button  type="button" id="generateDoc" class="btn-generate label-with-icon">
+                                            Start Over                                         
+                                        </button>
+                                    </a>
+                                </div>
                             </div>
                         </div>
 
@@ -348,7 +337,12 @@
                 method: form.method,
                 body: formData
             }).then(response => response.json()).then(data => {
-                    hideLoader();
+                hideLoader();
+
+                if(data){
+                    const pgContentWrppr = document.getElementById('pgContentWrppr')
+                    pgContentWrppr.classList.add('transcript-generated');
+
                     if(chatHistory){
                         chatHistory.style.display = 'block'
                      }       
@@ -421,11 +415,11 @@
 
                     // resultDiv.appendChild(div);
 
-                })
+             }       })
                 .catch(error => {
                     hideLoader();
                     console.error('Error:', error);
-                });
+          });
         }
     });
 

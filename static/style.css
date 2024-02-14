@@ -22,6 +22,16 @@
 .transcript-generated .welcome-note {
     justify-content: flex-start;
 }
+.loader-small {
+    width: 6px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    animation: l5 1s infinite linear alternate;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: none;
+  }
 
 /* === Loader === */
 .loader {
@@ -202,7 +212,13 @@ body[data-new-gr-c-s-loaded= "14.1154.0"] .pg-generate-contract-doc .pg-gcd {
 
 .pg-generate-contract-doc .audio-processing-container-body {
     align-items: center;
+    display: flex;
 }
+
+.start-over-container{
+    margin-left: auto;
+}   
+
 
 .pg-generate-contract-doc .prompt-response.user {
     border-bottom-right-radius: 19px;

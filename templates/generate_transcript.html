@@ -5,7 +5,7 @@
         {% include 'sidebar.html' %} 
         <main class="app-content-wrppr" id="page-content">
             <div class="pg-wrppr">
-                <div class="pg-content-wrppr pg-gt">
+                <div id="pgContentWrppr" class="pg-content-wrppr pg-gt">
                     <form method="POST" enctype="multipart/form-data">
                         <div class="welcome-note" id="welcomeNote">
                            
@@ -419,6 +419,10 @@
                 body: formData
             }).then(response => response.json()).then(data => {
                     if(data?.transcript){
+
+                        const pgContentWrppr = document.getElementById('pgContentWrppr')
+                        pgContentWrppr.classList.add('transcript-generated');
+
                         hideLoader();
                         responseSection.style.display = 'block'
                         selectFileSection.style.display = 'none'
