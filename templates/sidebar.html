@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const body = document.getElementById("body");
     const navLinks = document.querySelectorAll(".nav-link");
 
-    toggleButton.addEventListener("click", function () {
+    toggleButton && toggleButton.addEventListener("click", function () {
         sidebar.classList.toggle("collapsed");
         body.classList.toggle("collapsed");
     });

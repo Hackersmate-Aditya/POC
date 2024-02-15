@@ -192,12 +192,10 @@
         let pdfFileinform = document.getElementById('pdfFileinform')
 
         let generateDocBtn = document.getElementById('generateDoc');
-        var removeFileBtn = document.getElementById('removeFileBtn');
+        let removeFileBtn = document.getElementById('removeFileBtn');
 
-        let mainAudioPlayer = document.getElementById('mainAudioPlayer');
-        var mainProgressBar = document.getElementById('mainProgressBar');
-        var promptbox = document.getElementById('prompt-box');
-
+        let mainProgressBar = document.getElementById('mainProgressBar');
+        let promptbox = document.getElementById('prompt-box');
 
         let progressBarContainer = document.getElementById('progressBarContainer')
         let selectedFileName = document.getElementById('selectedFileName')
@@ -217,15 +215,13 @@
 
             const objectURL = URL.createObjectURL(selectedFile);
 
-            var reader = new FileReader();
+            let reader = new FileReader();
 
             reader.onprogress = function(event) {
                 if (event.lengthComputable) {
-                    var percentLoaded = (event.loaded / event.total) * 100;
+                    let percentLoaded = (event.loaded / event.total) * 100;
                     progressBar.value = percentLoaded;
                     if(percentLoaded === 100){
-                        mainAudioPlayer.style.display = 'block';
-                        mainProgressBar.style.display = 'none'
                         progressBarWithRemoveBtn.style.display = 'none'
                     }
                 }
@@ -262,8 +258,8 @@
                                             
                                          <span> File uploaded successfully  ${fileInput.files[0].name}</span>`
             
-            progressBarWithRemoveBtn.style.display = 'none'
-            fileInput.files = files;
+            // progressBarWithRemoveBtn.style.display = 'none'
+            // fileInput.files = files;
         
 
 
@@ -348,14 +344,14 @@
                      }       
                     // Display the result
 
-                    var textInput = document.getElementById("textInput");
+                    let textInput = document.getElementById("textInput");
 
                      if(data.user_query){
                         textInput.innerText = data.user_query
                     }
 
                     // Display the result
-                    var resultDiv = document.getElementById("summaryResult");
+                    let resultDiv = document.getElementById("summaryResult");
                     resultDiv.innerHTML = `<div id="tranScript">`;
 
                     if (data.summary) {
@@ -478,11 +474,11 @@
                     console.log('selectedFile',selectedFile)
                     const objectURL = URL.createObjectURL(selectedFile);
 
-                    var reader = new FileReader();
+                    let reader = new FileReader();
 
                     reader.onprogress = function(event) {
                         if (event.lengthComputable) {
-                            var percentLoaded = (event.loaded / event.total) * 100;
+                            let percentLoaded = (event.loaded / event.total) * 100;
                             progressBar.value = percentLoaded;
                             if(percentLoaded === 100){
                                 mainAudioPlayer.style.display = 'block';

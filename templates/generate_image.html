@@ -8,10 +8,7 @@
                 <div class="pg-wrppr">
                     <div id="scroll-bar" class="pg-content-wrppr pg-gi">
                         <div class="hide" id="chat-history">
-                            <div id="imageList">
-
-                            </div>
-
+                            
                         </div>
 
                         <div class="welcome-note" id="welcomeNote">
@@ -118,8 +115,8 @@
             // Get text input
             const text = document.getElementById("text").value;
            
-            var resultDiv = document.getElementById("imageList");
-            if(resultDiv.childNodes?.length == 1){
+            var resultDiv = document.getElementById("chat-history");
+            if(resultDiv?.childNodes?.length == 1){
                 showLoader();
             }
 
@@ -151,7 +148,7 @@
             .then(data => {      
                 hideLoader();
                 if(data){
-                let resultDiv = document.getElementById("imageList");
+                let resultDiv = document.getElementById("chat-history");
                     const div = document.createElement('div');
                     div.innerHTML = `
 
@@ -206,11 +203,11 @@
             });
         });
 
-        document.getElementById("imageList").addEventListener("click", function(event) {
+        document.getElementById("chat-history").addEventListener("click", function(event) {
                 if (event.target && event.target.id == "reGenerateImage") {
                     // Your event handler code here
 
-                var resultDiv = document.getElementById("imageList");
+                var resultDiv = document.getElementById("chat-history");
                 const div = document.createElement('div');
                 div.innerHTML =   `
                             <div class="prompt-response bot">
@@ -229,7 +226,7 @@
 
             // Get text input
             const text = document.getElementById("text").value;
-            const imageResult = document.getElementById("imageResult");
+            // const imageResult = document.getElementById("imageResult");
             // imageResult.innerHTML = "";
 
             // Make a POST request to your Flask server to generate the image
@@ -384,14 +381,9 @@
                 // const imageResult = document.getElementById("imageResult");
                 // imageResult.innerHTML = `<img src="${data.image_url}" alt="Generated Image">`;
                 if(data){
-
-                var resultDiv = document.getElementById("imageList");
-
-                const imageResult = document.getElementById("imageList");
-                // let chatHistoryElement = document.getElementById("chat-history");
-
+                let chatHistoryElement = document.getElementById("chat-history");
                 chatHistoryElement.innerHTML = ``
-                div.innerHTML = div.innerHTML = `
+                chatHistoryElement.innerHTML =  `
                                 <div>
                                     <div class="prompt-response user" id="textInput">
                                             ${text}
@@ -421,7 +413,6 @@
                                 `;
 
                 textInput.innerHTML = text;
-                let chatHistoryElement = document.getElementById("chat-history");
                 chatHistoryElement.classList.remove("hide");
                                 }  
             })
