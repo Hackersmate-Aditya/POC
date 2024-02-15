@@ -39,7 +39,7 @@
                                         
                                     <h1 class="feature-intro-title">Unveiling Sentiments Through Sound</h1>
                                     <p class="feature-intro-desc">
-                                        In a world where communication transcends beyond words, understanding the sentiment based on the call recordings.
+                                        In a world where communication transcends beyond words, understanding the sentiment based on the call recordings
                                     </p>
 
                                     <!--Step1: option to uplaod or select audio file-->
@@ -69,12 +69,12 @@
 
                                             <input type="file" id="audioFile" name="audio[]" accept=".mp3, .wav" style="display: none" multiple>
                                             <p id="dropArea"  class="upload-audio-inst">
-                                                Drag your MP3 or WAV files here 
+                                                Drag your MP3 or WAV file here 
                                                 <br> 
                                                 <span>or</span>
                                             </p>
                                             <label for="audioFile" class="mb-0">
-                                                <span class="btn btn-primary">Browse Files</span>
+                                                <span class="btn btn-primary">Browse File</span>
                                             </label>
 
                                             <!-- {% if not results %}
@@ -141,7 +141,7 @@
 
                         </div>
                     </form>
-                    <div class="loader mt-5" id="loader"></div>
+                    <div class="css-loader mt-5" id="loader"></div>
                 </div>
                 {% include 'footer.html' %}
             </div>                
@@ -217,8 +217,8 @@
                                                     </svg></i>
                                             </li>
                                             <li id="copyButton" title="Copy">
-                                                <i>
-                                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <i id="copyButton">
+                                                    <svg id="copyButton" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <path d="M12.721 0.715576H4.05436C3.9107 0.715576 3.77293 0.772645 3.67135 0.874227C3.56976 0.975809 3.5127 1.11358 3.5127 1.25724V3.96558H0.804362C0.660703 3.96558 0.522928 4.02264 0.421346 4.12423C0.319764 4.22581 0.262695 4.36358 0.262695 4.50724V13.1739C0.262695 13.3176 0.319764 13.4553 0.421346 13.5569C0.522928 13.6585 0.660703 13.7156 0.804362 13.7156H9.47103C9.61469 13.7156 9.75246 13.6585 9.85405 13.5569C9.95563 13.4553 10.0127 13.3176 10.0127 13.1739V10.4656H12.721C12.8647 10.4656 13.0025 10.4085 13.104 10.3069C13.2056 10.2053 13.2627 10.0676 13.2627 9.92391V1.25724C13.2627 1.11358 13.2056 0.975809 13.104 0.874227C13.0025 0.772645 12.8647 0.715576 12.721 0.715576ZM8.92936 12.6322H1.34603V5.04891H8.92936V12.6322ZM12.1794 9.38224H10.0127V4.50724C10.0127 4.36358 9.95563 4.22581 9.85405 4.12423C9.75246 4.02264 9.61469 3.96558 9.47103 3.96558H4.59603V1.79891H12.1794V9.38224Z" fill="#2F2F39"/>
                                                         </svg>
                                                 </i>
