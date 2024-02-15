@@ -156,6 +156,7 @@
         document.getElementById("generateTranscript").addEventListener("click", function () {
             event.preventDefault(); 
             showLoader();
+            generateTranscriptBtn.setAttribute('disabled', 'disabled');
 
             const form = event.target.closest('form');
             if (form) {
@@ -166,11 +167,13 @@
                 })
                     .then(response => response.json())  // Parse response as JSON
                     .then(data => {
+                        generateTranscriptBtn.removeAttribute('disabled');
+                        hideLoader();
+
                         if(data?.results && data.results.length){
                             const pgContentWrppr = document.getElementById('pgContentWrppr')
                             pgContentWrppr.classList.add('transcript-generated');
 
-                            hideLoader();
                             responseSection.style.display = 'block'
                             selectFileSection.style.display = 'none'
                             let innerHTML = ''
@@ -230,6 +233,7 @@
                         }
                  })
                     .catch(error => {
+                        generateTranscriptBtn.removeAttribute('disabled');
                         hideLoader();
                         console.error('Error:', error);
                     });

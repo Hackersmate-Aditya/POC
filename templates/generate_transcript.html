@@ -410,6 +410,7 @@
     document.getElementById("generateTranscript").addEventListener("click", function () {
         event.preventDefault(); 
         showLoader();
+        generateTranscriptBtn.setAttribute('disabled', 'disabled');
 
         const form = event.target.closest('form');
         if (form) {
@@ -418,6 +419,8 @@
                 method: form.method,
                 body: formData
             }).then(response => response.json()).then(data => {
+                    generateTranscriptBtn.removeAttribute('disabled');
+
                     if(data?.transcript){
 
                         const pgContentWrppr = document.getElementById('pgContentWrppr')
@@ -453,6 +456,7 @@
                     }
              })
                 .catch(error => {
+                    generateTranscriptBtn.removeAttribute('disabled');
                     hideLoader();
                     console.error('Error:', error);
                 });
