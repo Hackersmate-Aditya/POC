@@ -1,6 +1,6 @@
 {% include 'head.html' %} 
 
-<body id="body" class="sidebar-on" data-new-gr-c-s-check-loaded="14.1154.0" data-gr-ext-installed="" data-new-gr-c-s-loaded="14.1154.0">    
+<body id="body" class="sidebar-on">    
     <div class="app-container">
         {% include 'sidebar.html' %} 
         <main class="app-content-wrppr" id="page-content"> 
@@ -260,7 +260,7 @@
             
             // progressBarWithRemoveBtn.style.display = 'none'
             // fileInput.files = files;
-        
+            addClassOnBody()
 
 
         } else {
@@ -313,6 +313,13 @@
         // Function to hide the loader
         function hideLoader() {
             document.getElementById("loader").style.display = "none";
+        }
+
+        function addClassOnBody(){
+            const getEl = document.getElementById('body')
+            if(getEl){
+                getEl.classList.add('document-uploaded');
+            }
         }
 
         // Function to update the summary container with the response
@@ -467,6 +474,7 @@
             console.log(fileType)
             
             if (fileType === 'application') {
+                addClassOnBody()
                 // Check if a file has been selected
                     fileInput.files = files;
                     // Display the selected file name in the designated element

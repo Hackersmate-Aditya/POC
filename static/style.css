@@ -40,9 +40,8 @@
     border-radius: 50%;
     animation: l5 1s infinite linear alternate;
     position: absolute;
-    left: 50%;
+    right: 30px;
     top: 50%;
-    display: none;
   }
   @keyframes l5 {
       0%  {box-shadow: 10px 0 #676775, -10px 0 #D9D9D9;background: #676775 }
@@ -183,7 +182,7 @@ body {
 }
 
 /* Generate Contract Document */
-body[data-new-gr-c-s-loaded= "14.1154.0"] .pg-generate-contract-doc .pg-gcd {
+body.document-uploaded .pg-generate-contract-doc .pg-gcd {
     height: calc(100% - 96px);
     padding-bottom: 5px;
 }
