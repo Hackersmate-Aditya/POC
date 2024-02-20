@@ -190,7 +190,22 @@
 
                                innerHTML += `<p class="sentiment-header">Predicted Sentiment</p>
                                                         <p>
-                                                            <span class="sentiment-text">${ data.results[0].sentiment }</span>
+                                                            <span class="sentiment-text">${ data.results[0].sentiment }</span>                                                                                                                       
+                                                            <div class="container mb-1">
+                                                            <h5>Positive Pointers:</h5>
+                                                            ${ data.results[0].Positive_Pointers ? 
+                                                                data.results[0].Positive_Pointers.map(point => `<div class="mb-1">${point}</div>`).join('') :
+                                                                `<p>No positive pointers</p>` 
+                                                            }
+                                                            </div>
+                                                            <div class="container mb-1">
+                                                                <h5>Negative Pointers:</h5>
+                                                                ${ data.results[0].Negative_Pointers ? 
+                                                                    data.results[0].Negative_Pointers.map(point => `<div class="mb-1">${point}</div>`).join('') :
+                                                                    `<p>No negative pointers</p>` 
+                                                                }
+                                                            </div>
+
                                                             <!-- <br>
                                                             <span class="selected-file-name">Audio File: ${ data.results[0].audio_file }</span> -->
                                                         </p>
