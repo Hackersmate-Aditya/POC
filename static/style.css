@@ -31,7 +31,13 @@
     left: 50%;
     top: 50%;
     display: none;
-  }
+}
+
+.collapse:not(.show) {
+    display: inherit;
+    visibility: hidden;
+    height: 0;
+}
 
 /* === Loader === */
 .loader {
@@ -85,8 +91,10 @@ body {
 .pg-content-wrppr {
     width: 100%;
     height: 100%;
-    padding: 0 10%;
+    /* padding: 0 10px 0 40px; */
     overflow: auto;
+    max-width: 910px;
+    margin: 0 auto;
 }
 
 .pg-gi {
@@ -156,6 +164,7 @@ body {
     border-radius: 6px;
     font-weight: 400;
     padding: 8px 10px;
+    transition: all ease-in 100ms;
 }
 
 .sidebar ul li a svg {
@@ -165,11 +174,16 @@ body {
 .sidebar ul li a:hover:not(.active), .sidebar ul.bottom-nav li a:hover {
     padding-left: 16px;        
     background-color: rgba(217, 217, 217, 0.04);
+    transition: all ease-out 100ms;
 }
 
 #sidebar {
     transition: all 0.3s;
     overflow: visible;
+}
+
+#chat-history {
+    padding: 0 10px 0 40px;
 }
 
 /* Audio Sentiment */
@@ -216,8 +230,7 @@ body.document-uploaded .pg-generate-contract-doc .pg-gcd {
 
 .start-over-container{
     margin-left: auto;
-}   
-
+}
 
 .pg-generate-contract-doc .prompt-response.user {
     border-bottom-right-radius: 19px;
@@ -568,11 +581,11 @@ button#download-button {
 
 .transcript-response {
     text-align: left;
-    padding-top: 100px;
     /* padding-left: 160px; */
     font-size: 17px;
     line-height: 27px;
     margin-right: auto;
+    padding: 100px 10px 20px 40px;
 }
 
 .sentiment-response {
@@ -581,6 +594,7 @@ button#download-button {
     border-radius: 8px;
     padding: 13px 20px;
     margin-top: 12px;
+    margin-bottom: 10px;
 }
 
 .sentiment-header {
@@ -644,8 +658,15 @@ button#download-button {
     margin: 0 10%;
     position: absolute;
     bottom: 0;
-    right: 25PX;
-    left: 25PX;
+    right: 0;
+    left: 0;
+    max-width: 910px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    flex-flow: column nowrap;
 }
 
 .prompt, textarea.form-control.prompt {
@@ -1011,15 +1032,15 @@ button#download-button {
 
 .btn-link.response-accordion {
     color: #2F2F39;
-    margin-top: 23px;
+    margin-top: 13px;
     padding-left: 0;
 }
 
-.sentiment-transcript {
-    margin-top: 24px;
+.sentiment-transcript.collapse.show, .sentiment-transcript.collapsing {
+    padding-top: 10px;
 }
 
-.sentiment-transcript.collapse.show + #inputTextAccordion1 .btn-link.response-accordion {
+.sentiment-transcript.collapse.show + #inputTextAccordion1 .btn-link.response-accordion:not(.collapsed) {
     margin-top: 13px;
 }
 
