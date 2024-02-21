@@ -190,30 +190,31 @@
 
                                innerHTML += `<p class="sentiment-header">Predicted Sentiment</p>
                                                         <p>
-                                                            <span class="sentiment-text">${ data.results[0].sentiment }</span>                                                                                                                       
-                                                            <div class="container mb-1">
-                                                            <h5>Positive Pointers:</h5>
-                                                            ${ data.results[0].Positive_Pointers ? 
-                                                                data.results[0].Positive_Pointers.map(point => `<div class="mb-1">${point}</div>`).join('') :
-                                                                `<p>No positive pointers</p>` 
-                                                            }
-                                                            </div>
-                                                            <div class="container mb-1">
-                                                                <h5>Negative Pointers:</h5>
-                                                                ${ data.results[0].Negative_Pointers ? 
-                                                                    data.results[0].Negative_Pointers.map(point => `<div class="mb-1">${point}</div>`).join('') :
-                                                                    `<p>No negative pointers</p>` 
-                                                                }
-                                                            </div>
-
+                                                            <span class="sentiment-text">${ data.results[0].sentiment }</span>                                                                               
                                                             <!-- <br>
                                                             <span class="selected-file-name">Audio File: ${ data.results[0].audio_file }</span> -->
-                                                        </p>
+                                                        </p>                                                        
+                                                    </div>
+                                                    <div class="sentiments-summary">
+                                                        <div class="pointers">
+                                                            <h1 class="sentiment-positive">Positive pointers:</h1>
+                                                            ${ data.results[0].Positive_Pointers ? 
+                                                                data.results[0].Positive_Pointers.slice(2).map(point => `<div>${point}</div>`).join('') :
+                                                                `<p>There is no positive pointer in the audio file.</p>` 
+                                                            }
+                                                        </div>
+                                                        <div class="pointers">
+                                                            <h1 class="sentiment-negative">Negative pointers:</h1>
+                                                            ${ data.results[0].Negative_Pointers ? 
+                                                                data.results[0].Negative_Pointers.slice(2).map(point => `<div>${point}</div>`).join('') :
+                                                                `<p>There is no negative pointer in the audio file.</p>` 
+                                                            }
+                                                        </div>
                                                     </div>
                                                     <div id="inputTextCollapse1" class="collapse sentiment-transcript"
                                                         aria-labelledby="inputTextHeading1"
                                                         data-parent="#inputTextAccordion1">
-                                                            ${ data.results[0].transcript.text }
+                                                        ${ data.results[0].transcript.text }
                                                     </div>
                                                     <div id="inputTextAccordion1">
                                                         <div id="inputTextHeading1">

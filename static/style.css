@@ -120,6 +120,7 @@ body {
 
 .pg-ic {
     padding: 0 2%;
+    /* height: inherit; */
 }
 
 
@@ -282,6 +283,10 @@ body.document-uploaded .pg-generate-contract-doc .pg-gcd {
 
 
 /* Image Classification */
+#result-classification.welcome-note-content-warapper {
+    height: auto;
+}
+
 #webcam-container {
     margin-bottom: 20px;
     text-align: center;
@@ -289,16 +294,21 @@ body.document-uploaded .pg-generate-contract-doc .pg-gcd {
     justify-content: center;
 }
 
+#webcam-container canvas {
+    width: auto;
+}
+
 #result-classification {
-    width: 100%;
+    width: auto;
     background: #fff;
     box-shadow: 2px 2px 4px 0px #0000001A;
+    border-radius: 12px;
+    padding: 16px;
 }
 
 #stop_button {
     position: absolute;
     left: 0;
-    margin-left: 40px;
     height: 40px;
     border-radius: 73px;
     padding: 8px 16px;
@@ -616,7 +626,7 @@ button#download-button {
     border-color: #00882C;
     background-color: rgba(0, 136, 44, 0.08);
 }
-.sentiment-response.positive .sentiment-text {
+.sentiment-response.positive .sentiment-text, .sentiment-positive {
     color: #00882C;
 }
 
@@ -624,8 +634,36 @@ button#download-button {
     border-color: #EA1B3D;
     background-color: rgba(234, 27, 61, 0.05);
 }
-.sentiment-response.negative .sentiment-text {
+.sentiment-response.negative .sentiment-text, .sentiment-negative {
     color: #EA1B3D;
+}
+
+.sentiments-summary {
+    display: flex;
+    flex-flow: row nowrap;
+    font-size: 14px;
+    padding: 20px 10px 10px 5px;
+}
+
+.sentiment-positive, .sentiment-negative {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.sentiments-summary > div {
+    flex: 1;
+}
+
+.sentiments-summary > div:nth-child(1) {
+    padding-right: 10px;
+}
+
+.sentiments-summary > div:nth-child(2) {
+    padding-left: 10px;
+}
+
+.pointers > div:empty {
+    display: none;
 }
 
 
