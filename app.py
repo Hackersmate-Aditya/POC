@@ -446,7 +446,7 @@ def summarize_and_ask(pdf_file_path, user_questions):
     embeddings_qa = OpenAIEmbeddings(openai_api_key=openai.api_key)
     pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_API_ENV)
     # index_name_qa = "genai"
-    index_name_qa = "info"
+    index_name_qa = "genai"
     docsearch_qa = Pinecone.from_texts([t.page_content for t in texts], embeddings_qa, index_name=index_name_qa)
 
     # Initialize a list to store the answers for each question
@@ -543,9 +543,9 @@ def generate_multiple_audio_transcript(audio_file, language):
 def index2():
     return render_template('image_Classification.html', current_url=request.path)       
 
-@app.route('/objectdetection', methods=['GET'])
-def index3():
-    return render_template('Object_detection.html', current_url=request.path)                
+# @app.route('/objectdetection', methods=['GET'])
+# def index3():
+#     return render_template('Object_detection.html', current_url=request.path)                
     
     
 

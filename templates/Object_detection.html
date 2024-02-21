@@ -279,23 +279,16 @@
                 label.classList.add('label1');
                 label.textContent = `${(prediction[i].probability * 100).toFixed(2)}%`;
 
-                progressBar.appendChild(label);
-
-                
-                // console.log(container);
-                // console.log(labelContainer.childNodes[i])
-                if(prediction[i].className == 'Pen'){
-                    labelContainer.childNodes[i].innerHTML = '';
-                // }
-                // if(prediction[i].probability * 100 > 70){   
+                progressBar.appendChild(label);    
+                console.log(prediction[i]);            
+              
+                if(prediction[i].probability * 100 > 80){   
                     const statusLabel = document.createElement('div');
                     const statusLabelInner = document.createElement('span');
                     statusLabelInner.textContent = prediction[i].className;
                     statusLabel.innerHTML = 'Product is ' + '<span>'+ statusLabelInner.textContent +' <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.3904 7.64808C14.4619 7.71952 14.5186 7.80435 14.5574 7.89774C14.5961 7.99112 14.616 8.09122 14.616 8.19231C14.616 8.29339 14.5961 8.39349 14.5574 8.48688C14.5186 8.58026 14.4619 8.6651 14.3904 8.73654L9.00577 14.1212C8.93433 14.1927 8.84949 14.2494 8.75611 14.2881C8.66273 14.3268 8.56263 14.3468 8.46154 14.3468C8.36045 14.3468 8.26035 14.3268 8.16697 14.2881C8.07359 14.2494 7.98875 14.1927 7.91731 14.1212L5.60962 11.8135C5.46528 11.6691 5.38419 11.4734 5.38419 11.2692C5.38419 11.0651 5.46528 10.8693 5.60962 10.725C5.75396 10.5807 5.94972 10.4996 6.15385 10.4996C6.35798 10.4996 6.55374 10.5807 6.69808 10.725L8.46154 12.4894L13.3019 7.64808C13.3734 7.57655 13.4582 7.51982 13.5516 7.48111C13.645 7.4424 13.7451 7.42247 13.8462 7.42247C13.9472 7.42247 14.0473 7.4424 14.1407 7.48111C14.2341 7.51982 14.3189 7.57655 14.3904 7.64808ZM20 10.5C20 12.4778 19.4135 14.4112 18.3147 16.0557C17.2159 17.7002 15.6541 18.9819 13.8268 19.7388C11.9996 20.4957 9.98891 20.6937 8.0491 20.3078C6.10929 19.922 4.32746 18.9696 2.92894 17.5711C1.53041 16.1725 0.578004 14.3907 0.192152 12.4509C-0.1937 10.5111 0.00433284 8.50042 0.761209 6.67316C1.51809 4.8459 2.79981 3.28412 4.4443 2.1853C6.08879 1.08649 8.02219 0.5 10 0.5C12.6513 0.5028 15.1932 1.55727 17.068 3.43202C18.9427 5.30678 19.9972 7.84869 20 10.5ZM18.4615 10.5C18.4615 8.82646 17.9653 7.19051 17.0355 5.79902C16.1057 4.40753 14.7842 3.32299 13.2381 2.68256C11.6919 2.04212 9.99062 1.87456 8.34924 2.20105C6.70786 2.52754 5.20016 3.33342 4.01679 4.51679C2.83343 5.70016 2.02754 7.20786 1.70105 8.84923C1.37456 10.4906 1.54213 12.1919 2.18256 13.7381C2.823 15.2842 3.90753 16.6057 5.29902 17.5355C6.69052 18.4653 8.32647 18.9615 10 18.9615C12.2434 18.959 14.3941 18.0667 15.9804 16.4804C17.5667 14.8941 18.459 12.7434 18.4615 10.5Z" fill="#00882C"/></svg></span>';
                     const container = document.createElement('div');
                     container.classList.add('quality-status');
-                    // container.style.background = '#00882C';
-                    // container.style.color = '#2F2F39';
                     container.appendChild(statusLabel);
                     labelContainer.childNodes[i].innerHTML = '';
                     labelContainer.childNodes[i].appendChild(container);                                  

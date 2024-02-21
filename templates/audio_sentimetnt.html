@@ -199,14 +199,15 @@
                                                         <div class="pointers">
                                                             <h1 class="sentiment-positive">Positive pointers:</h1>
                                                             ${ data.results[0].Positive_Pointers ? 
-                                                                data.results[0].Positive_Pointers.slice(2).map(point => `<div>${point}</div>`).join('') :
+                                                                data.results[0].Positive_Pointers.filter(point => !point.includes('Positive points:'))
+                                                                                                .map(point => `<div>${point}</div>`).join('') :
                                                                 `<p>There is no positive pointer in the audio file.</p>` 
                                                             }
                                                         </div>
                                                         <div class="pointers">
                                                             <h1 class="sentiment-negative">Negative pointers:</h1>
                                                             ${ data.results[0].Negative_Pointers ? 
-                                                                data.results[0].Negative_Pointers.slice(2).map(point => `<div>${point}</div>`).join('') :
+                                                                data.results[0].Negative_Pointers.filter(point => !point.includes('Negative points:')).map(point => `<div>${point}</div>`).join('') :
                                                                 `<p>There is no negative pointer in the audio file.</p>` 
                                                             }
                                                         </div>
