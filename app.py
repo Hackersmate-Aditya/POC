@@ -187,7 +187,63 @@ def job_generation():
 
     return render_template("job_description.html", text_response=text_response, cost=cost,current_url = request.path)
 
-# Function to transcribe audio and predict sentiment
+# # Function to transcribe audio and predict sentiment
+# def transcribe_and_analyze_sentiment(audio_file):
+#     # Save the uploaded audio file to a temporary directory
+#     with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as temp_audio_file:
+#         audio_file.save(temp_audio_file)
+#         temp_audio_path = temp_audio_file.name
+
+#     # Convert audio to WAV format if it's not already in WAV
+#     if not temp_audio_path.endswith(".wav"):
+#         wav_path = os.path.splitext(temp_audio_path)[0] + ".wav"
+#         audio = AudioSegment.from_file(temp_audio_path)
+#         audio.export(wav_path, format="wav")
+#         temp_audio_path = wav_path
+
+#     with open(temp_audio_path, "rb") as audio_file:
+#         transcript = openai.Audio.translate("whisper-1", audio_file)
+
+#     input_text = str(transcript)
+#     prompt = f"Determine the sentiment of the following text whether it is positive, negative, or neutral: '{input_text}'"
+
+#     response = openai.Completion.create(
+#         engine="gpt-3.5-turbo-instruct",  # Use the GPT-3.5-turbo engine
+#         prompt=prompt,
+#         max_tokens=1000,
+#         temperature=0,
+#         top_p=1
+#     )
+
+#     sentiment_label = response.choices[0].text.strip()
+
+#     # Clean up temporary file after processing
+#     os.remove(temp_audio_path)
+
+#     return transcript, sentiment_label
+
+# # Route for audio sentiment analysis
+# @app.route("/audio_sentiment", methods=["GET", "POST"])
+# def audio_sentiment_analysis():
+#     transcripts_and_sentiments = []
+
+#     if request.method == "POST":
+#         audio_files = request.files.getlist("audio[]")
+
+#         for audio_file in audio_files:
+#             if audio_file:
+#                 audio_file_name = audio_file.filename
+#                 transcript, sentiment = transcribe_and_analyze_sentiment(audio_file)
+#                 transcripts_and_sentiments.append({
+#                     "audio_file": audio_file_name,
+#                     "transcript": transcript,
+#                     "sentiment": sentiment
+#                 })
+
+#         return jsonify({'results' : transcripts_and_sentiments, 'current_url':  request.path })
+#     else :
+#         return render_template("audio_sentimetnt.html", results=transcripts_and_sentiments, current_url = request.path)
+
 def transcribe_and_analyze_sentiment(audio_file):
     # Save the uploaded audio file to a temporary directory
     with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as temp_audio_file:
@@ -206,6 +262,8 @@ def transcribe_and_analyze_sentiment(audio_file):
 
     input_text = str(transcript)
     prompt = f"Determine the sentiment of the following text whether it is positive, negative, or neutral: '{input_text}'"
+    prompt_1 = f"If overall context of '{input_text}' is positive, then only fetch top four positive points from '{input_text}'. Otherwise, say no positive points."
+    prompt_2 = f"If overall context of '{input_text}' is negative, then only fetch top four negative points from '{input_text}'. Otherwise, say no negative points."
 
     response = openai.Completion.create(
         engine="gpt-3.5-turbo-instruct",  # Use the GPT-3.5-turbo engine
@@ -215,12 +273,34 @@ def transcribe_and_analyze_sentiment(audio_file):
         top_p=1
     )
 
+
+    response1 = openai.Completion.create(
+        engine="gpt-3.5-turbo-instruct",  # Use the GPT-3.5-turbo engine
+        prompt=prompt_1,
+        max_tokens=1000,
+        temperature=0,
+        top_p=0.1
+    )
+
+    response2 = openai.Completion.create(
+        engine="gpt-3.5-turbo-instruct",  # Use the GPT-3.5-turbo engine
+        prompt=prompt_2,
+        max_tokens=1000,
+        temperature=0,
+        top_p=0.1
+    )
+
+
+
     sentiment_label = response.choices[0].text.strip()
+    positive_pointers = response1.choices[0].text
+    negative_pointers = response2.choices[0].text
+
 
     # Clean up temporary file after processing
     os.remove(temp_audio_path)
 
-    return transcript, sentiment_label
+    return transcript, sentiment_label, positive_pointers, negative_pointers
 
 # Route for audio sentiment analysis
 @app.route("/audio_sentiment", methods=["GET", "POST"])
@@ -233,16 +313,21 @@ def audio_sentiment_analysis():
         for audio_file in audio_files:
             if audio_file:
                 audio_file_name = audio_file.filename
-                transcript, sentiment = transcribe_and_analyze_sentiment(audio_file)
+                transcript, sentiment, positive_pointers, negative_pointers = transcribe_and_analyze_sentiment(audio_file)
+                negative_points_list = negative_pointers.split('\n')
+                positive_points_list = positive_pointers.split('\n')
                 transcripts_and_sentiments.append({
                     "audio_file": audio_file_name,
                     "transcript": transcript,
-                    "sentiment": sentiment
+                    "sentiment": sentiment,
+                    "Positive_Pointers": positive_points_list,
+                    "Negative_Pointers": negative_points_list
                 })
 
         return jsonify({'results' : transcripts_and_sentiments, 'current_url':  request.path })
     else :
         return render_template("audio_sentimetnt.html", results=transcripts_and_sentiments, current_url = request.path)
+
 
 # Function to check if the uploaded file has a valid extension
 def allowed_file(filename):
@@ -361,7 +446,7 @@ def summarize_and_ask(pdf_file_path, user_questions):
     embeddings_qa = OpenAIEmbeddings(openai_api_key=openai.api_key)
     pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_API_ENV)
     # index_name_qa = "genai"
-    index_name_qa = "info"
+    index_name_qa = "genai"
     docsearch_qa = Pinecone.from_texts([t.page_content for t in texts], embeddings_qa, index_name=index_name_qa)
 
     # Initialize a list to store the answers for each question
@@ -456,7 +541,11 @@ def generate_multiple_audio_transcript(audio_file, language):
 
 @app.route('/imageClassification', methods=['GET'])
 def index2():
-    return render_template('image_Classification.html', current_url=request.path)                
+    return render_template('image_Classification.html', current_url=request.path)       
+
+# @app.route('/objectdetection', methods=['GET'])
+# def index3():
+#     return render_template('Object_detection.html', current_url=request.path)                
     
     
 

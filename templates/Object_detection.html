@@ -1,0 +1,319 @@
+{% include 'head.html' %} 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Image Classification Interface with Progressive Feedback</title>
+    <style>
+        /* body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #fff9ed;
+        } */
+        .container {
+            text-align: center;
+            margin-bottom: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+        .quality-status {
+            background-color: rgba(0, 136, 44, 0.1);
+            color: #2F2F39;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        .quality-status span {
+            color: #00882C;
+        }
+        .quality-status svg {
+            margin-top: -3px;
+            margin-left: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            /* background-color: #0056b3; */
+        }
+        .label {
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        .bar1 {
+            width: 200px !important; 
+            height: 20px !important; 
+            background-color: #ddd;
+            margin: 0 0 5px auto; 
+            position: relative;
+            
+        }
+        .bar-fill1 {
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: width 0.3s ease;
+            
+        }
+        .label1 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+           
+        }
+        .bar-blue1 {
+            /* background-color: #f21616; */
+            background-color: #28a745;
+            
+        }
+
+        .bar-green1 {
+            background-color: #f21616;
+            
+        }
+        .camera-svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 6px;
+            margin-left: 0!important;
+        }
+        .circle-svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 6px;
+        }
+        .btn-generate {
+            margin-top: 15px;
+        }
+        .label-with-icon {
+            font-size: inherit!important;
+        }
+        .mt-20 {
+            margin-top: 20px;
+        }
+        
+        #label-container {
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: flex-end;
+            position: relative;
+            margin-top: -30px;
+            justify-content: center;
+        }
+        #label-container > div > div {
+            display: flex;
+            gap: 10px;
+        }
+        .feature-classification-desc {
+            max-width: 760px!important;
+        }
+    </style>
+</head>
+
+<body id="body" class="sidebar-on">    
+    <div class="app-container">
+            {% include 'sidebar.html' %} 
+            <main class="app-content-wrppr" id="page-content">
+                <div class="pg-wrppr">
+                    <div class="pg-content-wrppr pg-gt pg-ic">
+                        <form>
+                            <div class="welcome-note" id="welcomeNote">
+                                <div class="welcome-note-content-warapper" id="intro-classification">
+                                    <svg width="81" height="80" viewBox="0 0 81 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g filter="url(#filter0_d_138_1740)">
+                                            <path d="M70.689 24.1946L51.2799 4.81C51.0222 4.55292 50.7163 4.34907 50.3797 4.21008C50.0431 4.0711 49.6824 3.99971 49.3182 4H16.0455C14.5747 4 13.1642 4.58352 12.1242 5.62218C11.0843 6.66084 10.5 8.06957 10.5 9.53846V70.4615C10.5 71.9304 11.0843 73.3392 12.1242 74.3778C13.1642 75.4165 14.5747 76 16.0455 76H65.9545C67.4253 76 68.8358 75.4165 69.8758 74.3778C70.9157 73.3392 71.5 71.9304 71.5 70.4615V26.1538C71.5003 25.7901 71.4288 25.4298 71.2897 25.0936C71.1505 24.7575 70.9464 24.452 70.689 24.1946ZM52.0909 13.4535L62.0346 23.3846H52.0909V13.4535ZM65.9545 70.4615H16.0455V9.53846H46.5455V26.1538C46.5455 26.8883 46.8376 27.5927 47.3576 28.112C47.8776 28.6313 48.5828 28.9231 49.3182 28.9231H65.9545V70.4615ZM54.8636 42.7692C54.8636 43.5037 54.5715 44.208 54.0515 44.7274C53.5315 45.2467 52.8263 45.5385 52.0909 45.5385H29.9091C29.1737 45.5385 28.4685 45.2467 27.9485 44.7274C27.4285 44.208 27.1364 43.5037 27.1364 42.7692C27.1364 42.0348 27.4285 41.3304 27.9485 40.8111C28.4685 40.2918 29.1737 40 29.9091 40H52.0909C52.8263 40 53.5315 40.2918 54.0515 40.8111C54.5715 41.3304 54.8636 42.0348 54.8636 42.7692ZM54.8636 53.8462C54.8636 54.5806 54.5715 55.285 54.0515 55.8043C53.5315 56.3236 52.8263 56.6154 52.0909 56.6154H29.9091C29.1737 56.6154 28.4685 56.3236 27.9485 55.8043C27.4285 55.285 27.1364 54.5806 27.1364 53.8462C27.1364 53.1117 27.4285 52.4073 27.9485 51.888C28.4685 51.3687 29.1737 51.0769 29.9091 51.0769H52.0909C52.8263 51.0769 53.5315 51.3687 54.0515 51.888C54.5715 52.4073 54.8636 53.1117 54.8636 53.8462Z" fill="#2F2F39"/>
+                                        </g>
+                                        <defs>
+                                            <filter id="filter0_d_138_1740" x="10.5" y="4" width="65" height="76" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                                                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                                                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                                                <feOffset dx="4" dy="4"/>
+                                                <feComposite in2="hardAlpha" operator="out"/>
+                                                <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 0.815686 0 0 0 0 0.847059 0 0 0 1 0"/>
+                                                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_138_1740"/>
+                                                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_138_1740" result="shape"/>
+                                            </filter>
+                                        </defs>
+                                    </svg>    
+                                    <h1 class="feature-intro-title">Quality Control Metrics for Products</h1>
+                                    <p class="feature-intro-desc feature-classification-desc">
+                                        Incorporating products to your website that offer real-time visual recognition capabilities and greatly improve user experience.
+                                    </p>
+                                    <!-- <button id="show_intact"  type="button" onclick="init()">Start Classification</button> -->
+                                    <button type="button" id="show_intact" class="btn-generate label-with-icon cta-intro" onclick="init()">
+                                        <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M21.6923 7.34783H19.0269L17.7163 5.34826C17.6461 5.24119 17.551 5.15339 17.4395 5.09265C17.328 5.0319 17.2034 5.00008 17.0769 5H10.9231C10.7966 5.00008 10.672 5.0319 10.5605 5.09265C10.449 5.15339 10.3539 5.24119 10.2837 5.34826L8.97212 7.34783H6.30769C5.69565 7.34783 5.10868 7.59519 4.67591 8.03549C4.24313 8.47579 4 9.07297 4 9.69565V20.6522C4 21.2749 4.24313 21.872 4.67591 22.3123C5.10868 22.7526 5.69565 23 6.30769 23H21.6923C22.3043 23 22.8913 22.7526 23.3241 22.3123C23.7569 21.872 24 21.2749 24 20.6522V9.69565C24 9.07297 23.7569 8.47579 23.3241 8.03549C22.8913 7.59519 22.3043 7.34783 21.6923 7.34783ZM22.4615 20.6522C22.4615 20.8597 22.3805 21.0588 22.2362 21.2056C22.092 21.3523 21.8963 21.4348 21.6923 21.4348H6.30769C6.10368 21.4348 5.90802 21.3523 5.76376 21.2056C5.61951 21.0588 5.53846 20.8597 5.53846 20.6522V9.69565C5.53846 9.48809 5.61951 9.28903 5.76376 9.14226C5.90802 8.9955 6.10368 8.91304 6.30769 8.91304H9.38462C9.51129 8.91313 9.63602 8.88138 9.74774 8.82063C9.85946 8.75987 9.9547 8.67199 10.025 8.56478L11.3346 6.56522H16.6644L17.975 8.56478C18.0453 8.67199 18.1405 8.75987 18.2523 8.82063C18.364 8.88138 18.4887 8.91313 18.6154 8.91304H21.6923C21.8963 8.91304 22.092 8.9955 22.2362 9.14226C22.3805 9.28903 22.4615 9.48809 22.4615 9.69565V20.6522ZM14 10.4783C13.1632 10.4783 12.3453 10.7307 11.6495 11.2037C10.9538 11.6766 10.4115 12.3489 10.0913 13.1354C9.77106 13.9219 9.68728 14.7874 9.85052 15.6223C10.0138 16.4573 10.4167 17.2243 11.0084 17.8262C11.6001 18.4282 12.3539 18.8382 13.1746 19.0042C13.9953 19.1703 14.846 19.0851 15.619 18.7593C16.3921 18.4335 17.0529 17.8818 17.5178 17.174C17.9826 16.4661 18.2308 15.6339 18.2308 14.7826C18.2295 13.6414 17.7833 12.5473 16.9902 11.7404C16.1971 10.9335 15.1217 10.4796 14 10.4783ZM14 17.5217C13.4675 17.5217 12.947 17.3611 12.5042 17.0601C12.0615 16.7591 11.7164 16.3313 11.5126 15.8308C11.3089 15.3303 11.2555 14.7796 11.3594 14.2482C11.4633 13.7169 11.7197 13.2288 12.0963 12.8458C12.4728 12.4627 12.9525 12.2018 13.4748 12.0961C13.997 11.9904 14.5383 12.0447 15.0303 12.252C15.5223 12.4593 15.9427 12.8104 16.2386 13.2608C16.5344 13.7113 16.6923 14.2409 16.6923 14.7826C16.6923 15.5091 16.4087 16.2058 15.9037 16.7195C15.3988 17.2332 14.714 17.5217 14 17.5217Z" fill="white"/>
+                                        </svg>
+                                            
+                                          
+                                        Start Quality Check                                         
+                                    </button>
+                                </div>
+                                <div class="welcome-note-content-warapper" id="result-classification" style="display:none;">
+                                    <div id="webcam-container"></div>
+                                    <div id="label-container" class="mt-20"></div>
+                                </div>
+                            </div>
+                        </form>
+                </div>
+
+                
+                    
+                <div class="css-loader" id="loader"></div>
+                {% include 'footer.html' %} 
+                </div>
+            </main>
+    </div>
+         
+    <script type="text/javascript">
+        function showLoader() {
+            document.getElementById("loader").style.display = "block";
+        }
+
+        // Function to hide the loader
+        function hideLoader() {
+            document.getElementById("loader").style.display = "none";
+        }
+        // document.getElementById("show_intact").addEventListener("click", function (e) {
+
+        // const URL = "https://teachablemachine.withgoogle.com/models/Hhs_pEZN4/";
+        const URL = "https://teachablemachine.withgoogle.com/models/dLCw58PXV/";
+        let model, webcam, labelContainer, maxPredictions;
+        const delay = 100;
+
+        async function init() {
+            document.getElementById("intro-classification").style.display = "none";
+            showLoader()
+            const modelURL = URL + "model.json";
+            const metadataURL = URL + "metadata.json";
+
+            model = await tmImage.load(modelURL, metadataURL);
+            maxPredictions = model.getTotalClasses();
+
+            const flip = true;
+            webcam = new tmImage.Webcam(document.getElementsByClassName('welcome-note')[0].offsetWidth-100, document.getElementsByClassName('welcome-note')[0].offsetHeight-120, flip);
+            await webcam.setup(); 
+            await webcam.play();
+            window.requestAnimationFrame(loop);
+
+            document.getElementById("webcam-container").innerHTML = ''
+            document.getElementById("webcam-container").appendChild(webcam.canvas);
+            labelContainer = document.getElementById("label-container");
+            for (let i = 0; i < maxPredictions; i++) {
+                labelContainer.appendChild(document.createElement("div"));                
+            }
+            hideLoader();
+            document.getElementById("result-classification").style.display = "block";
+            const stopButton = document.createElement("button");
+            stopButton.textContent = "Stop Quality Check ";
+            stopButton.id = "stop_button";
+            stopButton.type = "button";
+            const svgIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svgIcon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+            svgIcon.setAttribute("fill", "none");
+            svgIcon.setAttribute("viewBox", "0 0 24 24");
+            svgIcon.setAttribute("stroke-width", "1.5");
+            svgIcon.setAttribute("stroke", "currentColor");
+            svgIcon.classList.add("circle-svg"); // Add classes to style the SVG if needed
+
+            // Create and append the path elements
+            const path1 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            path1.setAttribute("stroke-linecap", "round");
+            path1.setAttribute("stroke-linejoin", "round");
+            path1.setAttribute("d", "M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z");
+
+            const path2 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            path2.setAttribute("stroke-linecap", "round");
+            path2.setAttribute("stroke-linejoin", "round");
+            path2.setAttribute("d", "M9 9.563C9 9.252 9.252 9 9.563 9h4.874c.311 0 .563.252.563.563v4.874c0 .311-.252.563-.563.563H9.564A.562.562 0 0 1 9 14.437V9.564Z");
+
+            // Append path elements to SVG
+            svgIcon.appendChild(path1);
+            svgIcon.appendChild(path2);
+
+            // Append SVG to button
+            stopButton.prepend(svgIcon);
+            stopButton.addEventListener("click", stopWebcam);
+            document.getElementById("label-container").appendChild(stopButton);
+
+        }
+
+        async function loop() {
+            webcam.update(); 
+            await predict();
+            window.requestAnimationFrame(loop);
+        }             
+        async function predict() {
+            const prediction = await model.predict(webcam.canvas);                                                
+                
+            await updateProgressBar(prediction);
+
+        }                      
+        async function updateProgressBar(prediction) {
+            for (let i = 0; i < maxPredictions; i++) {
+                // console.log(prediction[i].className)
+                labelContainer.childNodes[i].innerHTML = '';
+                const progressBar = document.createElement('div');
+                progressBar.classList.add('bar1');
+
+                const progressBarFill = document.createElement('div');
+                progressBarFill.classList.add('bar-fill1');
+                progressBarFill.style.width = `${prediction[i].probability * 100}%`;
+                progressBar.appendChild(progressBarFill);
+
+                const label = document.createElement('div');
+                label.classList.add('label1');
+                label.textContent = `${(prediction[i].probability * 100).toFixed(2)}%`;
+
+                progressBar.appendChild(label);    
+                console.log(prediction[i]);            
+              
+                if(prediction[i].probability * 100 > 80){   
+                    const statusLabel = document.createElement('div');
+                    const statusLabelInner = document.createElement('span');
+                    statusLabelInner.textContent = prediction[i].className;
+                    statusLabel.innerHTML = 'Product is ' + '<span>'+ statusLabelInner.textContent +' <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.3904 7.64808C14.4619 7.71952 14.5186 7.80435 14.5574 7.89774C14.5961 7.99112 14.616 8.09122 14.616 8.19231C14.616 8.29339 14.5961 8.39349 14.5574 8.48688C14.5186 8.58026 14.4619 8.6651 14.3904 8.73654L9.00577 14.1212C8.93433 14.1927 8.84949 14.2494 8.75611 14.2881C8.66273 14.3268 8.56263 14.3468 8.46154 14.3468C8.36045 14.3468 8.26035 14.3268 8.16697 14.2881C8.07359 14.2494 7.98875 14.1927 7.91731 14.1212L5.60962 11.8135C5.46528 11.6691 5.38419 11.4734 5.38419 11.2692C5.38419 11.0651 5.46528 10.8693 5.60962 10.725C5.75396 10.5807 5.94972 10.4996 6.15385 10.4996C6.35798 10.4996 6.55374 10.5807 6.69808 10.725L8.46154 12.4894L13.3019 7.64808C13.3734 7.57655 13.4582 7.51982 13.5516 7.48111C13.645 7.4424 13.7451 7.42247 13.8462 7.42247C13.9472 7.42247 14.0473 7.4424 14.1407 7.48111C14.2341 7.51982 14.3189 7.57655 14.3904 7.64808ZM20 10.5C20 12.4778 19.4135 14.4112 18.3147 16.0557C17.2159 17.7002 15.6541 18.9819 13.8268 19.7388C11.9996 20.4957 9.98891 20.6937 8.0491 20.3078C6.10929 19.922 4.32746 18.9696 2.92894 17.5711C1.53041 16.1725 0.578004 14.3907 0.192152 12.4509C-0.1937 10.5111 0.00433284 8.50042 0.761209 6.67316C1.51809 4.8459 2.79981 3.28412 4.4443 2.1853C6.08879 1.08649 8.02219 0.5 10 0.5C12.6513 0.5028 15.1932 1.55727 17.068 3.43202C18.9427 5.30678 19.9972 7.84869 20 10.5ZM18.4615 10.5C18.4615 8.82646 17.9653 7.19051 17.0355 5.79902C16.1057 4.40753 14.7842 3.32299 13.2381 2.68256C11.6919 2.04212 9.99062 1.87456 8.34924 2.20105C6.70786 2.52754 5.20016 3.33342 4.01679 4.51679C2.83343 5.70016 2.02754 7.20786 1.70105 8.84923C1.37456 10.4906 1.54213 12.1919 2.18256 13.7381C2.823 15.2842 3.90753 16.6057 5.29902 17.5355C6.69052 18.4653 8.32647 18.9615 10 18.9615C12.2434 18.959 14.3941 18.0667 15.9804 16.4804C17.5667 14.8941 18.459 12.7434 18.4615 10.5Z" fill="#00882C"/></svg></span>';
+                    const container = document.createElement('div');
+                    container.classList.add('quality-status');
+                    container.appendChild(statusLabel);
+                    labelContainer.childNodes[i].innerHTML = '';
+                    labelContainer.childNodes[i].appendChild(container);                                  
+                }
+                else {
+                    labelContainer.childNodes[i].innerHTML = '';
+                }
+                // await new Promise(resolve => setTimeout(resolve, delay));
+            }
+}       
+
+        function stopWebcam() {
+        if (webcam) {
+            webcam.stop();
+            document.getElementById("result-classification").style.display = "none";
+            document.getElementById("intro-classification").style.display = "flex";
+        }
+    }
+
+        
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+     
+</body>
+</html>
+
